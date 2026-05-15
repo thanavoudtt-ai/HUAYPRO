@@ -9,250 +9,413 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#0a1128">
+    <meta name="theme-color" content="#070c1e">
 
-    <?!= include('style'); ?>
+    <style>
+        /* ========================================== */
+        /* 🆕 LIQUID GLASS SYSTEM & CORE DESIGN       */
+        /* ========================================== */
+        :root {
+            --bg-dark: #070c1e;
+            --card-bg: rgba(16, 26, 54, 0.55);
+            --ios-blue: #007aff;
+            --ios-green: #34c759;
+            --ios-pink: #ff2d55;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 45, 85, 0.08) 0%, transparent 45%);
+            background-attachment: fixed;
+        }
+
+        .page-wrapper {
+            width: 100%; max-width: 480px; margin: 0 auto;
+            min-height: 100vh; display: flex; flex-direction: column;
+        }
+
+        .app-container {
+            padding: 16px;
+            padding-bottom: calc(24px + env(safe-area-inset-bottom)); 
+            flex: 1;
+        }
+
+        .hidden { display: none !important; }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 28px;
+            padding: 22px 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.02);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .card h2 {
+            font-size: 16px; font-weight: 600; margin-bottom: 18px;
+            color: #fff; display: flex; align-items: center; gap: 6px;
+        }
+
+        .top-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 6px; margin-bottom: 10px;
+        }
+
+        .user-badge {
+            background: rgba(255, 255, 255, 0.07);
+            padding: 6px 14px; border-radius: 20px;
+            font-size: 14px; font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* INPUTS & CONTROLS */
+        .input-group { margin-bottom: 18px; }
+        .input-group label {
+            display: block; font-size: 13px; color: var(--text-muted);
+            margin-bottom: 8px; font-weight: 500; padding-left: 2px;
+        }
+
+        input[type="text"], input[type="number"], select, input[type="password"] {
+            width: 100%; background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px; padding: 14px 16px;
+            color: #fff; font-size: 15px; outline: none;
+            transition: all 0.25s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--ios-blue);
+            background: rgba(0, 0, 0, 0.35);
+            box-shadow: 0 0 12px rgba(0, 122, 255, 0.25);
+        }
+
+        /* BUTTONS DESIGN */
+        .btn {
+            width: 100%; padding: 15px; border-radius: 18px;
+            font-size: 15px; font-weight: 600; border: 1px solid transparent;
+            cursor: pointer; transition: all 0.2s ease;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+        }
+        .btn:active { transform: scale(0.97); }
+        .btn-primary {
+            background: linear-gradient(180deg, #007aff 0%, #0056b3 100%);
+            color: #fff; border-top: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 20px rgba(0,122,255,0.25);
+        }
+
+        .btn-toggle, .btn-position, .btn-payment {
+            flex: 1; padding: 12px 8px; border-radius: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted); font-size: 13px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease; text-align: center;
+        }
+        .btn-toggle.active, .btn-position.active, .btn-payment.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--ios-blue); color: #fff;
+            box-shadow: 0 4px 12px rgba(0,122,255,0.15);
+        }
+
+        .quick-btn {
+            flex: 1; min-width: 60px; padding: 10px; border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.06);
+            color: #fff; font-size: 13px; font-weight: 600; cursor: pointer;
+        }
+        .quick-btn:active { background: rgba(255,255,255,0.15); }
+
+        /* TABLES & BADGES */
+        .table-area { width: 100%; border-collapse: collapse; margin-top: 4px; }
+        .table-area th {
+            text-align: left; font-size: 12px; color: var(--text-muted);
+            padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .table-area td { padding: 12px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+
+        .badge { padding: 4px 8px; border-radius: 8px; font-size: 11px; font-weight: 600; }
+        .badge-lao { background: rgba(0, 190, 255, 0.15); color: #00beff; }
+        .badge-th { background: rgba(255, 45, 85, 0.15); color: #ff2d55; }
+        .btn-remove { background: transparent; border: none; cursor: pointer; font-size: 14px; }
+
+        /* MENU GRID & DASHBOARD */
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+        .menu-box {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px; padding: 22px 14px; text-align: center; cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .menu-box:active { transform: scale(0.95); background: rgba(255,255,255,0.08); }
+        .menu-box-icon { font-size: 32px; margin-bottom: 12px; }
+        .menu-box-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #fff; }
+        .menu-box-desc { font-size: 11px; color: var(--text-muted); }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+        .stat-box { 
+            background: rgba(255,255,255,0.04); border-radius: 20px; padding: 16px 8px; text-align: center; 
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .stat-box p { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+        .stat-box h3 { font-size: 15px; font-weight: 700; }
+
+        .history-list { max-height: 420px; overflow-y: auto; padding-right: 4px; }
+        .history-item { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 16px; border-radius: 20px; background: rgba(255,255,255,0.04); 
+            margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .bill-preview-box {
+            background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px; padding: 16px; text-align: left; max-height: 240px; overflow-y: auto; margin-bottom: 20px;
+        }
+        .bill-preview-box pre { color: #00df89; font-family: monospace; font-size: 14px; white-space: pre-wrap; }
+
+        .nam-sat-display { display: block; font-size: 13px; color: #ffb703; text-align: center; margin-top: 8px; font-weight: 500; min-height: 18px; }
+
+        /* GLASS MODAL POPUP OVERLAYS */
+        .glass-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 12, 24, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            z-index: 9999; display: none; animation: fadeIn 0.3s ease-out;
+        }
+        .glass-modal-card {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 400px;
+            background: rgba(15, 32, 67, 0.65); border: 1px solid rgba(255, 255, 255, 0.2); border-top: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 30px; padding: 30px 24px; text-align: center; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: #fff;
+        }
+        .status-modal-icon { font-size: 54px; margin-bottom: 16px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
 </head>
 <body>
     <div class="page-wrapper">
-        <div id="loginContainer">
-            <?!= include('login'); ?>
-        </div>
-
-        <div id="mainApp" class="app-container">
-        
-        <div id="menuPage" class="hidden">
-            <div class="top-bar">
-                <div class="user-badge">👤 <span id="currentUserName">Loading...</span></div>
-                <button onclick="logout()" style="background: transparent; border: none; color: var(--ios-pink); cursor: pointer; font-size: 15px; font-weight: bold;">❌ ออกระบบ</button>
-            </div>
-
-            <div class="card" style="padding: 28px 20px 32px; text-align: center;">
-                <div style="font-size: 40px; margin-bottom: 10px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25));">✨</div>
-                <h2 style="margin-bottom: 4px; font-size: 20px;">ศูนย์ควบคุมระบบ</h2>
-                <p style="color: var(--text-muted); font-size: 13px;">เลือกฟังก์ชันกระจกเหลวเพื่อดำเนินการ</p>
-                
-                <div class="menu-grid">
-                    <div class="menu-box box-recorder" onclick="goToRecorder()">
-                        <div class="menu-box-icon">📝</div>
-                        <div class="menu-box-title">ขายหวย</div>
-                        <div class="menu-box-desc">คีย์ยอดแทงใหม่</div>
-                    </div>
-                    
-                    <div class="menu-box box-dashboard" onclick="goToDashboard()">
-                        <div class="menu-box-icon">📊</div>
-                        <div class="menu-box-title">ประวัติการขาย</div>
-                        <div class="menu-box-desc">ดูรายงานสถิติขาย</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="recorderPage" class="hidden">
-            <div class="top-bar">
-                <button onclick="backToMenu()" style="background: transparent; border: none; color: var(--ios-blue); cursor: pointer; font-size: 16px; font-weight: bold;">← เมนูหลัก</button>
-                <div style="text-align: center; font-weight: 700; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.4);">บันทึกรายการหวย</div>
-                <button onclick="logout()" style="background: transparent; border: none; color: var(--ios-pink); cursor: pointer; font-size: 15px; font-weight: bold;">❌ ออก</button>
-            </div>
-
-            <div class="card">
-                <h2>📝 กรอกข้อมูล</h2>
+        <div id="loginContainer" class="app-container">
+            <div class="card" style="margin-top: 20%; padding: 35px 24px;">
+                <div style="font-size: 50px; text-align: center; margin-bottom: 15px; filter: drop-shadow(0 4px 10px rgba(0,122,255,0.3));">💎</div>
+                <h1 style="text-align: center; font-size: 24px; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.5px;">Smart Huay Pro</h1>
+                <p style="text-align: center; color: var(--text-muted); font-size: 13px; margin-bottom: 28px;">กรุณาเลือกชื่อผู้ใช้และระบุรหัส PIN เพื่อลงชื่อเข้างาน</p>
                 
                 <div class="input-group">
-                    <label>ชื่อลูกค้า</label>
-                    <input type="text" id="custName" placeholder="พิมพ์ระบุชื่อลูกค้า...">
+                    <label>บัญชีผู้ใช้พนักงาน</label>
+                    <select id="loginUser">
+                        <option value="">⏳ กำลังเชื่อมต่อรายชื่อหลังบ้าน...</option>
+                    </select>
                 </div>
-
-                <div class="input-group">
-                    <label>ประเภทหวย</label>
-                    <div style="display: flex; gap: 10px;">
-                        <button class="btn-toggle active" data-type="ลาว" onclick="setHuayType('ลาว', this)">หวยลาว</button>
-                        <button class="btn-toggle" data-type="ไทย" onclick="setHuayType('ไทย', this)">หวยไทย</button>
-                    </div>
+                <div class="input-group" style="margin-bottom: 30px;">
+                    <label>รหัส PIN เข้าสู่ระบบ</label>
+                    <input type="password" id="loginPin" placeholder="••••" maxlength="4" inputmode="numeric" style="text-align: center; font-size: 24px; letter-spacing: 12px; font-weight: bold;">
                 </div>
-
-                <div class="input-group">
-                    <label>เลขเด็ด</label>
-                    <input type="text" id="huayNum" placeholder="000" maxlength="3" inputmode="numeric" style="font-size: 28px; text-align: center; letter-spacing: 10px; font-weight: bold; color: #fff; background: rgba(0,0,0,0.4);">
-                    <span id="namSatText" class="nam-sat-display"></span>
-                </div>
-
-                <div class="input-group" id="huayPositionSection" style="display: none;">
-                    <label>เลือกตำแหน่ง</label>
-                    <div style="display: flex; gap: 8px;">
-                        <button class="btn-position active" data-position="บน" onclick="setHuayPosition('บน', this)">🔺 บน</button>
-                        <button class="btn-position" data-position="ล่าง" onclick="setHuayPosition('ล่าง', this)">🔻 ล่าง</button>
-                        <button class="btn-position" data-position="บน/ล่าง" onclick="setHuayPosition('บน/ล่าง', this)">🔷 บน/ล่าง</button>
-                    </div>
-                </div>
-
-                <div class="input-group" id="laoAmtSection">
-                    <label>จำนวนเงินเดิมพัน (₭)</label>
-                    <input type="number" id="huayAmt" placeholder="0" inputmode="numeric" style="font-size: 20px; text-align: center; color: var(--ios-green); font-weight: bold;">
-                </div>
-
-                <div class="input-group" id="thaiAmtSection" style="display: none;">
-                    <label>จำนวนเงินเดิมพัน (₭)</label>
-                    <div id="thaiAmtFields">
-                        <div id="amtTopOnly" style="display: none;">
-                            <label style="font-size: 11px; margin-bottom: 4px; display: block; color:#ff9500;">🔺 ช่องบน</label>
-                            <input type="number" id="huayAmtTop" placeholder="0" inputmode="numeric" style="font-size: 18px; color: var(--ios-green); font-weight: bold;">
-                        </div>
-                        <div id="amtBotOnly" style="display: none;">
-                            <label style="font-size: 11px; margin-bottom: 4px; display: block; color:#ff9500;">🔻 ช่องล่าง</label>
-                            <input type="number" id="huayAmtBot" placeholder="0" inputmode="numeric" style="font-size: 18px; color: var(--ios-green); font-weight: bold;">
-                        </div>
-                        <div id="amtBothSection" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;">
-                            <div>
-                                <label style="font-size: 11px; margin-bottom: 4px; display: block; color:#ff9500;">🔺 ยอดบน</label>
-                                <input type="number" id="huayAmtTop2" placeholder="0" inputmode="numeric" style="font-size: 18px; color: var(--ios-green); font-weight: bold;">
-                            </div>
-                            <div>
-                                <label style="font-size: 11px; margin-bottom: 4px; display: block; color:#ff9500;">🔻 ยอดล่าง</label>
-                                <input type="number" id="huayAmtBot2" placeholder="0" inputmode="numeric" style="font-size: 18px; color: var(--ios-green); font-weight: bold;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 22px;">
-                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px; padding-left: 2px;">💰 ปุ่มเพิ่มเงินด่วน (กดซ้ำเพื่อรวมยอดทบได้)</div>
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        <button class="quick-btn" onclick="setQuickAmount(1000)">1K</button>
-                        <button class="quick-btn" onclick="setQuickAmount(5000)">5K</button>
-                        <button class="quick-btn" onclick="setQuickAmount(10000)">10K</button>
-                        <button class="quick-btn" onclick="setQuickAmount(20000)">20K</button>
-                        <button class="quick-btn" onclick="setQuickAmount(50000)">50K</button>
-                    </div>
-                </div>
-
-                <button class="btn btn-primary" onclick="addItem()" style="font-size: 17px; font-weight: bold;">➕ เพิ่มรายการนี้</button>
-            </div>
-
-            <div class="card">
-                <h2>🧾 ตารางบิลปัจจุบัน</h2>
-                <table class="table-area">
-                    <thead><tr><th>เลข</th><th>ประเภท</th><th>เงินเดิมพัน</th><th style="width: 40px;"></th></tr></thead>
-                    <tbody id="billTableBody"><tr><td colspan="4" style="text-align:center; color: var(--text-muted);">ยังไม่มีรายการถูกเพิ่มเข้าบิล</td></tr></tbody>
-                </table>
-                <div style="margin: 20px 0 4px; text-align: right; font-size: 16px; font-weight: 500; color: var(--text-muted);">ยอดรวมทัังหมด: <span id="billTotalText" style="color: #ff3b30; font-size: 22px; font-weight: 700; text-shadow: 0 0 10px rgba(255,59,48,0.3);">0 ₭</span></div>
-            </div>
-
-            <div class="card">
-                <div class="input-group" style="margin-bottom: 24px;">
-                    <label>เลือกการรับชำระเงิน</label>
-                    <div style="display: flex; gap: 10px;">
-                        <button class="btn-payment active" data-method="เงินสด" onclick="setPaymentMethod('เงินสด', this)">💵 รับเงินสด</button>
-                        <button class="btn-payment" data-method="เงินโอน" onclick="setPaymentMethod('เงินโอน', this)">📱 แบบโอนเงิน</button>
-                    </div>
-                </div>
-                <button class="btn btn-primary" id="btnSubmit" onclick="submitBill()" style="font-size: 18px; background: linear-gradient(180deg, rgba(0, 223, 137, 0.85) 0%, rgba(0, 160, 95, 0.95) 100%); border-color: rgba(255,255,255,0.25); box-shadow: 0 15px 30px rgba(0,160,95,0.35);">✅ ขาย และ แจ้งเตือนหวย</button>
+                <button class="btn btn-primary" onclick="handleLogin()" style="font-size: 16px; padding: 16px;">🔑 ยืนยันล็อกอินเข้าสู่ระบบ</button>
             </div>
         </div>
 
-        <div id="dashboardPage" class="hidden">
-            <div class="top-bar">
-                <button onclick="backToMenu()" style="background: transparent; border: none; color: var(--ios-blue); cursor: pointer; font-size: 16px; font-weight: bold;">← เมนูหลัก</button>
-                <div style="text-align: center; font-weight: 700; color: #fff;">แผงสถิติรายงาน</div>
-                <button onclick="logout()" style="background: transparent; border: none; color: var(--ios-pink); cursor: pointer; font-size: 15px; font-weight: bold;">❌ ออก</button>
-            </div>
-
-            <div class="card">
-                <h2>📈 ยอดสรุปการขายรวม</h2>
-                <div class="stats-grid">
-                    <div class="stat-box"><p>วันนี้</p><h3 style="color: #00beff" id="statToday">0 ₭</h3></div>
-                    <div class="stat-box"><p>สัปดาห์นี้</p><h3 style="color: #ff9500" id="statWeek">0 ₭</h3></div>
-                    <div class="stat-box"><p>เดือนนี้</p><h3 style="color: #00df89" id="statMonth">0 ₭</h3></div>
+        <div id="mainApp" class="app-container" style="display: none;">
+            
+            <div id="menuPage" class="hidden">
+                <div class="top-bar">
+                    <div class="user-badge">👤 <span id="currentUserName">Loading...</span></div>
+                    <button onclick="logout()" style="background: transparent; border: none; color: var(--ios-pink); cursor: pointer; font-size: 15px; font-weight: bold;">❌ ออกระบบ</button>
+                </div>
+                <div class="card" style="padding: 28px 20px 32px; text-align: center;">
+                    <div style="font-size: 40px; margin-bottom: 10px;">✨</div>
+                    <h2 style="margin-bottom: 4px; font-size: 20px; justify-content: center;">ศูนย์ควบคุมระบบ</h2>
+                    <p style="color: var(--text-muted); font-size: 13px;">เลือกฟังก์ชันกระจกเหลวเพื่อดำเนินการ</p>
+                    <div class="menu-grid">
+                        <div class="menu-box" onclick="goToRecorder()">
+                            <div class="menu-box-icon">📝</div>
+                            <div class="menu-box-title">บันทึกหวย</div>
+                            <div class="menu-box-desc">คีย์ยอดแทงใหม่</div>
+                        </div>
+                        <div class="menu-box" onclick="goToDashboard()">
+                            <div class="menu-box-icon">📊</div>
+                            <div class="menu-box-title">แดชบอร์ด</div>
+                            <div class="menu-box-desc">ดูรายงานสถิติขาย</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="card">
-    <h2>⏳ สรุปบิลล่าสุด 5 รายการ</h2>
-    <div class="history-list" id="historyContainer"></div>
-</div>
+            <div id="recorderPage" class="hidden">
+                <div class="top-bar">
+                    <button onclick="backToMenu()" style="background: transparent; border: none; color: var(--ios-blue); cursor: pointer; font-size: 16px; font-weight: bold;">← เมนูหลัก</button>
+                    <div style="font-weight: 700; color: #fff;">บันทึกรายการหวย</div>
+                    <button onclick="logout()" style="background: transparent; border: none; color: var(--ios-pink); cursor: pointer; font-size: 15px; font-weight: bold;">❌ ออก</button>
+                </div>
+
+                <div class="card">
+                    <h2>📝 กรอกข้อมูลรายการ</h2>
+                    <div class="input-group"><label>ชื่อลูกค้า</label><input type="text" id="custName" placeholder="พิมพ์ระบุชื่อลูกค้า..."></div>
+                    <div class="input-group">
+                        <label>ประเภทหวย</label>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn-toggle active" data-type="ลาว" onclick="setHuayType('ลาว', this)">หวยลาว</button>
+                            <button class="btn-toggle" data-type="ไทย" onclick="setHuayType('ไทย', this)">หวยไทย</button>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>เลขเด็ด</label>
+                        <input type="text" id="huayNum" placeholder="000" maxlength="3" inputmode="numeric" style="font-size: 28px; text-align: center; letter-spacing: 10px; font-weight: bold; color: #fff; background: rgba(0,0,0,0.4);">
+                        <span id="namSatText" class="nam-sat-display"></span>
+                    </div>
+
+                    <div class="input-group" id="huayPositionSection" style="display: none;">
+                        <label>เลือกตำแหน่ง</label>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn-position active" data-position="บน" onclick="setHuayPosition('บน', this)">🔺 บน</button>
+                            <button class="btn-position" data-position="ล่าง" onclick="setHuayPosition('ล่าง', this)">🔻 ล่าง</button>
+                            <button class="btn-position" data-position="บน/ล่าง" onclick="setHuayPosition('บน/ล่าง', this)">🔷 บน/ล่าง</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group" id="laoAmtSection">
+                        <label>จำนวนเงินเดิมพัน (₭)</label>
+                        <input type="number" id="huayAmt" placeholder="0" inputmode="numeric" style="font-size: 20px; text-align: center; color: var(--ios-green); font-weight: bold;">
+                    </div>
+
+                    <div class="input-group" id="thaiAmtSection" style="display: none;">
+                        <label>จำนวนเงินเดิมพัน (₭)</label>
+                        <div id="thaiAmtFields">
+                            <div id="amtTopOnly" style="display: none;">
+                                <label style="font-size: 11px; margin-bottom: 4px; display: block; color:#ff9500;">🔺 ช่องบน</label>
+                                <input type="number" id="huayAmtTop" placeholder="0" inputmode="numeric" style="font-size: 18px; color: var(--ios-green); font-weight: bold;">
+                            </div>
+                            <div id="amtBotOnly" style="display: none;">
+                                <label style="font-size: 11px; margin-bottom: 4px; display: block; color:#ff9500;">🔻 ช่องล่าง</label>
+                                <input type="number" id="huayAmtBot" placeholder="0" inputmode="numeric" style="font-size: 18px; color: var(--ios-green); font-weight: bold;">
+                            </div>
+                            <div id="amtBothSection" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <div>
+                                    <label style="font-size: 11px; margin-bottom: 4px; display: block; color:#ff9500;">🔺 ยอดบน</label>
+                                    <input type="number" id="huayAmtTop2" placeholder="0" inputmode="numeric" style="font-size: 18px; color: var(--ios-green); font-weight: bold;">
+                                </div>
+                                <div>
+                                    <label style="font-size: 11px; margin-bottom: 4px; display: block; color:#ff9500;">🔻 ยอดล่าง</label>
+                                    <input type="number" id="huayAmtBot2" placeholder="0" inputmode="numeric" style="font-size: 18px; color: var(--ios-green); font-weight: bold;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 22px;">
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">💰 ปุ่มเพิ่มเงินด่วน (กดซ้ำเพื่อรวมยอดทบได้)</div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <button class="quick-btn" onclick="setQuickAmount(1000)">1K</button>
+                            <button class="quick-btn" onclick="setQuickAmount(5000)">5K</button>
+                            <button class="quick-btn" onclick="setQuickAmount(10000)">10K</button>
+                            <button class="quick-btn" onclick="setQuickAmount(20000)">20K</button>
+                            <button class="quick-btn" onclick="setQuickAmount(50000)">50K</button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="addItem()" style="font-size: 17px; font-weight: bold;">➕ บันทึกเพิ่มรายการนี้</button>
+                </div>
+
+                <div class="card">
+                    <h2>🧾 ตารางบิลปัจจุบัน</h2>
+                    <table class="table-area">
+                        <thead><tr><th>เลข</th><th>ประเภท</th><th>เงินเดิมพัน</th><th style="width: 40px;"></th></tr></thead>
+                        <tbody id="billTableBody"><tr><td colspan="4" style="text-align:center; color: var(--text-muted);">ยังไม่มีรายการถูกเพิ่มเข้าบิล</td></tr></tbody>
+                    </table>
+                    <div style="margin: 20px 0 4px; text-align: right; font-size: 16px;">ยอดรวมทั้งหมด: <span id="billTotalText" style="color: #ff3b30; font-size: 22px; font-weight: 700;">0 ₭</span></div>
+                </div>
+
+                <div class="card">
+                    <div class="input-group" style="margin-bottom: 24px;">
+                        <label>เลือกการรับชำระเงิน</label>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn-payment active" data-method="เงินสด" onclick="setPaymentMethod('เงินสด', this)">💵 รับเงินสด</button>
+                            <button class="btn-payment" data-method="เงินโอน" onclick="setPaymentMethod('เงินโอน', this)">📱 สแกนโอนเงิน</button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="btnSubmit" onclick="submitBill()" style="font-size: 18px; background: linear-gradient(180deg, #00df89 0%, #00a061 100%);">✅ ยืนยันปิดบิลและส่งเข้า Telegram</button>
+                </div>
+            </div>
+
+            <div id="dashboardPage" class="hidden">
+                <div class="top-bar">
+                    <button onclick="backToMenu()" style="background: transparent; border: none; color: var(--ios-blue); cursor: pointer; font-size: 16px; font-weight: bold;">← เมนูหลัก</button>
+                    <div style="font-weight: 700; color: #fff;">แผงสถิติรายงาน</div>
+                    <button onclick="logout()" style="background: transparent; border: none; color: var(--ios-pink); cursor: pointer; font-size: 15px; font-weight: bold;">❌ ออก</button>
+                </div>
+                <div class="card">
+                    <h2>📈 ยอดสรุปการขายรวม</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box"><p>วันนี้</p><h3 style="color: #00beff" id="statToday">0 ₭</h3></div>
+                        <div class="stat-box"><p>สัปดาห์นี้</p><h3 style="color: #ff9500" id="statWeek">0 ₭</h3></div>
+                        <div class="stat-box"><p>เดือนนี้</p><h3 style="color: #00df89" id="statMonth">0 ₭</h3></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>⏳ สรุปบิลล่าสุด 5 รายการ</h2>
+                    <div class="history-list" id="historyContainer"></div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div id="statusModal" class="glass-modal-overlay" style="display: none;">
-        <div class="glass-modal-card" style="padding: 35px 24px;">
+    <div id="statusModal" class="glass-modal-overlay">
+        <div class="glass-modal-card">
             <div id="statusIcon" class="status-modal-icon">✨</div>
             <h3 id="statusTitle">บันทึกข้อมูล</h3>
             <p id="statusMessage" style="margin-bottom: 0;">กำลังประมวลผล...</p>
         </div>
     </div>
 
-    <div id="copyBillModal" class="glass-modal-overlay" style="display: none;">
-        <div class="glass-modal-card bill-card">
-            <div class="status-modal-icon copy-icon">📋</div>
+    <div id="copyBillModal" class="glass-modal-overlay">
+        <div class="glass-modal-card">
+            <div class="status-modal-icon">📋</div>
             <h3>🧾 สรุปบิลหวยสำเร็จ</h3>
-            <p style="font-size: 13px; color: #94a3b8; margin-bottom: 14px;">คุณสามารถตรวจเช็คความถูกต้องและกดคัดลอกด้านล่างนี้ได้</p>
-            
-            <div class="bill-preview-box">
-                <pre id="billTextPreview"></pre>
-            </div>
-            
-            <div class="modal-btn-group" style="display: block; text-align: center;">
-                <button id="copyBtn" class="glass-modal-btn success" onclick="copyBillToClipboard()" style="margin-bottom: 10px; width: 100%;">
-                    🔗 คัดลอกข้อความบิล
-                </button>
-                <button class="glass-modal-btn" onclick="closeCopyModal()" style="background: rgba(255,255,255,0.1); width: 100%;">
-                    ปิดหน้าต่างนี้
-                </button>
-            </div>
+            <p style="font-size: 13px; color: #94a3b8; margin-bottom: 14px;">กดคัดลอกด้านล่างเพื่อส่งต่อให้ลูกค้าได้ทันที</p>
+            <div class="bill-preview-box"><pre id="billTextPreview"></pre></div>
+            <button id="copyBtn" class="glass-modal-btn success" onclick="copyBillToClipboard()" style="margin-bottom: 10px; width: 100%;">🔗 คัดลอกข้อความบิล</button>
+            <button class="glass-modal-btn" onclick="closeCopyModal()" style="background: rgba(255,255,255,0.1); width: 100%;">ปิดหน้าต่างนี้</button>
         </div>
     </div>
 
     <script>
+        // 🔗 วางพิกัดลิงก์ URL การทำให้ใช้งานได้ของตัวหลังบ้าน Google Apps Script ตรงนี้
+        const BACKEND_API_URL = "https://script.google.com/macros/s/AKfycbwry_rMPLXIG5_p0u12_piZrCa44LiRO4qTbCG-oJYukzlA03Vyj8GVbMRgVRIjTEJ0dQ/exec";
+
         let currentUser = {};
         let currentBillItems = [];
         let currentHuayType = 'ลาว';
         let currentHuayPosition = 'บน';
         let currentPaymentMethod = 'เงินสด';
-        
-        // ตัวแปรระบบสำหรับจดจำกล่องช่องเงินล่าสุดที่พนักงานเอานิ้วไปเลือก (Focus)
         let lastFocusedInput = null;
 
         const tamraHuay = {
-            "01": "ປານ້ອຍ", "41": "ປານ້ອຍ", "81": "ປານ້ອຍ",
-            "02": "ຫອຍ", "42": "ຫອຍ", "82": "ຫອຍ",
-            "03": "ຫ່ານ", "43": "ຫ່ານ", "83": "ຫ່ານ",
-            "04": "ນົກຍຸງ", "44": "ນົກຍຸງ", "84": "ນົกຍຸງ",
-            "05": "ສິງ", "45": "ສິງ", "85": "ສິງ",
-            "06": "ເສືອ", "46": "ເສືອ", "86": "ເສືອ",
-            "07": "ໝູ", "47": "ໝູ", "87": "ໝູ",
-            "08": "ກະຕ່າຍ", "48": "ກະຕ່າຍ", "88": "ກະຕ່າຍ",
-            "09": "ควาย", "49": "ควาย", "89": "ควาย",
-            "10": "ນາກນ້ຳ", "50": "ນາກນ້ຳ", "90": "ນາກນ້ຳ",
-            "11": "ໝາ", "51": "ໝາ", "91": "ໝາ",
-            "12": "ມ້າ", "52": "ມ້າ", "92": "ມ້າ",
-            "13": "ຊ້າງ", "53": "ຊ້າງ", "93": "ຊ້າງ",
-            "14": "ແມວບ້ານ", "54": "ແມວບ້ານ", "94": "ແມວບ້ານ",
-            "15": "ໜູ", "55": "ໜູ", "95": "ໜູ",
-            "16": "ເຜິງ", "56": "ເຜິງ", "96": "ເຜິງ",
-            "17": "ນົກຍາງ", "57": "ນົກຍາງ", "97": "ນົກຍາງ",
-            "18": "ແມວປ່າ", "58": "ແມວປ່າ", "98": "ແມວປ່າ",
-            "19": "ແມງກະเບື້ອ", "59": "ແມງກະເບື້ອ", "99": "ແມງກະເບື້ອ",
-            "00": "ขี้เข็บ", "20": "ขี้เข็บ", "60": "ขี้เข็บ",
-            "21": "ນົກແອ່ນ", "61": "ນົກແອ່ນ",
-            "22": "ນົກກາງແກ", "62": "ນົກກາງແก",
-            "23": "ລິງ", "63": "ລິງ",
-            "24": "ກົບ", "64": "ກົບ",
-            "25": "ແຫຼວ", "65": "ແຫຼວ",
-            "26": "ນາກບิน", "66": "ນາກບิน",
-            "27": "ເຕົ່າ", "67": "ເຕົ່າ",
-            "28": "ໄກ່", "68": "ໄກ່",
-            "29": "ອ່ຽນ", "69": "ອ່ຽນ",
-            "30": "ປ່າໃຫຍ່", "70": "ປ່າໃຫຍ່",
-            "31": "ກຸ້ງ", "71": "ກຸ້ງ",
-            "32": "ງູ", "72": "ງູ",
-            "33": "ແມງມຸມ", "73": "ແມງມຸມ",
-            "34": "ກວາງ", "74": "ກວາງ",
-            "35": "ແບ້", "75": "ແบ້",
-            "36": "ເຫງັນ", "76": "ເຫງັນ",
-            "37": "ຫຼິ່ນ", "77": "ຫຼິ່ນ",
-            "38": "ເໝັ່ນ", "78": "ເໝັ່ນ",
-            "39": "ກະປູ", "79": "ກະປູ",
-            "40": "ນົກອິນຊີ", "80": "ນົກອິນຊີ"
+            "01": "ປານ້ອຍ", "41": "ປານ້ອຍ", "81": "ປານ້ອຍ", "02": "ຫອຍ", "42": "ຫອຍ", "82": "ຫອຍ",
+            "03": "ຫ່ານ", "43": "ຫ່ານ", "83": "ຫ່ານ", "04": "ນົກຍຸງ", "44": "ນົກຍຸງ", "84": "ນົກຍຸງ",
+            "05": "ສິງ", "45": "ສิง", "85": "ສິງ", "06": "ເສືອ", "46": "ເສືອ", "86": "ເສືອ",
+            "07": "ໝູ", "47": "ໝູ", "87": "ໝູ", "08": "ກະຕ່າຍ", "48": "ກະຕ່າຍ", "88": "ກະຕ່າຍ",
+            "09": "ควาย", "49": "ควาย", "89": "ควาย", "10": "ນາກນ້ຳ", "50": "ນາກນ້ຳ", "90": "ນາກນ້ຳ",
+            "11": "ໝາ", "51": "ໝາ", "91": "ໝາ", "12": "ມ້າ", "52": "ມ້າ", "92": "ມ້າ",
+            "13": "ຊ້າງ", "53": "ຊ້າງ", "93": "ຊ້າງ", "14": "ແມວບ້ານ", "54": "ແມວບ້ານ", "94": "ແມວບ້ານ",
+            "15": "ໜູ", "55": "ໜູ", "95": "ໜູ", "16": "ເຜິງ", "56": "ເຜິງ", "96": "ເຜິງ",
+            "17": "ນົกຍາງ", "57": "ນົກຍາງ", "98": "ນົກຍາງ", "18": "ແມວປ່າ", "58": "ແມວປ່າ", "98": "ແມວປ່າ",
+            "19": "ແມງກະເບື້ອ", "59": "ແມງກະເບື້ອ", "99": "ແມງກະເບື້ອ", "00": "ขี้เข็บ", "20": "ขี้เข็บ", "60": "ขี้เข็บ",
+            "21": "ນົກແອ່ນ", "61": "ນົກແອ່ນ", "22": "ນົກກາງແກ", "62": "ນົກກາງແກ", "23": "ລິງ", "63": "ລິງ",
+            "24": "ກົບ", "64": "ກົບ", "25": "ແຫຼວ", "65": "ແຫຼວ", "26": "ນາກບິນ", "66": "ນາກບິນ",
+            "27": "ເຕົ່າ", "67": "ເຕົ່າ", "28": "ໄກ່", "68": "ໄກ่", "29": "ອ່ຽນ", "69": "ອ່ຽນ",
+            "30": "ປ່າໃຫຍ່", "70": "ປ່າໃຫຍ່", "31": "ກຸ້ງ", "71": "ກຸ້ງ", "32": "ງູ", "72": "ງູ",
+            "33": "ແມງມຸມ", "73": "ແມງມຸມ", "34": "ກວາງ", "74": "ກວາງ", "35": "ແບ້", "75": "ແບ້",
+            "36": "ເຫງັນ", "76": "ເຫງັນ", "37": "ຫຼິ່ນ", "77": "ຫຼິ່ນ", "38": "ເໝັ່ນ", "78": "ເໝັ່ນ",
+            "39": "ກະປູ", "79": "ກະປູ", "40": "ນົກອິນຊີ", "80": "ນົກອินຊີ"
         };
 
         window.addEventListener('load', function() {
@@ -260,71 +423,70 @@
             if (numInput) {
                 numInput.addEventListener('input', function() {
                     this.value = this.value.replace(/[^0-9]/g, '');
-                    if (this.value.length > 3) {
-                        this.value = this.value.slice(0, 3);
-                    }
+                    if (this.value.length > 3) this.value = this.value.slice(0, 3);
                     checkLengthAndToggleFields(this.value);
                 });
             }
-            
-            // ตรวจจับ Focus ของช่องกรอกเงินทุกกล่องเพื่อทำระบบปุ่มด่วนแยกข้างอิสระ
             const inputs = ['huayAmt', 'huayAmtTop', 'huayAmtBot', 'huayAmtTop2', 'huayAmtBot2'];
             inputs.forEach(id => {
                 const el = document.getElementById(id);
-                if (el) {
-                    el.addEventListener('focus', function() {
-                        lastFocusedInput = this;
-                    });
-                }
+                if (el) el.addEventListener('focus', function() { lastFocusedInput = this; });
             });
 
             loadUserDropdown();
-
-            // 🆕 ตรวจสอบว่ามีประวัติเคยล็อกอินค้างไว้ในเครื่องไหม ถ้ามีให้เข้าแอปออโต้ทันที
             checkSavedLoginSession();
         });
 
-        // 🆕 ฟังก์ชันเช็คการล็อกอินค้างไว้ในมือถือ
         function checkSavedLoginSession() {
             const savedUser = localStorage.getItem('smartHuayUser');
             if (savedUser) {
                 try {
                     currentUser = JSON.parse(savedUser);
-                    // สั่งเปิดเข้าหน้าแอปหลักทันที ข้ามหน้า Login
                     document.getElementById('loginContainer').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('currentUserName').innerText = currentUser.name;
                     showMenu();
-                } catch (e) {
-                    localStorage.removeItem('smartHuayUser');
-                }
+                } catch (e) { localStorage.removeItem('smartHuayUser'); }
             }
         }
 
         function loadUserDropdown() {
-            if (isAppsScriptEnvironment()) {
-                google.script.run
-                    .withSuccessHandler(function(users) {
-                        const selectElement = document.getElementById('loginUser');
-                        if (selectElement && users && users.length > 0) {
-                            let html = '';
-                            users.forEach(u => {
-                                html += `<option value="${u.username}">${u.name}</option>`;
-                            });
-                            selectElement.innerHTML = html;
-                        } else if (selectElement) {
-                            selectElement.innerHTML = `<option value="admin">แอดมินหลัก (admin)</option>`;
-                        }
-                    })
-                    .withFailureHandler(function(err) {
-                        console.error("โหลดยูสเซอร์ล้มเหลว:", err);
-                    })
-                    .getAllUsernames();
-            }
+            fetch(BACKEND_API_URL, {
+                method: "POST",
+                body: JSON.stringify({ action: "getUsernames" })
+            })
+            .then(res => res.json())
+            .then(data => {
+                const selectElement = document.getElementById('loginUser');
+                if (selectElement && data.users && data.users.length > 0) {
+                    let html = '';
+                    data.users.forEach(u => { html += `<option value="${u.username}">${u.name}</option>`; });
+                    selectElement.innerHTML = html;
+                }
+            }).catch(err => console.error("โหลดข้อมูลพนักงานพลาด:", err));
         }
 
-        function isAppsScriptEnvironment() {
-            return window.google && google.script && typeof google.script.run === 'object';
+        function handleLogin() {
+            const selectedUser = document.getElementById('loginUser').value;
+            const pin = document.getElementById('loginPin').value;
+            if(!selectedUser || !pin) { alert("กรุณากรอกข้อมูลให้ครบถ้วน"); return; }
+
+            fetch(BACKEND_API_URL, {
+                method: "POST",
+                body: JSON.stringify({ action: "login", username: selectedUser, pin: pin })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if(res.success) {
+                    currentUser = res; 
+                    localStorage.setItem('smartHuayUser', JSON.stringify(res));
+                    document.getElementById('loginContainer').style.display = 'none';
+                    document.getElementById('mainApp').style.display = 'block';
+                    document.getElementById('currentUserName').innerText = res.name; 
+                    document.getElementById('loginPin').value = '';
+                    showMenu();
+                } else { alert(res.message); }
+            }).catch(err => alert('เชื่อมต่อเซิร์ฟเวอร์หลังบ้านล้มเหลว'));
         }
 
         function checkLengthAndToggleFields(value) {
@@ -335,19 +497,13 @@
 
             if (value.length === 2 && tamraHuay[value]) {
                 namSatText.innerHTML = `🐾 ນາມສັດ: <span style="color:#fff; font-weight:bold;">${tamraHuay[value]}</span>`;
-            } else {
-                namSatText.innerText = '';
-            }
+            } else { namSatText.innerText = ''; }
 
             if (currentHuayType === 'ไทย' && value.length === 2) {
-                positionSection.style.display = 'block';
-                laoAmtSection.style.display = 'none';
-                thaiAmtSection.style.display = 'block';
+                positionSection.style.display = 'block'; laoAmtSection.style.display = 'none'; thaiAmtSection.style.display = 'block';
                 setHuayPosition(currentHuayPosition, document.querySelector(`.btn-position[data-position="${currentHuayPosition}"]`));
             } else {
-                positionSection.style.display = 'none';
-                laoAmtSection.style.display = 'block';
-                thaiAmtSection.style.display = 'none';
+                positionSection.style.display = 'none'; laoAmtSection.style.display = 'block'; thaiAmtSection.style.display = 'none';
             }
         }
 
@@ -355,9 +511,7 @@
             currentHuayType = type;
             document.querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            
-            const numInput = document.getElementById('huayNum');
-            checkLengthAndToggleFields(numInput.value);
+            checkLengthAndToggleFields(document.getElementById('huayNum').value);
         }
         
         function setHuayPosition(position, btn) {
@@ -369,17 +523,10 @@
             const amtBotOnly = document.getElementById('amtBotOnly');
             const amtBothSection = document.getElementById('amtBothSection');
             
-            amtTopOnly.style.display = 'none';
-            amtBotOnly.style.display = 'none';
-            amtBothSection.style.display = 'none';
-            
-            if (position === 'บน') {
-                amtTopOnly.style.display = 'block';
-            } else if (position === 'ล่าง') {
-                amtBotOnly.style.display = 'block';
-            } else if (position === 'บน/ล่าง') {
-                amtBothSection.style.display = 'grid';
-            }
+            amtTopOnly.style.display = 'none'; amtBotOnly.style.display = 'none'; amtBothSection.style.display = 'none';
+            if (position === 'บน') amtTopOnly.style.display = 'block';
+            else if (position === 'ล่าง') amtBotOnly.style.display = 'block';
+            else if (position === 'บน/ล่าง') amtBothSection.style.display = 'grid';
         }
 
         function setPaymentMethod(method, btn) {
@@ -388,46 +535,30 @@
             btn.classList.add('active');
         }
 
-        // ระบบปุ่มเร็วระบุเงินสะสมทบแยกช่องซ้าย-ขวาอย่างอิสระตามจุดที่เคอร์เซอร์จิ้มอยู่
         function setQuickAmount(amount) {
-            const num = document.getElementById('huayNum').value;
-            
-            // 1. ถ้าพนักงานจิ้มเมาส์/โฟกัสที่ช่องกล่องเงินช่องไหนอยู่ ให้เพิ่มเข้าช่องนั้นตรงๆ ทันที
             if (lastFocusedInput && document.body.contains(lastFocusedInput) && lastFocusedInput.offsetParent !== null) {
                 const currentAmt = parseFloat(lastFocusedInput.value) || 0;
                 lastFocusedInput.value = currentAmt + amount;
                 lastFocusedInput.focus();
                 return;
             }
-            
-            // 2. ระบบ Auto fallback สำรองกรณีไม่ได้กดยกโฟกัส
+            const num = document.getElementById('huayNum').value;
             if (currentHuayType === 'ไทย' && num.length === 2) {
                 if (currentHuayPosition === 'บน') {
-                    const currentAmt = parseFloat(document.getElementById('huayAmtTop').value) || 0;
-                    document.getElementById('huayAmtTop').value = currentAmt + amount;
-                    document.getElementById('huayAmtTop').focus();
+                    const el = document.getElementById('huayAmtTop'); el.value = (parseFloat(el.value) || 0) + amount; el.focus();
                 } else if (currentHuayPosition === 'ล่าง') {
-                    const currentAmt = parseFloat(document.getElementById('huayAmtBot').value) || 0;
-                    document.getElementById('huayAmtBot').value = currentAmt + amount;
-                    document.getElementById('huayAmtBot').focus();
+                    const el = document.getElementById('huayAmtBot'); el.value = (parseFloat(el.value) || 0) + amount; el.focus();
                 } else if (currentHuayPosition === 'บน/ล่าง') {
-                    const topInput = document.getElementById('huayAmtTop2');
-                    const currentTop = parseFloat(topInput.value) || 0;
-                    topInput.value = currentTop + amount;
-                    topInput.focus();
+                    const el = document.getElementById('huayAmtTop2'); el.value = (parseFloat(el.value) || 0) + amount; el.focus();
                 }
             } else {
-                const currentAmt = parseFloat(document.getElementById('huayAmt').value) || 0;
-                document.getElementById('huayAmt').value = currentAmt + amount;
-                document.getElementById('huayAmt').focus();
+                const el = document.getElementById('huayAmt'); el.value = (parseFloat(el.value) || 0) + amount; el.focus();
             }
         }
 
         function addItem() {
             const num = document.getElementById('huayNum').value;
             if (!num) { alert('กรุณาระบุเลขหวยก่อน'); return; }
-            
-            // 🆕 สร้างข้อความเวลาปัจจุบัน เช่น "21:15" เพื่อแนบไปกับรายการหวย
             let now = new Date();
             let timeStr = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
             
@@ -445,31 +576,20 @@
                 } else if (currentHuayPosition === 'บน/ล่าง') {
                     const amtTop = parseFloat(document.getElementById('huayAmtTop2').value) || 0;
                     const amtBot = parseFloat(document.getElementById('huayAmtBot2').value) || 0;
-                    
                     if (amtTop <= 0 && amtBot <= 0) { alert('กรุณาใส่จำนวนเงินบนหรือล่างอย่างน้อย 1 ช่อง'); return; }
-                    
-                    if (amtTop > 0) {
-                        currentBillItems.push({ num, type: currentHuayType, position: 'บน', amt: amtTop, timeAdded: timeStr });
-                    }
-                    if (amtBot > 0) {
-                        currentBillItems.push({ num, type: currentHuayType, position: 'ล่าง', amt: amtBot, timeAdded: timeStr });
-                    }
-                    
-                    document.getElementById('huayAmtTop2').value = '';
-                    document.getElementById('huayAmtBot2').value = '';
+                    if (amtTop > 0) currentBillItems.push({ num, type: currentHuayType, position: 'บน', amt: amtTop, timeAdded: timeStr });
+                    if (amtBot > 0) currentBillItems.push({ num, type: currentHuayType, position: 'ล่าง', amt: amtBot, timeAdded: timeStr });
+                    document.getElementById('huayAmtTop2').value = ''; document.getElementById('huayAmtBot2').value = '';
                 }
             } else {
                 const amt = parseFloat(document.getElementById('huayAmt').value) || 0;
                 if (amt <= 0) { alert('กรุณาระบุจำนวนเงิน'); return; }
-                
                 currentBillItems.push({ num, type: currentHuayType, amt, timeAdded: timeStr });
                 document.getElementById('huayAmt').value = '';
             }
             
             renderBillTable();
-            document.getElementById('huayNum').value = '';
-            checkLengthAndToggleFields('');
-            document.getElementById('huayNum').focus();
+            document.getElementById('huayNum').value = ''; checkLengthAndToggleFields(''); document.getElementById('huayNum').focus();
         }
 
         function renderBillTable() {
@@ -477,212 +597,54 @@
             let total = 0;
             if(currentBillItems.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-muted);">ยังไม่มีรายการถูกเพิ่มเข้าบิล</td></tr>`;
-                document.getElementById('billTotalText').innerText = "0 ₭";
-                return;
+                document.getElementById('billTotalText').innerText = "0 ₭"; return;
             }
             let html = '';
             currentBillItems.forEach((item, idx) => {
                 total += item.amt;
                 let numDisplay = item.num;
                 let animalLabel = (item.num.length === 2 && tamraHuay[item.num]) ? ` <span style="color:#ffb703; font-size:12px;">(${tamraHuay[item.num]})</span>` : '';
+                if (item.position) numDisplay = `${item.num}${animalLabel} <small style="font-size: 11px; color: #ff9500; font-weight:bold;">[${item.position}]</small>`;
+                else numDisplay = `${item.num}${animalLabel}`;
                 
-                if (item.position) {
-                    numDisplay = `${item.num}${animalLabel} <small style="font-size: 11px; color: #ff9500; font-weight:bold;">[${item.position}]</small>`;
-                } else {
-                    numDisplay = `${item.num}${animalLabel}`;
-                }
-                
-                // ดึงชื่อพนักงานคีย์ปัจจุบัน (ถ้าไม่มีให้แสดงเป็น แอดมิน)
                 let staffName = (currentUser && currentUser.name) ? currentUser.name : "แอดมิน";
-                
-                // 🆕 จัดรูปแบบวันที่ปัจจุบันให้เป็นแนวสากล (เช่น Fri May 15 2026)
                 let now = new Date();
                 let options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
-                let dateStr = now.toLocaleDateString('en-US', options).replace(/,/g, ''); // ผลลัพธ์: Fri May 15 2026
-                
-                // 🆕 จัดเลเอาท์แถวล่างตามที่คุณต้องการเป๊ะๆ: เมื่อ: Fri May 15 2026 เวลา 21:15 | โดย: ชื่อพนักงาน
+                let dateStr = now.toLocaleDateString('en-US', options).replace(/,/g, '');
                 let showDetails = item.timeAdded ? `<br><small style="color: #94a3b8; font-size: 11px; font-weight: normal;">เมื่อ: ${dateStr} เวลา ${item.timeAdded} | โดย: ${staffName}</small>` : '';
                 
                 html += `<tr>
                     <td><strong>${numDisplay}</strong> <span style="font-size: 12px; color: #cbd5e1; margin-left: 6px;">${item.type}</span>${showDetails}</td>
                     <td><span class="badge ${item.type === 'ไทย' ? 'badge-th' : 'badge-lao'}">${item.type}</span></td>
                     <td style="font-weight: 500; color:#00df89;">${item.amt.toLocaleString()} ₭</td>
-                    <td><button class="btn-remove" onclick="removeItem(${idx})" aria-label="ลบรายการ">❌</button></td>
+                    <td><button class="btn-remove" onclick="removeItem(${idx})">❌</button></td>
                 </tr>`;
             });
             tbody.innerHTML = html;
             document.getElementById('billTotalText').innerText = total.toLocaleString() + " ₭";
         }
 
-        function removeItem(idx) {
-            currentBillItems.splice(idx, 1);
-            renderBillTable();
-        }
+        function removeItem(idx) { currentBillItems.splice(idx, 1); renderBillTable(); }
 
-        function handleLogin() {
-            const selectedUser = document.getElementById('loginUser').value;
-            const pin = document.getElementById('loginPin').value;
-            if(!selectedUser) { alert("กรุณาเลือกผู้ใช้งานระบบ"); return; }
-            if(!pin) { alert("กรุณาใส่รหัส PIN ล็อกอิน"); return; }
-            if (!isAppsScriptEnvironment()) {
-                // สำหรับโหมด Preview ทดสอบระบบในคอม
-                currentUser = { success: true, username: selectedUser, name: "ผู้ใช้งานทดสอบ" };
-                localStorage.setItem('smartHuayUser', JSON.stringify(currentUser)); // 🆕 จำสิทธิ์
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('mainApp').style.display = 'block';
-                document.getElementById('currentUserName').innerText = currentUser.name;
-                document.getElementById('loginPin').value = '';
-                showMenu();
-                return;
-            }
-
-            google.script.run
-                .withSuccessHandler(function(res) {
-                    if(res.success) {
-                        currentUser = res; 
-                        
-                        // 🆕 สั่งให้มือถือจำข้อมูลพนักงานคนนี้ไว้ในเครื่อง ไม่ต้องใส่ PIN ซ้ำอีกต่อไป
-                        localStorage.setItem('smartHuayUser', JSON.stringify(res));
-                        
-                        document.getElementById('loginContainer').style.display = 'none';
-                        document.getElementById('mainApp').style.display = 'block';
-                        document.getElementById('currentUserName').innerText = res.name; 
-                        document.getElementById('loginPin').value = '';
-                        showMenu();
-                    } else {
-                        alert(res.message);
-                    }
-                })
-                .withFailureHandler(function(err) {
-                    console.error('Login error', err);
-                    alert('เกิดข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์');
-                })
-                .checkLogin(selectedUser, pin);
-        }
-
-        function submitBill() {
-            if (currentBillItems.length === 0) {
-                showStatusPopup("⚠️ คำเตือน", "กรุณาเพิ่มรายการหวยในตารางก่อนยืนยันบิลครับ", false);
-                return;
-            }
-
-            const custName = document.getElementById('custName').value.trim() || "ลูกค้าทั่วไป";
-            const btn = document.getElementById('btnSubmit'); 
-            btn.disabled = true;
-            btn.innerText = `⏳ กำลังบันทึกข้อมูล...`;
-
-            const formattedBillText = generateBillText(custName, currentBillItems);
-
-            const payload = {
-                customer: custName,
-                payment: currentPaymentMethod,
-                items: currentBillItems,
-                user: currentUser ? currentUser.username : "admin"
-            };
-
-            if (!isAppsScriptEnvironment()) {
-                setTimeout(() => {
-                    btn.disabled = false;
-                    btn.innerText = `✅ ยืนยันปิดบิล`;
-                    showStatusPopup("✅ สำเร็จ", "บันทึกข้อมูลหวยเรียบร้อย", true, function() {
-                        openCopyBillModal(formattedBillText);
-                        currentBillItems = [];
-                        renderBillTable();
-                        document.getElementById('custName').value = '';
-                    });
-                }, 1000);
-                return;
-            }
-
-            google.script.run
-                .withSuccessHandler(function(responseJSON) {
-                    const response = JSON.parse(responseJSON);
-                    btn.disabled = false;
-                    btn.innerText = `✅ ยืนยันปิดบิล`;
-                    
-                    if (response.status === "success") {
-                        showStatusPopup("🚀 บันทึกบิลสำเร็จ!", "ระบบบันทึกเรียบร้อย", true, function() {
-                            openCopyBillModal(formattedBillText);
-                            currentBillItems = [];
-                            renderBillTable();
-                            document.getElementById('custName').value = '';
-                        });
-                    } else { 
-                        showStatusPopup("❌ เกิดข้อผิดพลาด", response.message, false); 
-                    }
-                })
-                .withFailureHandler(function(err) {
-                    console.error('Submit bill error', err);
-                    btn.disabled = false;
-                    btn.innerText = `✅ ยืนยันปิดบิล`;
-                    showStatusPopup("❌ ล้มเหลว", "กรุณาลองใหม่อีกครั้ง", false);
-                })
-                .saveOrderFromWeb(payload);
-        }
-
-        // ระบบควบคุมหน้าต่างแจ้งเตือนแบบหรูหราจางหายไปเองอัตโนมัติใน 1.5 วินาที
-        let statusModalCallback = null;
-        let statusModalTimer = null;
-
-        function showStatusPopup(title, message, isSuccess, callback = null) {
-            if (statusModalTimer) clearTimeout(statusModalTimer);
-
-            document.getElementById('statusTitle').innerText = title;
-            document.getElementById('statusMessage').innerText = message;
-            document.getElementById('statusIcon').innerText = isSuccess ? "💎" : "💥";
-            document.getElementById('statusIcon').style.filter = isSuccess ? "drop-shadow(0 0 10px #00ffcc)" : "drop-shadow(0 0 10px #ff4d6d)";
-            
-            statusModalCallback = callback;
-            document.getElementById('statusModal').style.display = 'block';
-
-            // ตั้งให้เฟดจางหายตัวไปเองภายใน 1.5 วินาที (1500ms)
-            statusModalTimer = setTimeout(function() {
-                closeStatusModal();
-            }, 1500);
-        }
-
-        function closeStatusModal() {
-            if (statusModalTimer) clearTimeout(statusModalTimer);
-            document.getElementById('statusModal').style.display = 'none';
-            if(statusModalCallback && typeof statusModalCallback === 'function') {
-                statusModalCallback();
-                statusModalCallback = null;
-            }
-        }
-
-        // ระบบสรุปข้อความบิลอวยพรรูปแบบใหม่ 'งวดนี้รวย'! พร้อมดึงชื่อพนักงานที่ล็อกอินอยู่มาใช้งาน
-        // ฟังก์ชันสรุปข้อความบิลอวยพร 'งวดนี้รวย'! พร้อมแสดงธงชาติแยกประเภทหวย 🇱🇦 🇹🇭
         function generateBillText(customer, items) {
             let now = new Date();
             let dateStr = now.toLocaleDateString('th-TH') + ' ' + now.toLocaleTimeString('th-TH');
             let staffName = (currentUser && currentUser.name) ? currentUser.name : "แอดมินระบบ";
-            
             let text = `'งวดนี้รวย'!\n`;
             text += `ชื่อ: ${customer}\n`;
             text += `--------------------------\n`;
-            
             let total = 0;
             items.forEach((item, index) => {
-                // 🆕 เช็คประเภทหวยเพื่อใส่ Emoji ธงชาติ (ถ้าเป็น 'ลาว' ใส่ 🇱🇦, ถ้าเป็น 'ไทย' ใส่ 🇹🇭)
-                let flagEmoji = '';
-                if (item.type === 'ลาว') {
-                    flagEmoji = '🇱🇦 ';
-                } else if (item.type === 'ไทย') {
-                    flagEmoji = '🇹🇭 ';
-                }
-
+                let flagEmoji = item.type === 'ลาว' ? '🇱🇦 ' : '🇹🇭 ';
                 let posText = '[--]';
                 if (item.position) {
                     if (item.position === 'บน') posText = '[บน]';
                     if (item.position === 'ล่าง') posText = '[ล่าง]';
                     if (item.position === 'บน/ล่าง') posText = '[บน/ล่าง]';
                 }
-                
-                // แสดงธงชาติหลังจุดทศนิยมของลำดับ เช่น "1. 🇱🇦  25 [บน] - 20,000"
                 text += `${index + 1}.  ${flagEmoji}${item.num} ${posText} - ${Number(item.amt).toLocaleString()} \n`;
                 total += Number(item.amt);
             });
-            
             text += `--------------------------\n`;
             text += ` ยอดรวม: ${total.toLocaleString()} ₭\n`;
             text += ` ชำระโดย: ${currentPaymentMethod}\n`;
@@ -691,11 +653,63 @@
             return text;
         }
 
+        function submitBill() {
+            if (currentBillItems.length === 0) { alert("กรุณาเพิ่มรายการหวยก่อน"); return; }
+            const custName = document.getElementById('custName').value.trim() || "ลูกค้าทั่วไป";
+            const btn = document.getElementById('btnSubmit'); 
+            btn.disabled = true; btn.innerText = `⏳ กำลังบันทึกข้อมูล...`;
+
+            const formattedBillText = generateBillText(custName, currentBillItems);
+            const payload = {
+                customer: custName, payment: currentPaymentMethod,
+                items: currentBillItems, user: currentUser ? currentUser.username : "admin"
+            };
+
+            fetch(BACKEND_API_URL, {
+                method: "POST",
+                body: JSON.stringify({ action: "saveOrder", payload: payload })
+            })
+            .then(res => res.json())
+            .then(response => {
+                btn.disabled = false; btn.innerText = `✅ ยืนยันปิดบิลและส่งเข้า Telegram`;
+                if (response.status === "success") {
+                    showStatusPopup("🚀 บันทึกบิลสำเร็จ!", "ระบบส่งข้อมูลเข้า Telegram เรียบร้อยแล้วค่ะ", true, function() {
+                        openCopyBillModal(formattedBillText);
+                        currentBillItems = []; renderBillTable(); document.getElementById('custName').value = '';
+                    });
+                } else { showStatusPopup("❌ เกิดข้อผิดพลาด", response.message, false); }
+            }).catch(err => {
+                btn.disabled = false; btn.innerText = `✅ ยืนยันปิดบิลและส่งเข้า Telegram`;
+                showStatusPopup("❌ ล้มเหลว", "เกิดข้อผิดพลาดจากเครือข่ายหลังบ้าน", false);
+            });
+        }
+
+        let statusModalCallback = null;
+        let statusModalTimer = null;
+
+        function showStatusPopup(title, message, isSuccess, callback = null) {
+            if (statusModalTimer) clearTimeout(statusModalTimer);
+            document.getElementById('statusTitle').innerText = title;
+            document.getElementById('statusMessage').innerText = message;
+            document.getElementById('statusIcon').innerText = isSuccess ? "💎" : "💥";
+            statusModalCallback = callback;
+            document.getElementById('statusModal').style.display = 'block';
+
+            statusModalTimer = setTimeout(function() { closeStatusModal(); }, 1500);
+        }
+
+        function closeStatusModal() {
+            if (statusModalTimer) clearTimeout(statusModalTimer);
+            document.getElementById('statusModal').style.display = 'none';
+            if(statusModalCallback && typeof statusModalCallback === 'function') {
+                statusModalCallback(); statusModalCallback = null;
+            }
+        }
+
         function openCopyBillModal(text) {
             document.getElementById('billTextPreview').innerText = text;
             const copyBtn = document.getElementById('copyBtn');
-            copyBtn.className = "glass-modal-btn success";
-            copyBtn.innerText = "🔗 คัดลอกข้อความบิล";
+            copyBtn.className = "glass-modal-btn success"; copyBtn.innerText = "🔗 คัดลอกข้อความบิล";
             document.getElementById('copyBillModal').style.display = 'block';
         }
 
@@ -703,113 +717,12 @@
             const billText = document.getElementById('billTextPreview').innerText;
             navigator.clipboard.writeText(billText).then(function() {
                 const copyBtn = document.getElementById('copyBtn');
-                copyBtn.className = "glass-modal-btn";
-                copyBtn.style.background = "linear-gradient(180deg, #28c76f 0%, #1f9d55 100%)";
+                copyBtn.className = "glass-modal-btn"; copyBtn.style.background = "linear-gradient(180deg, #28c76f 0%, #1f9d55 100%)";
                 copyBtn.innerText = "✅ คัดลอกบิลเรียบร้อย!";
-            }).catch(function(err) {
-                alert('ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาครอบคัดลอกด้วยตนเองครับ');
             });
         }
+        function closeCopyModal() { document.getElementById('copyBillModal').style.display = 'none'; }
 
-        function closeCopyModal() {
-            document.getElementById('copyBillModal').style.display = 'none';
-        }
-
-        function logout() {
-            // 🆕 ล้างข้อมูลความจำที่เซฟไว้ในมือถือออก เพื่อให้กลับไปหน้าล็อกอินเริ่มต้นถามรหัส PIN ใหม่
-            localStorage.removeItem('smartHuayUser');
-            
-            currentUser = {};
-            document.getElementById('mainApp').style.display = 'none';
-            document.getElementById('loginContainer').style.display = 'block';
-            hideAllPages();
-        }
-
-        function hideAllPages() {
-            document.getElementById('menuPage').classList.add('hidden');
-            document.getElementById('recorderPage').classList.add('hidden');
-            document.getElementById('dashboardPage').classList.add('hidden');
-        }
-
-        function showMenu() {
-            hideAllPages();
-            document.getElementById('menuPage').classList.remove('hidden');
-        }
-
-        function goToRecorder() {
-            hideAllPages();
-            document.getElementById('recorderPage').classList.remove('hidden');
-            document.getElementById('huayNum').focus();
-        }
-
-        // 🆕 วางลิงก์ URL พิกัด API หลังบ้านที่พี่ได้มาตรงนี้
-        const BACKEND_API_URL = "https://script.google.com/macros/s/AKfycbwry_rMPLXIG5_p0u12_piZrCa44LiRO4qTbCG-oJYukzlA03Vyj8GVbMRgVRIjTEJ0dQ/exec";
-
-        // แก้ไขระบบตรวจสอบรายชื่อ Dropdown ให้ยิงผ่าน API URL
-        function loadUserDropdown() {
-            fetch(BACKEND_API_URL, {
-                method: "POST",
-                body: JSON.stringify({ action: "getUsernames" })
-            })
-            .then(res => res.json())
-            .then(data => {
-                const selectElement = document.getElementById('loginUser');
-                if (selectElement && data.users && data.users.length > 0) {
-                    let html = '';
-                    data.users.forEach(u => {
-                        html += `<option value="${u.username}">${u.name}</option>`;
-                    });
-                    selectElement.innerHTML = html;
-                }
-            }).catch(err => console.error("โหลดรายชื่อพลาด:", err));
-        }
-
-        // แก้ไขระบบส่งบันทึกบิลหวยเข้าคลังข้อมูลชีต
-        function submitBill() {
-            if (currentBillItems.length === 0) {
-                showStatusPopup("⚠️ คำเตือน", "กรุณาเพิ่มรายการหวยในตารางก่อนยืนยันบิลครับ", false);
-                return;
-            }
-            const custName = document.getElementById('custName').value.trim() || "ลูกค้าทั่วไป";
-            const btn = document.getElementById('btnSubmit'); 
-            btn.disabled = true;
-            btn.innerText = `⏳ กำลังบันทึกข้อมูล...`;
-
-            const formattedBillText = generateBillText(custName, currentBillItems);
-            const payload = {
-                customer: custName,
-                payment: currentPaymentMethod,
-                items: currentBillItems,
-                user: currentUser ? currentUser.username : "admin"
-            };
-
-            // ยิงข้อมูลข้ามค่ายไปหา Google Sheets ผ่านเว็บตรง
-            fetch(BACKEND_API_URL, {
-                method: "POST",
-                body: JSON.stringify({ action: "saveOrder", payload: payload })
-            })
-            .then(res => res.json())
-            .then(response => {
-                btn.disabled = false;
-                btn.innerText = `✅ ยืนยันปิดบิลและส่งเข้า Telegram`;
-                if (response.status === "success") {
-                    showStatusPopup("🚀 บันทึกบิลสำเร็จ!", "ระบบบันทึกฐานข้อมูลชีตและส่งเข้ากลุ่ม Telegram เรียบร้อยแล้วค่ะ", true, function() {
-                        openCopyBillModal(formattedBillText);
-                        currentBillItems = [];
-                        renderBillTable();
-                        document.getElementById('custName').value = '';
-                    });
-                } else {
-                    showStatusPopup("❌ เกิดข้อผิดพลาด", response.message, false);
-                }
-            }).catch(err => {
-                btn.disabled = false;
-                btn.innerText = `✅ ยืนยันปิดบิลและส่งเข้า Telegram`;
-                showStatusPopup("❌ ล้มเหลว", "เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์", false);
-            });
-        }
-
-        // แก้ไขระบบดึงประวัติแดชบอร์ด 5 รายการล่าสุด
         function loadDashboardData() {
             fetch(BACKEND_API_URL, {
                 method: "POST",
@@ -822,90 +735,63 @@
                     document.getElementById('statWeek').innerText = data.week.toLocaleString() + " ₭";
                     document.getElementById('statMonth').innerText = data.month.toLocaleString() + " ₭";
                     
-                    // ... (ใช้ตรรกะมัดกลุ่มบิลสรุป 5 รายการล่าสุดตัวหนังสือดิบล็อกนิ่งตัวเดิมที่ทำไว้ได้เลยครับ) ...
-                    // วนลูปสร้าง html จนจบแล้วแสดงผลลงใน historyContainer
-                }
-            }).catch(err => console.error("โหลดแดชบอร์ดผิดพลาด:", err));
-        }
+                    let html = '';
+                    if (!data.history || data.history.length === 0) {
+                        html = `<p style="text-align: center; color: var(--text-muted); font-size: 13px; padding: 20px;">ไม่มีข้อมูลประวัติบิล</p>`;
+                    } else {
+                        let billsMap = {};
+                        data.history.forEach(item => {
+                            let displaySellerName = item.seller || "แอดมิน";
+                            let displayTimeStr = item.time ? String(item.time) : "Fri May 15 2026 เวลา: --:--";
+                            let billKey = `${displayTimeStr}_${item.customer || 'ลูกค้าทั่วไป'}`;
 
-        function goToDashboard() {
-            hideAllPages();
-            document.getElementById('dashboardPage').classList.remove('hidden');
-            loadDashboardData();
-        }
+                            if (!billsMap[billKey]) {
+                                billsMap[billKey] = {
+                                    customer: item.customer || 'ลูกค้าทั่วไป',
+                                    timeStr: displayTimeStr,
+                                    seller: displaySellerName,
+                                    totalAmt: 0
+                                };
+                            }
+                            billsMap[billKey].totalAmt += Number(item.amt || 0);
+                        });
 
-        function backToMenu() { showMenu(); }
-        
-        function loadDashboardData() {
-            if (!isAppsScriptEnvironment()) return;
-            google.script.run
-                .withSuccessHandler(function(data) {
-                    if(data && data.success) {
-                        // 1. แสดงยอดสถิติตัวเลขขายรวมด้านบนตามปกติ
-                        document.getElementById('statToday').innerText = data.today.toLocaleString() + " ₭";
-                        document.getElementById('statWeek').innerText = data.week.toLocaleString() + " ₭";
-                        document.getElementById('statMonth').innerText = data.month.toLocaleString() + " ₭";
-                        
-                        let html = '';
-                        if (!data.history || data.history.length === 0) {
-                            html = `<p style="text-align: center; color: var(--text-muted); font-size: 13px; padding: 20px;">ไม่มีข้อมูลประวัติบิล</p>`;
-                        } else {
-                            // 2. 🔐 มัดรวมกลุ่มบิลโดยใช้ข้อความวันเวลาดิบจากคอลัมน์ A (ล็อกนิ่งถาวร ไม่ดิ้นตามกัน)
-                            let billsMap = {};
-
-                            data.history.forEach(item => {
-                                // ดึงชื่อพนักงานผู้บันทึกข้อมูลที่ส่งมาจากหลังบ้าน
-                                let displaySellerName = item.seller || "แอดมิน";
-                                if (displaySellerName === "ไม่ทราบชื่อ" || displaySellerName === "admin") {
-                                    displaySellerName = (currentUser && currentUser.name) ? currentUser.name : "แอดมิน";
-                                }
-
-                                // 🆕 ดึงข้อความวันเวลาที่หลังบ้านจัดรูปแบบสำเร็จรูปส่งมาให้ตรง ๆ (เช่น Fri May 15 2026 เวลา: 21:55)
-                                let displayTimeStr = item.time ? String(item.time) : "Fri May 15 2026 เวลา: --:--";
-
-                                // 🔑 ล็อกกลุ่มบิลโดยใช้ "ข้อความวันเวลาคอลัมน์ A + ชื่อลูกค้า" เป็นคีย์หลัก
-                                let billKey = `${displayTimeStr}_${item.customer || 'ลูกค้าทั่วไป'}`;
-
-                                if (!billsMap[billKey]) {
-                                    billsMap[billKey] = {
-                                        customer: item.customer || 'ลูกค้าทั่วไป',
-                                        timeStr: displayTimeStr,
-                                        seller: displaySellerName,
-                                        totalAmt: 0
-                                    };
-                                }
-                                // รวมเงินของเลขทุกบรรทัดในบิลใบเดียวกัน
-                                billsMap[billKey].totalAmt += Number(item.amt || 0);
-                            });
-
-                            // ดึงค่าออกมาเป็น Array แล้วดึงมาโชว์แค่ 5 บิลล่าสุดในหน้าสรุปรายงานตามไอเดียใหม่
-                            let sortedBills = Object.values(billsMap).slice(0, 5);
-
-                            // 3. ประกอบโครงสร้าง UX/UI รายบิลส่งเข้าไปแสดงที่หน้าแดชบอร์ด
-                            sortedBills.forEach(bill => {
-                                html += `<div class="history-item" style="padding: 16px; margin-bottom: 12px; background: rgba(255,255,255,0.05); border-radius: 20px;">
-                                    <div style="flex: 1;">
-                                        <span style="font-size: 16px; font-weight: 700; color: #ffffff;">👤 ลูกค้า: ${bill.customer}</span>
-                                        <br>
-                                        <small style="color: var(--text-muted); font-size: 11px; display: inline-block; margin-top: 6px;">
-                                            เมื่อ: ${bill.timeStr} | ผู้ขาย: ${bill.seller}
-                                        </small>
-                                    </div>
-                                    <div style="text-align: right; min-width: 110px;">
-                                        <span style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 2px;">รวมยอดบิล</span>
-                                        <strong style="font-size: 16px; color: #00df89;">${bill.totalAmt.toLocaleString()} ₭</strong>
-                                    </div>
-                                </div>`;
-                            });
-                        }
-                        document.getElementById('historyContainer').innerHTML = html;
+                        let sortedBills = Object.values(billsMap).slice(0, 5);
+                        sortedBills.forEach(bill => {
+                            html += `<div class="history-item">
+                                <div style="flex: 1;">
+                                    <span style="font-size: 16px; font-weight: 700; color: #ffffff;">👤 ลูกค้า: ${bill.customer}</span>
+                                    <br>
+                                    <small style="color: var(--text-muted); font-size: 11px; display: inline-block; margin-top: 6px;">
+                                        เมื่อ: ${bill.timeStr} | ผู้ขาย: ${bill.seller}
+                                    </small>
+                                </div>
+                                <div style="text-align: right; min-width: 110px;">
+                                    <span style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 2px;">รวมยอดบิล</span>
+                                    <strong style="font-size: 16px; color: #00df89;">${bill.totalAmt.toLocaleString()} ₭</strong>
+                                </div>
+                            </div>`;
+                        });
                     }
-                })
-                .withFailureHandler(function(err) {
-                    console.error('Dashboard load error', err);
-                })
-                .getSalesStats();
+                    document.getElementById('historyContainer').innerHTML = html;
+                }
+            }).catch(err => console.error('Dashboard error:', err));
         }
+
+        function logout() {
+            localStorage.removeItem('smartHuayUser'); currentUser = {};
+            document.getElementById('mainApp').style.display = 'none';
+            document.getElementById('loginContainer').style.display = 'block'; hideAllPages();
+        }
+        function hideAllPages() {
+            document.getElementById('menuPage').classList.add('hidden');
+            document.getElementById('recorderPage').classList.add('hidden');
+            document.getElementById('dashboardPage').classList.add('hidden');
+        }
+        function showMenu() { hideAllPages(); document.getElementById('menuPage').classList.remove('hidden'); }
+        function goToRecorder() { hideAllPages(); document.getElementById('recorderPage').classList.remove('hidden'); document.getElementById('huayNum').focus(); }
+        function goToDashboard() { hideAllPages(); document.getElementById('dashboardPage').classList.remove('hidden'); loadDashboardData(); }
+        function backToMenu() { showMenu(); }
     </script>
 </body>
 </html>
