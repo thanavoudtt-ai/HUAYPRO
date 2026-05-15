@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Smart Huay Pro 2026</title>
+    <title>HUAY PRO</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -160,7 +160,12 @@
         .slip-item-row-super-nano.won-strike { 
             border-left-color: #ff3b30; 
             background: #fef2f2;         
-            color: #dc2626;              
+            color: #dc2626;
+            display: flex; align-items: center; gap: 3px;
+        }
+        .winner-badge { 
+            background: #dc2626; color: white; font-size: 9px; font-weight: 800; 
+            padding: 2px 4px; border-radius: 3px; flex-shrink: 0; 
         }
         
         /* แผงฟุตเตอร์ปุ่มล็อกท้ายการ์ดแน่นหนา */
@@ -174,7 +179,7 @@
         <div id="loginContainer" class="app-container">
             <div class="card" style="margin-top: 12%; padding: 35px 24px;">
                 <div style="font-size: 55px; text-align: center; margin-bottom: 15px; filter: drop-shadow(0 4px 10px rgba(0,122,255,0.3));">💎</div>
-                <h1 style="text-align: center; font-size: 26px; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.5px;">Smart Huay Pro</h1>
+                <h1 style="text-align: center; font-size: 26px; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.5px;">HUAY PRO</h1>
                 <p style="text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 28px;">กรุณาเลือกชื่อผู้ใช้และระบุรหัส PIN เพื่อลงชื่อเข้างาน</p>
                 <div class="input-group">
                     <label>บัญชีผู้ใช้พนักงาน</label>
@@ -337,7 +342,7 @@
                 <div id="digitalSlipCaptureArea" class="digital-slip-canvas">
                     <div class="slip-header-shine">
                         <div style="font-size: 24px; text-align: center;">💎</div>
-                        <div class="slip-title-text" style="text-align: center;">SMART HUAY PRO</div>
+                        <div class="slip-title-text" style="text-align: center;">HUAY PRO</div>
                         <div style="font-size: 10.5px; color: #718096; margin-top: 1px; text-align: center; font-weight:600;">ใบเสร็จรับเงินสั่งซื้อหวยออนไลน์</div>
                     </div>
                     <div class="slip-row-item"><span>👤 ชื่อลูกค้า:</span><strong id="slipCustName" style="color:#1a202c;">-</strong></div>
@@ -454,7 +459,7 @@
                         let html = '';
                         winnersGlobalDataCache.forEach((winner, idx) => {
                             html += `<div class="winner-row-box">
-                                <span style="font-size:16px; font-weight:700; color:#00df89;">🎉 ยอดถูกหวย: ${winner.customer}</span>
+                                <span style="font-size:16px; font-weight:700; color:#00df89;">ยอดถูกหวย: ${winner.customer}</span>
                                 <button class="glass-modal-btn success" onclick="triggerWinnerSlipModal(${idx})" style="padding: 6px 14px; font-size: 13px; border-radius: 10px;">📋 ดูบิลภาพสลิป</button>
                             </div>`;
                         });
@@ -472,9 +477,16 @@
             let col1Html = ""; let col2Html = ""; let col3Html = "";
 
             itemsArray.forEach((itemText, index) => {
-                let cleanedText = itemText.replace(/🎉\s*ถูกหวย!!\s*[23]\s*ตัว\s*🎉/g, "").trim();
-                let extraClass = itemText.includes("ถูกหวย!!") ? "won-strike" : "";
-                let itemBlock = `<div class="slip-item-row-super-nano ${extraClass}">${cleanedText}</div>`;
+                let cleanedText = itemText.replace(/^\d+\.\s*/, '').trim();
+                let hasWon = cleanedText.includes("ถูกหวย!!");
+                
+                if (hasWon) {
+                    cleanedText = cleanedText.replace(/🎉\s*ถูกหวย!!\s*\d*\s*ตัว/g, '').trim();
+                }
+                
+                let extraClass = hasWon ? "won-strike" : "";
+                let badgeHtml = hasWon ? `<span class="winner-badge">[W]</span>` : '';
+                let itemBlock = `<div class="slip-item-row-super-nano ${extraClass}">${badgeHtml}<span style="flex: 1; min-width: 0;">${cleanedText}</span></div>`;
                 
                 if (index < LIMIT_PER_COLUMN) {
                     col1Html += itemBlock;
@@ -510,7 +522,7 @@
                     }
                 });
 
-                document.getElementById('modalBillTitle').innerText = "🎉 ใบเสร็จผู้โชคดีถูกหวย!!";
+                document.getElementById('modalBillTitle').innerText = "ใบเสร็จผู้โชคดีถูกหวย";
                 document.getElementById('slipCustName').innerText = customer;
                 document.getElementById('slipTimeBuy').innerText = timeBuy;
                 document.getElementById('slipPayment').innerText = payment;
@@ -531,7 +543,7 @@
             const captureArea = document.getElementById('digitalSlipCaptureArea');
             const copyBtn = document.getElementById('copyImgBtn');
             
-            copyBtn.disabled = true; copyBtn.innerText = "⏳ กำลังคัดลอกรูปภาพเข้าบอร์ด...";
+            copyBtn.disabled = true; copyBtn.innerText = "⏳ กำลังเตรียมรูปภาพ...";
 
             html2canvas(captureArea, {
                 backgroundColor: "#ffffff",
@@ -542,21 +554,55 @@
                 canvas.toBlob(function(blob) {
                     if (!blob) { alert("สร้างไฟล์ภาพล้มเหลว"); copyBtn.disabled = false; return; }
                     
-                    try {
-                        const item = new ClipboardItem({ "image/png": blob });
-                        navigator.clipboard.write([item]).then(function() {
-                            copyBtn.style.background = "linear-gradient(180deg, #34c759 0%, #28a745 100%)";
-                            copyBtn.innerText = "✅ คัดลอกรูปภาพแล้ว! ไปกดวางในแแชทได้เลย";
+                    const file = new File([blob], "HuayReceipt.png", { type: "image/png" });
+                    
+                    // ลองใช้ navigator.share ก่อน (รองรับ Messenger, WhatsApp, Telegram บน Mobile)
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        navigator.share({
+                            files: [file],
+                            title: 'บิลสลิปหวย',
+                            text: 'ส่งบิลเลขหวยขาวมินิมอล'
+                        }).then(() => {
+                            copyBtn.disabled = false; copyBtn.innerText = "📋 คลิกเดียว คัดลอกรูปภาพบิล";
+                        }).catch(() => {
+                            copyBtn.disabled = false; copyBtn.innerText = "📋 คลิกเดียว คัดลอกรูปภาพบิล";
+                        });
+                    } else {
+                        // Fallback: ลองใช้ clipboard (Desktop)
+                        try {
+                            const item = new ClipboardItem({ "image/png": blob });
+                            navigator.clipboard.write([item]).then(function() {
+                                copyBtn.style.background = "linear-gradient(180deg, #34c759 0%, #28a745 100%)";
+                                copyBtn.innerText = "✅ คัดลอกแล้ว! ไปวางใน Messenger/WhatsApp/Telegram ได้เลย";
+                                setTimeout(() => {
+                                    copyBtn.disabled = false;
+                                    copyBtn.style.background = "linear-gradient(180deg, #007aff 0%, #0056b3 100%)";
+                                    copyBtn.innerText = "📋 คลิกเดียว คัดลอกรูปภาพบิล";
+                                }, 2500);
+                            }).catch(() => {
+                                // Fallback สุดท้าย: Download
+                                const link = document.createElement('a');
+                                link.href = URL.createObjectURL(blob);
+                                link.download = `HuaySlip_${Date.now()}.png`;
+                                link.click();
+                                copyBtn.innerText = "✅ ดาวน์โหลดแล้ว! ไปอัพโหลดเองได้เลย";
+                                setTimeout(() => {
+                                    copyBtn.disabled = false;
+                                    copyBtn.innerText = "📋 คลิกเดียว คัดลอกรูปภาพบิล";
+                                }, 2000);
+                            });
+                        } catch (e) {
+                            // Download เป็นวิธีสุดท้าย
+                            const link = document.createElement('a');
+                            link.href = URL.createObjectURL(blob);
+                            link.download = `HuaySlip_${Date.now()}.png`;
+                            link.click();
+                            copyBtn.innerText = "✅ ดาวน์โหลดแล้ว! ไปอัพโหลดเองได้เลย";
                             setTimeout(() => {
                                 copyBtn.disabled = false;
-                                copyBtn.style.background = "linear-gradient(180deg, #007aff 0%, #0056b3 100%)";
                                 copyBtn.innerText = "📋 คลิกเดียว คัดลอกรูปภาพบิล";
-                            }, 2500);
-                        }).catch(function() {
-                            triggerFallbackShare(blob);
-                        });
-                    } catch (e) {
-                        triggerFallbackShare(blob);
+                            }, 2000);
+                        }
                     }
                 }, "image/png");
             }).catch(err => {
@@ -680,7 +726,7 @@
         function setHuayPosition(position, btn) {
             currentHuayPosition = position; document.querySelectorAll('.btn-position').forEach(b => b.classList.remove('active')); if(btn) btn.classList.add('active');
             const amtTopOnly = document.getElementById('amtTopOnly'), amtBotOnly = document.getElementById('amtBotOnly'), amtBothSection = document.getElementById('amtBothSection');
-            amtTopOnly.style.display = 'none'; amtBotOnly.style.display = 'none'; amtBothSection.style.display = 'grid';
+            amtTopOnly.style.display = 'none'; amtBotOnly.style.display = 'none'; amtBothSection.style.display = 'none';
             if (position === 'บน') amtTopOnly.style.display = 'block'; else if (position === 'ล่าง') amtBotOnly.style.display = 'block'; else if (position === 'บน/ล่าง') amtBothSection.style.display = 'grid';
         }
         function setPaymentMethod(method, btn) { currentPaymentMethod = method; document.querySelectorAll('.btn-payment').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
