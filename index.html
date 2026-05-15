@@ -52,20 +52,24 @@
         .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 6px; margin-bottom: 10px; }
         .user-badge { background: rgba(255, 255, 255, 0.07); padding: 8px 16px; border-radius: 20px; font-size: 16px; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1); }
 
-        .input-group { margin-bottom: 18px; }
+        .input-group { margin-bottom: 18px; width: 100%; }
         .input-group label { display: block; font-size: 15px; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; padding-left: 2px; }
 
+        /* 🌟 FIX ความกว้างของกล่องข้อความและตัวเลือกวันที่ปฏิทินไม่ให้พองหลุดขอบการ์ดเพื่อนๆ */
         input[type="text"], input[type="number"], select, input[type="password"], input[type="date"] {
-            width: 100%; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px; padding: 15px 16px; color: #fff; font-size: 17px; outline: none; transition: all 0.25s ease;
+            width: 100%; max-width: 100%; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px; padding: 14px 16px; color: #fff; font-size: 16px; outline: none; transition: all 0.25s ease;
+            box-sizing: border-box; display: block;
         }
         input:focus, select:focus { border-color: var(--ios-blue); background: rgba(0, 0, 0, 0.35); box-shadow: 0 0 12px rgba(0, 122, 255, 0.25); }
 
+        input[type="date"] { -webkit-appearance: none; appearance: none; min-height: 50px; }
         input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); font-size: 18px; cursor: pointer; }
 
         .btn {
             width: 100%; padding: 14px; border-radius: 18px; font-size: 16px; font-weight: 600; border: 1px solid transparent;
             cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: center; align-items: center; gap: 8px;
+            box-sizing: border-box;
         }
         .btn:active { transform: scale(0.97); }
         .btn-primary { background: linear-gradient(180deg, #007aff 0%, #0056b3 100%); color: #fff; border-top: 1px solid rgba(255,255,255,0.2); box-shadow: 0 10px 20px rgba(0,122,255,0.25); }
@@ -105,61 +109,59 @@
 
         .nam-sat-display { display: block; font-size: 16px; color: #ffb703; text-align: center; margin-top: 10px; font-weight: 600; min-height: 18px; }
 
-        .glass-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 12, 24, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 9999; display: none; animation: fadeIn 0.3s ease-out; }
-        .glass-modal-card { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 96%; max-width: 460px; background: rgba(15, 32, 67, 0.78); border: 1px solid rgba(255, 255, 255, 0.2); border-top: 2px solid rgba(255, 255, 255, 0.4); border-radius: 30px; padding: 16px 10px; text-align: center; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); color: #fff; }
+        .glass-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 12, 24, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 9999; display: none; animation: fadeIn 0.3s ease-out; }
+        
+        /* 🌟 FIX ปรับโครงสร้างหน้าต่างป๊อปอัพใบเสร็จให้จำกัดความสูงพอดีจอมือถือ และจัดระเบียบพื้นที่เซฟโซน */
+        .glass-modal-card { 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 94%; max-width: 440px; 
+            max-height: 90vh; /* บังคับความสูงห้ามเกิน 90% ของหน้าจอมือถือทุกรุ่น */
+            background: rgba(18, 35, 71, 0.9); border: 1px solid rgba(255, 255, 255, 0.2); 
+            border-top: 2px solid rgba(255, 255, 255, 0.4); border-radius: 26px; 
+            padding: 16px 14px; color: #fff;
+            display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
         .status-modal-icon { font-size: 54px; margin-bottom: 16px; }
-        .glass-modal-btn { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; padding: 12px 24px; border-radius: 16px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+        .glass-modal-btn { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; padding: 12px 24px; border-radius: 16px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; box-sizing: border-box; }
         .glass-modal-btn.success { background: linear-gradient(180deg, #007aff 0%, #0056b3 100%); border: none; box-shadow: 0 8px 20px rgba(0,122,255,0.3); }
 
         .winner-row-box { display: flex; justify-content: space-between; align-items: center; padding: 14px 12px; background: rgba(0, 223, 137, 0.05); border: 1px solid rgba(0, 223, 137, 0.2); border-radius: 16px; margin-top: 10px; }
 
-        /* ======================================================= */
-        /* 📸 MODERN CLEAN WHITE DIGITAL SLIP DESIGN (พื้นขาว)      */
-        /* ======================================================= */
-        .digital-slip-canvas {
-            width: 100%; background: #ffffff; 
-            border-radius: 20px; border: 1px solid #e2e8f0;
-            padding: 16px 14px; text-align: left; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            margin-bottom: 14px; color: #1a202c; overflow: hidden; position: relative;
+        /* 🌟🆕 FIX กล่องครอบตัวใบบิลภาพสลิปสีขาว ให้เลื่อนนิ้วสไลด์ดูข้างในกรอบได้เวลาบิลยาวๆ ไม่ดันปุ่มทะลุหาย */
+        .slip-scroll-wrapper {
+            width: 100%; overflow-y: auto; overflow-x: hidden;
+            flex: 1; margin-bottom: 12px; border-radius: 16px;
+            padding-right: 2px;
+            -webkit-overflow-scrolling: touch; /* เลื่อนสไลด์บน iOS ได้นุ่มนวลแบบกระจกเหลว */
         }
-        .slip-header-shine {
-            text-align: center; border-bottom: 1px dashed #cbd5e1;
-            padding-bottom: 10px; margin-bottom: 10px;
-        }
-        .slip-title-text { font-size: 18px; font-weight: 700; color: #007aff; letter-spacing: 0.5px; margin-top: 2px; }
-        .slip-row-item { display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 4px; color: #4a5568; font-weight: 500; }
-        .slip-divider-line { border-top: 1px dashed #cbd5e1; margin: 10px 0; }
-        .slip-total-banner { display: flex; justify-content: space-between; align-items: center; background: #f0fdf4; border-radius: 10px; padding: 10px 12px; margin-top: 8px; border: 1px solid #bbf7d0; }
 
-        .slip-grid-container-triple {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 6px;
-            align-items: start;
+        /* 🌟 FIX ความกว้างหน้ากระดาษใบบิลจริงตอนแปลงเป็นรูปภาพ ล็อกขนาดคงที่ไว้ปลอดภัยที่สุด */
+        .digital-slip-canvas {
+            width: 100%; max-width: 100%; background: #ffffff; 
+            border-radius: 16px; border: 1px solid #e2e8f0;
+            padding: 14px 12px; text-align: left; color: #1a202c; 
+            box-sizing: border-box; display: block;
         }
-        .slip-column-block-nano {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
+        .slip-header-shine { text-align: center; border-bottom: 1px dashed #cbd5e1; padding-bottom: 8px; margin-bottom: 8px; }
+        .slip-title-text { font-size: 17px; font-weight: 700; color: #007aff; letter-spacing: 0.5px; margin-top: 2px; }
+        .slip-row-item { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 3px; color: #4a5568; font-weight: 500; }
+        .slip-divider-line { border-top: 1px dashed #cbd5e1; margin: 8px 0; }
+        .slip-total-banner { display: flex; justify-content: space-between; align-items: center; background: #f0fdf4; border-radius: 10px; padding: 8px 10px; margin-top: 6px; border: 1px solid #bbf7d0; }
+
+        .slip-grid-container-triple { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; align-items: start; }
+        .slip-column-block-nano { display: flex; flex-direction: column; gap: 3px; }
         .slip-item-row-super-nano {
-            font-size: 12px;
-            font-weight: 700;
-            color: #1a202c;
-            background: #f8fafc;
-            padding: 5px 4px;
-            border-radius: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            border-left: 2.5px solid #007aff;
-            border-bottom: 1px solid #edf2f7;
+            font-size: 11.5px; font-weight: 700; color: #1a202c; background: #f8fafc;
+            padding: 4px 3px; border-radius: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            border-left: 2px solid #007aff; border-bottom: 1px solid #edf2f7;
         }
-        .slip-item-row-super-nano.won-strike {
-            border-left-color: #ff3b30;
-            background: #fef2f2;
-            color: #dc2626;
-        }
+        .slip-item-row-super-nano.won-strike { border-left-color: #ff3b30; background: #fef2f2; color: #dc2626; }
+        
+        /* แผงควบคุมปุ่มด้านล่างป๊อปอัพ ให้อยู่คงที่ตลอดกาลกดได้ 100% */
+        .modal-action-footer { width: 100%; display: flex; flex-direction: column; gap: 8px; padding-top: 4px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -206,7 +208,7 @@
                     </div>
                 </div>
 
-                <div class="card" style="border: 1px solid rgba(0, 223, 137, 0.25);">
+                <div class="card" style="border: 1px solid rgba(0, 223, 137, 0.25); overflow: hidden;">
                     <h2 style="color: #00df89;">🎯 ตรวจเช็คยอดคนถูกหวยประจำวัน</h2>
                     <div class="input-group" style="margin-bottom: 14px;">
                         <label style="color:#00df89; font-weight:bold;">📅 ขั้นตอนที่ 1: เลือกวันที่ต้องการตรวจสอบ</label>
@@ -214,9 +216,9 @@
                     </div>
                     <div class="input-group" style="margin-bottom: 14px;">
                         <label style="color:#00df89; font-weight:bold;">🔢 ขั้นตอนที่ 2: ระบุเลขผลรางวัลหวย</label>
-                        <div style="display: flex; gap: 10px;">
-                            <input type="number" id="winNumberInput" placeholder="กรอกเลขรางวัล (เช่น 970)" inputmode="numeric" style="font-size: 18px; font-weight: bold; text-align: center; border-color: rgba(0, 223, 137, 0.4);">
-                            <button class="btn btn-primary" id="btnCheckWin" onclick="checkDailyWinners()" style="width: auto; padding: 0 20px; background: linear-gradient(180deg, #00df89 0%, #00a061 100%); border:none; box-shadow: 0 4px 12px rgba(0,223,137,0.25);">🔍 ค้นหา</button>
+                        <div style="display: flex; gap: 10px; width: 100%; box-sizing: border-box;">
+                            <input type="number" id="winNumberInput" placeholder="กรอกเลขรางวัล (เช่น 970)" inputmode="numeric" style="font-size: 16px; font-weight: bold; text-align: center; border-color: rgba(0, 223, 137, 0.4); flex: 1; width: 100%;">
+                            <button class="btn btn-primary" id="btnCheckWin" onclick="checkDailyWinners()" style="width: auto; padding: 0 16px; background: linear-gradient(180deg, #00df89 0%, #00a061 100%); border:none; box-shadow: 0 4px 12px rgba(0,223,137,0.25); white-space: nowrap;">🔍 ค้นหา</button>
                         </div>
                     </div>
                     <div id="winnerResultsArea" style="max-height: 200px; overflow-y: auto;">
@@ -320,41 +322,43 @@
         </div>
     </div>
 
-    <div id="statusModal" class="glass-modal-overlay"><div class="glass-modal-card"><div id="statusIcon" class="status-modal-icon">✨</div><h3 id="statusTitle" style="font-size: 22px;">บันทึกข้อมูล</h3><p id="statusMessage" style="margin-bottom: 0; font-size: 15px;">กำลังประมวลผล...</p></div></div>
+    <div id="statusModal" class="glass-modal-overlay"><div class="glass-modal-card" style="max-width:320px; text-align:center; padding:30px 20px;"><div id="statusIcon" class="status-modal-icon">✨</div><h3 id="statusTitle" style="font-size: 22px;">บันทึกข้อมูล</h3><p id="statusMessage" style="margin-bottom: 0; font-size: 15px;">กำลังประมวลผล...</p></div></div>
 
     <div id="copyBillModal" class="glass-modal-overlay">
         <div class="glass-modal-card">
-            <h3 id="modalBillTitle" style="font-size: 18px; margin-bottom: 10px;">🧾 ใบเสร็จรับเงินอิเล็กทรอนิกส์</h3>
+            <h3 id="modalBillTitle" style="font-size: 18px; margin-bottom: 12px; text-align: center; font-weight: 700;">🧾 ใบเสร็จรับเงินอิเล็กทรอนิกส์</h3>
             
-            <div id="digitalSlipCaptureArea" class="digital-slip-canvas">
-                <div class="slip-header-shine">
-                    <div style="font-size: 24px; text-align: center; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">💎</div>
-                    <div class="slip-title-text">SMART HUAY PRO</div>
-                    <div style="font-size: 10.5px; color: #718096; margin-top: 1px; text-align: center; font-weight:600;">ใบเสร็จรับเงินสั่งซื้อหวยออนไลน์</div>
+            <div class="slip-scroll-wrapper">
+                <div id="digitalSlipCaptureArea" class="digital-slip-canvas">
+                    <div class="slip-header-shine">
+                        <div style="font-size: 24px; text-align: center;">💎</div>
+                        <div class="slip-title-text" style="text-align: center;">SMART HUAY PRO</div>
+                        <div style="font-size: 10.5px; color: #718096; margin-top: 1px; text-align: center; font-weight:600;">ใบเสร็จรับเงินสั่งซื้อหวยออนไลน์</div>
+                    </div>
+                    <div class="slip-row-item"><span>👤 ชื่อลูกค้า:</span><strong id="slipCustName" style="color:#1a202c;">-</strong></div>
+                    <div class="slip-row-item"><span>⏰ วันเวลาซื้อ:</span><span id="slipTimeBuy" style="color:#4a5568; font-size: 12px;">-</span></div>
+                    <div class="slip-row-item"><span>💳 ชำระเงินผ่าน:</span><span id="slipPayment" style="color:#4a5568;">-</span></div>
+                    <div class="slip-row-item"><span>👤 พนักงานขาย:</span><span id="slipSeller" style="color:#4a5568;">-</span></div>
+                    
+                    <div class="slip-divider-line"></div>
+                    <div style="font-size: 11px; color: #718096; margin-bottom: 5px; font-weight: 700;">📋 รายการตัวเลขที่เดิมพัน:</div>
+                    
+                    <div id="slipItemsContainer" class="slip-grid-container-triple"></div>
+                    
+                    <div class="slip-divider-line"></div>
+                    <div class="slip-total-banner">
+                        <span style="font-size: 14px; font-weight: 700; color:#2d3748;">💰 ยอดเงินรวมทั้งสิ้น:</span>
+                        <strong id="slipTotalAmt" style="font-size: 18px; color: #16a34a; font-weight: 800;">0 ₭</strong>
+                    </div>
+                    <div style="text-align: center; font-size: 9.5px; color: #a0aec0; margin-top: 10px; letter-spacing: 0.5px; font-weight:600;">*** ขอบคุณที่ใช้บริการ ขอให้ท่านโชคดีรวยๆ ***</div>
                 </div>
-                <div class="slip-row-item"><span>👤 ชื่อลูกค้า:</span><strong id="slipCustName" style="color:#1a202c;">-</strong></div>
-                <div class="slip-row-item"><span>⏰ วันเวลาซื้อ:</span><span id="slipTimeBuy" style="color:#4a5568; font-size: 12px;">-</span></div>
-                <div class="slip-row-item"><span>💳 ชำระเงินผ่าน:</span><span id="slipPayment" style="color:#4a5568;">-</span></div>
-                <div class="slip-row-item"><span>👤 พนักงานขาย:</span><span id="slipSeller" style="color:#4a5568;">-</span></div>
-                
-                <div class="slip-divider-line"></div>
-                <div style="font-size: 11px; color: #718096; margin-bottom: 5px; font-weight: 700;">📋 รายการตัวเลขที่เดิมพัน:</div>
-                
-                <div id="slipItemsContainer" class="slip-grid-container-triple"></div>
-                
-                <div class="slip-divider-line"></div>
-                <div class="slip-total-banner">
-                    <span style="font-size: 14px; font-weight: 700; color:#2d3748;">💰 ยอดเงินรวมทั้งสิ้น:</span>
-                    <strong id="slipTotalAmt" style="font-size: 18px; color: #16a34a; font-weight: 800;">0 ₭</strong>
-                </div>
-                <div style="text-align: center; font-size: 9.5px; color: #a0aec0; margin-top: 10px; letter-spacing: 0.5px; font-weight:600;">*** ขอบคุณที่ใช้บริการ ขอให้ท่านโชคดีรวยๆ ***</div>
             </div>
 
-            <button id="copyImgBtn" class="btn btn-primary" onclick="copySlipToClipboardAsImage()" style="margin-bottom: 10px; width: 100%; font-size: 16px; background: linear-gradient(180deg, #007aff 0%, #0056b3 100%); border-top: 1px solid rgba(255,255,255,0.2); box-shadow: 0 4px 12px rgba(0,122,255,0.2);">📋 คลิกเดียว คัดลอกรูปภาพบิล</button>
-            
-            <button id="shareImgBtn" class="glass-modal-btn" onclick="generateAndShareSlipPhoto()" style="margin-bottom: 10px; width: 100%; font-size: 14px; background: rgba(52, 199, 89, 0.15); border-color: rgba(52, 199, 89, 0.3); color: #34c759;">📸 แชร์ / บันทึกรูปภาพ</button>
-            
-            <button class="glass-modal-btn" onclick="closeCopyModal()" style="background: rgba(255,255,255,0.08); width: 100%; font-size: 15px;">ปิดหน้าต่างใบเสร็จ</button>
+            <div class="modal-action-footer">
+                <button id="copyImgBtn" class="btn btn-primary" onclick="copySlipToClipboardAsImage()" style="width: 100%; margin: 0;">📋 คลิกเดียว คัดลอกรูปภาพบิล</button>
+                <button id="shareImgBtn" class="btn" onclick="generateAndShareSlipPhoto()" style="width: 100%; margin: 0; background: rgba(52, 199, 89, 0.15); border: 1px solid rgba(52, 199, 89, 0.3); color: #34c759;">📸 แชร์ / บันทึกรูปภาพ</button>
+                <button class="glass-modal-btn" onclick="closeCopyModal()" style="width: 100%; margin: 0; background: rgba(255,255,255,0.08); font-size: 14px; padding: 10px;">ปิดหน้าต่างใบเสร็จ</button>
+            </div>
         </div>
     </div>
 
@@ -376,15 +380,15 @@
             "07": "ໝູ", "47": "ໝູ", "87": "ໝູ", "08": "ກະຕ່າຍ", "48": "ກະຕ່າຍ", "88": "ກະຕ່າຍ",
             "09": "ควาย", "49": "ควาย", "89": "ควาย", "10": "ນາກນ້ຳ", "50": "ນາກນ້ຳ", "90": "ນາກນ້ຳ",
             "11": "ໝາ", "51": "ໝາ", "91": "ໝາ", "12": "ມ້າ", "52": "ມ້າ", "92": "ມ້າ",
-            "13": "ຊ້າງ", "53": "ຊ້າງ", "93": "ຊ້າງ", "14": "ແມວບ້ານ", "54": "ແມวບ້ານ", "94": "ແມວບ້ານ",
+            "13": "ຊ້າງ", "53": "ຊ້າງ", "93": "ຊ້າງ", "14": "ແມວບ້ານ", "54": "ແມວບ້ານ", "94": "ແມວບ້ານ",
             "15": "ໜູ", "55": "ໜູ", "95": "ໜູ", "16": "ເຜິງ", "56": "ເຜິງ", "96": "ເຜິງ",
-            "17": "ນົกຍາງ", "57": "ນົກຍາງ", "98": "ນົกຍາງ", "18": "ແມວປ່າ", "58": "ແມວປ່າ", "98": "ແມວປ່າ",
-            "19": "ແມງກະເບື້ອ", "59": "ແມງກະເບື້ອ", "99": "ແມງກະເບື້ອ", "00": "ขี้เข็บ", "20": "ขี้เข็บ", "60": "ขี้เข็บ",
+            "17": "ນົกຍາງ", "57": "ນົກຍາງ", "98": "ນົກຍาง", "18": "ແມວປ່າ", "58": "ແມວປ່າ", "98": "ແມວປ່າ",
+            "19": "ແມງກະเບື້ອ", "59": "ແມງກະເບື້ອ", "99": "ແມງກະເບື້ອ", "00": "ขี้เข็บ", "20": "ขี้เข็บ", "60": "ขี้เข็บ",
             "21": "ນົກແອ່ນ", "61": "ນົກແອ່ນ", "22": "ນົກກາງແກ", "62": "ນົກກາງແກ", "23": "ລິງ", "63": "ລິງ",
-            "24": "ກົບ", "64": "ກົບ", "25": "ແຫຼວ", "65": "ແຫຼว", "26": "ນາກບິນ", "66": "ນາກບິນ",
+            "24": "ກົບ", "64": "ກົບ", "25": "ແຫຼວ", "65": "ແຫຼວ", "26": "ນາກບິນ", "66": "ນາກບິນ",
             "27": "ເຕົ່າ", "67": "ເຕົ່າ", "28": "ໄກ່", "68": "ໄກ່", "29": "ອ່ຽນ", "69": "ອ່ຽນ",
-            "30": "ປ່າໃຫຍ່", "70": "ປ່າໃຫຍ່", "31": "ກຸ້ງ", "71": "ກຸ້ງ", "32": "ງູ", "72": "ງູ",
-            "33": "ແມງມຸມ", "73": "ແມງມຸม", "34": "ກວาง", "74": "ກວาง", "35": "ແບ້", "75": "ແບ້",
+            "30": "ປ່າໃຫຍ່", "70": "ປ່າໃຫຍ່", "31": "ກຸ້ງ", "71": "ກຸ້ງ", "32": "ງູ", "72": "ງู",
+            "33": "ແມງມຸມ", "73": "ແມງມຸມ", "34": "ກວາງ", "74": "ກວາງ", "35": "ແບ້", "75": "ແບ້",
             "36": "ເຫງັນ", "76": "ເຫງັນ", "37": "ຫຼິ່ນ", "77": "ຫຼິ່ນ", "38": "ເໝັ່ນ", "78": "ເໝັ່ນ",
             "39": "ກະປູ", "79": "ກະປູ", "40": "ນົກອິນຊີ", "80": "ນົກອິນຊີ"
         };
@@ -512,6 +516,9 @@
                 const copyBtn = document.getElementById('copyImgBtn');
                 copyBtn.className = "btn btn-primary"; copyBtn.innerText = "📋 คลิกเดียว คัดลอกรูปภาพบิล";
                 document.getElementById('copyBillModal').style.display = 'block';
+                
+                // รีเซ็ตตำแหน่งสกรอลล์ให้วิ่งกลับไปด้านบนสุดของบิลทุกครั้งที่เปิดดูบิลใหม่
+                document.querySelector('.slip-scroll-wrapper').scrollTop = 0;
             }
         }
 
@@ -667,7 +674,6 @@
         }
         function setPaymentMethod(method, btn) { currentPaymentMethod = method; document.querySelectorAll('.btn-payment').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
 
-        // ปล่อยปุ่มเพิ่มเงินด่วนทำงานได้อย่างถูกต้องนิ่งสนิท
         function setQuickAmount(amount) {
             if (lastFocusedInput && document.body.contains(lastFocusedInput) && lastFocusedInput.offsetParent !== null) {
                 const currentAmt = parseFloat(lastFocusedInput.value) || 0; lastFocusedInput.value = currentAmt + amount; lastFocusedInput.focus(); return;
@@ -723,7 +729,18 @@
         function removeAllItems() { currentBillItems = []; renderBillTable(); }
         function removeItem(idx) { currentBillItems.splice(idx, 1); renderBillTable(); }
 
-        // 🔒 [แก้ไขสมบูรณ์แบบ] ปรับจูนตัวแปรโครงสร้างฟังก์ชันปิดบิลใหม่ ปราบการติดบั๊กนิ่งสนิทและกางป๊อปอัพ 100%
+        function generateBillText(customer, items) {
+            let now = new Date(); let dateStr = now.toLocaleDateString('th-TH') + ' ' + now.toLocaleTimeString('th-TH');
+            let staffName = (currentUser && currentUser.name) ? currentUser.name : "แอดมินระบบ";
+            let text = `'งวดนี้รวย'!\nชื่อ: ${customer}\n--------------------------\n`; let total = 0;
+            items.forEach((item, index) => {
+                let flagEmoji = item.type === 'ลาว' ? '🇱🇦' : '🇹🇭'; let posText = item.position ? `[${item.position}]` : '[--]';
+                text += `${index + 1}.  ${flagEmoji}${item.num} ${posText} - ${Number(item.amt).toLocaleString()} \n`; total += Number(item.amt);
+            });
+            text += `--------------------------\n ยอดรวม: ${total.toLocaleString()} ₭\n ชำระโดย: ${currentPaymentMethod}\n ผู้บันทึก: ${staffName}\n เวลาซื้อ: ${dateStr}`;
+            return text;
+        }
+
         function submitBill() {
             if (currentBillItems.length === 0) { alert("กรุณาเพิ่มรายการหวยก่อน"); return; }
             const custName = document.getElementById('custName').value.trim() || "ลูกค้าทั่วไป";
@@ -753,22 +770,18 @@
                             total += item.amt; 
                             let flag = item.type === 'ลาว' ? '🇱🇦' : '🇹🇭';
                             let pos = item.position ? `[${item.position}]` : '[--]';
-                            // แปลงโครงสร้างข้อความดิบให้เป็นแถวกระชับมินิมอล 3 คอลัมน์
                             itemsList.push(`${idx+1}.${flag}${item.num}${pos}-${item.amt.toLocaleString()}`);
                         });
                         document.getElementById('slipTotalAmt').innerText = total.toLocaleString() + " ₭";
                         
-                        // กางแผนผังตาราง 3 คอลัมน์สีขาวนวลสบายตา
                         document.getElementById('slipItemsContainer').innerHTML = buildTripleColumnsLayout(itemsList);
                         
-                        // รีเซ็ตปุ่มคัดลอกรูปภาพกลับมาสถานะเริ่มต้น
                         document.getElementById('copyImgBtn').className = "btn btn-primary";
                         document.getElementById('copyImgBtn').innerText = "📋 คลิกเดียว คัดลอกรูปภาพบิล";
                         
-                        // เปิดหน้าต่าง Modal แสดงใบเสร็จรับเงิน
                         document.getElementById('copyBillModal').style.display = 'block';
+                        document.querySelector('.slip-scroll-wrapper').scrollTop = 0;
                         
-                        // ล้างหน้าบิลเก่าออกเพื่อสแตนด์บายคีย์งานงวดถัดไป
                         currentBillItems = []; renderBillTable(); document.getElementById('custName').value = '';
                     });
                 } else { showStatusPopup("❌ เกิดข้อผิดพลาด", response.message, false); }
