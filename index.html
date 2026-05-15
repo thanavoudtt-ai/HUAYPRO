@@ -55,7 +55,6 @@
         .input-group { margin-bottom: 18px; width: 100%; }
         .input-group label { display: block; font-size: 15px; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; padding-left: 2px; }
 
-        /* 🌟 FIX ความกว้างของกล่องข้อความและตัวเลือกวันที่ปฏิทินไม่ให้พองหลุดขอบการ์ดเพื่อนๆ */
         input[type="text"], input[type="number"], select, input[type="password"], input[type="date"] {
             width: 100%; max-width: 100%; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px; padding: 14px 16px; color: #fff; font-size: 16px; outline: none; transition: all 0.25s ease;
@@ -111,32 +110,31 @@
 
         .glass-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 12, 24, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 9999; display: none; animation: fadeIn 0.3s ease-out; }
         
-        /* 🌟 FIX ปรับโครงสร้างหน้าต่างป๊อปอัพใบเสร็จให้จำกัดความสูงพอดีจอมือถือ และจัดระเบียบพื้นที่เซฟโซน */
         .glass-modal-card { 
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
             width: 94%; max-width: 440px; 
-            max-height: 90vh; /* บังคับความสูงห้ามเกิน 90% ของหน้าจอมือถือทุกรุ่น */
-            background: rgba(18, 35, 71, 0.9); border: 1px solid rgba(255, 255, 255, 0.2); 
+            max-height: 90vh; 
+            background: rgba(18, 35, 71, 0.95); border: 1px solid rgba(255, 255, 255, 0.2); 
             border-top: 2px solid rgba(255, 255, 255, 0.4); border-radius: 26px; 
             padding: 16px 14px; color: #fff;
             display: flex; flex-direction: column; overflow: hidden;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
-        .status-modal-icon { font-size: 54px; margin-bottom: 16px; }
+        .status-modal-icon { font-size: 54px; margin-bottom: 16px; text-align: center; }
         .glass-modal-btn { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; padding: 12px 24px; border-radius: 16px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; box-sizing: border-box; }
         .glass-modal-btn.success { background: linear-gradient(180deg, #007aff 0%, #0056b3 100%); border: none; box-shadow: 0 8px 20px rgba(0,122,255,0.3); }
 
         .winner-row-box { display: flex; justify-content: space-between; align-items: center; padding: 14px 12px; background: rgba(0, 223, 137, 0.05); border: 1px solid rgba(0, 223, 137, 0.2); border-radius: 16px; margin-top: 10px; }
 
-        /* 🌟🆕 FIX กล่องครอบตัวใบบิลภาพสลิปสีขาว ให้เลื่อนนิ้วสไลด์ดูข้างในกรอบได้เวลาบิลยาวๆ ไม่ดันปุ่มทะลุหาย */
+        /* 🌟 [Scroll Wrapper] สไลด์ใบบิลขาวไม่ดันจอปุ่มหาย */
         .slip-scroll-wrapper {
             width: 100%; overflow-y: auto; overflow-x: hidden;
             flex: 1; margin-bottom: 12px; border-radius: 16px;
             padding-right: 2px;
-            -webkit-overflow-scrolling: touch; /* เลื่อนสไลด์บน iOS ได้นุ่มนวลแบบกระจกเหลว */
+            -webkit-overflow-scrolling: touch; 
         }
 
-        /* 🌟 FIX ความกว้างหน้ากระดาษใบบิลจริงตอนแปลงเป็นรูปภาพ ล็อกขนาดคงที่ไว้ปลอดภัยที่สุด */
+        /* 📸 DIGITAL SLIP DESIGN (พื้นขาวสะอาดตา มินิมอล 3 คอลัมน์) */
         .digital-slip-canvas {
             width: 100%; max-width: 100%; background: #ffffff; 
             border-radius: 16px; border: 1px solid #e2e8f0;
@@ -151,14 +149,21 @@
 
         .slip-grid-container-triple { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; align-items: start; }
         .slip-column-block-nano { display: flex; flex-direction: column; gap: 3px; }
+        
         .slip-item-row-super-nano {
             font-size: 11.5px; font-weight: 700; color: #1a202c; background: #f8fafc;
             padding: 4px 3px; border-radius: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             border-left: 2px solid #007aff; border-bottom: 1px solid #edf2f7;
         }
-        .slip-item-row-super-nano.won-strike { border-left-color: #ff3b30; background: #fef2f2; color: #dc2626; }
         
-        /* แผงควบคุมปุ่มด้านล่างป๊อปอัพ ให้อยู่คงที่ตลอดกาลกดได้ 100% */
+        /* 🌟 ไฮไลท์สีคนถูกรางวัลแบบคลีน ไร้ข้อความเกะกะสายตา */
+        .slip-item-row-super-nano.won-strike { 
+            border-left-color: #ff3b30; 
+            background: #fef2f2;         
+            color: #dc2626;              
+        }
+        
+        /* แผงฟุตเตอร์ปุ่มล็อกท้ายการ์ดแน่นหนา */
         .modal-action-footer { width: 100%; display: flex; flex-direction: column; gap: 8px; padding-top: 4px; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -322,7 +327,7 @@
         </div>
     </div>
 
-    <div id="statusModal" class="glass-modal-overlay"><div class="glass-modal-card" style="max-width:320px; text-align:center; padding:30px 20px;"><div id="statusIcon" class="status-modal-icon">✨</div><h3 id="statusTitle" style="font-size: 22px;">บันทึกข้อมูล</h3><p id="statusMessage" style="margin-bottom: 0; font-size: 15px;">กำลังประมวลผล...</p></div></div>
+    <div id="statusModal" class="glass-modal-overlay"><div class="glass-modal-card" style="max-width:320px; text-align:center; padding:30px 20px;"><div id="statusIcon" class="status-modal-icon">💎</div><h3 id="statusTitle" style="font-size: 22px;">บันทึกข้อมูล</h3><p id="statusMessage" style="margin-bottom: 0; font-size: 15px;">กำลังประมวลผล...</p></div></div>
 
     <div id="copyBillModal" class="glass-modal-overlay">
         <div class="glass-modal-card">
@@ -355,8 +360,8 @@
             </div>
 
             <div class="modal-action-footer">
-                <button id="copyImgBtn" class="btn btn-primary" onclick="copySlipToClipboardAsImage()" style="width: 100%; margin: 0;">📋 คลิกเดียว คัดลอกรูปภาพบิล</button>
-                <button id="shareImgBtn" class="btn" onclick="generateAndShareSlipPhoto()" style="width: 100%; margin: 0; background: rgba(52, 199, 89, 0.15); border: 1px solid rgba(52, 199, 89, 0.3); color: #34c759;">📸 แชร์ / บันทึกรูปภาพ</button>
+                <button id="copyImgBtn" class="btn btn-primary" onclick="copySlipToClipboardAsImage()" style="width: 100%; margin: 0; font-weight:bold;">📋 คลิกเดียว คัดลอกรูปภาพบิล</button>
+                <button id="shareImgBtn" class="btn" onclick="generateAndShareSlipPhoto()" style="width: 100%; margin: 0; background: rgba(52, 199, 89, 0.15); border: 1px solid rgba(52, 199, 89, 0.3); color: #34c759; font-weight:bold;">📸 แชร์เข้า Messenger / Line โดยตรง</button>
                 <button class="glass-modal-btn" onclick="closeCopyModal()" style="width: 100%; margin: 0; background: rgba(255,255,255,0.08); font-size: 14px; padding: 10px;">ปิดหน้าต่างใบเสร็จ</button>
             </div>
         </div>
@@ -376,19 +381,19 @@
         const tamraHuay = {
             "01": "ປານ້ອຍ", "41": "ປານ້ອຍ", "81": "ປານ້ອຍ", "02": "ຫອย", "42": "ຫອย", "82": "ຫອย",
             "03": "ຫ່ານ", "43": "ຫ່ານ", "83": "ຫ່ານ", "04": "ນົກຍຸງ", "44": "ນົກຍຸງ", "84": "ນົກຍຸງ",
-            "05": "ສິງ", "45": "ສິງ", "85": "ສິງ", "06": "ເສືອ", "46": "ເສືອ", "86": "ເສືອ",
+            "05": "ສິງ", "45": "ສิง", "85": "ສິງ", "06": "ເສືອ", "46": "ເສືອ", "86": "ເສືອ",
             "07": "ໝູ", "47": "ໝູ", "87": "ໝູ", "08": "ກະຕ່າຍ", "48": "ກະຕ່າຍ", "88": "ກະຕ່າຍ",
             "09": "ควาย", "49": "ควาย", "89": "ควาย", "10": "ນາກນ້ຳ", "50": "ນາກນ້ຳ", "90": "ນາກນ້ຳ",
             "11": "ໝາ", "51": "ໝາ", "91": "ໝາ", "12": "ມ້າ", "52": "ມ້າ", "92": "ມ້າ",
             "13": "ຊ້າງ", "53": "ຊ້າງ", "93": "ຊ້າງ", "14": "ແມວບ້ານ", "54": "ແມວບ້ານ", "94": "ແມວບ້ານ",
             "15": "ໜູ", "55": "ໜູ", "95": "ໜູ", "16": "ເຜິງ", "56": "ເຜິງ", "96": "ເຜິງ",
-            "17": "ນົกຍາງ", "57": "ນົກຍາງ", "98": "ນົກຍาง", "18": "ແມວປ່າ", "58": "ແມວປ່າ", "98": "ແມວປ່າ",
-            "19": "ແມງກະเບື້ອ", "59": "ແມງກະເບື້ອ", "99": "ແມງກະເບື້ອ", "00": "ขี้เข็บ", "20": "ขี้เข็บ", "60": "ขี้เข็บ",
+            "17": "ນົกຍາງ", "57": "ນົກຍາງ", "98": "ນົກຍາງ", "18": "ແມວປ່າ", "58": "ແມວປ່າ", "98": "ແມวປ່າ",
+            "19": "ແມງກະເບື້ອ", "59": "ແມງກະເບື້ອ", "99": "ແມງກະເບື້ອ", "00": "ขี้เข็บ", "20": "ขี้เข็บ", "60": "ขี้เข็บ",
             "21": "ນົກແອ່ນ", "61": "ນົກແອ່ນ", "22": "ນົກກາງແກ", "62": "ນົກກາງແກ", "23": "ລິງ", "63": "ລິງ",
-            "24": "ກົບ", "64": "ກົບ", "25": "ແຫຼວ", "65": "ແຫຼວ", "26": "ນາກບິນ", "66": "ນາກບິນ",
+            "24": "ກົບ", "64": "ກົບ", "25": "ແຫຼວ", "65": "ແຫຼວ", "26": "ນາກບິນ", "66": "ນາກບิน",
             "27": "ເຕົ່າ", "67": "ເຕົ່າ", "28": "ໄກ່", "68": "ໄກ່", "29": "ອ່ຽນ", "69": "ອ່ຽນ",
-            "30": "ປ່າໃຫຍ່", "70": "ປ່າໃຫຍ່", "31": "ກຸ້ງ", "71": "ກຸ້ງ", "32": "ງູ", "72": "ງู",
-            "33": "ແມງມຸມ", "73": "ແມງມຸມ", "34": "ກວາງ", "74": "ກວາງ", "35": "ແບ້", "75": "ແບ້",
+            "30": "ປ່າໃຫຍ່", "70": "ປ່າໃຫຍ່", "31": "ກຸ້ງ", "71": "ກຸ້ງ", "32": "ງູ", "72": "ງູ",
+            "33": "ແມงມຸມ", "73": "ແມງມຸມ", "34": "ກວາງ", "74": "ກວาง", "35": "ແບ້", "75": "ແບ້",
             "36": "ເຫງັນ", "76": "ເຫງັນ", "37": "ຫຼິ່ນ", "77": "ຫຼິ່ນ", "38": "ເໝັ່ນ", "78": "ເໝັ່ນ",
             "39": "ກະປູ", "79": "ກະປູ", "40": "ນົກອິນຊີ", "80": "ນົກອິນຊີ"
         };
@@ -467,8 +472,9 @@
             let col1Html = ""; let col2Html = ""; let col3Html = "";
 
             itemsArray.forEach((itemText, index) => {
+                let cleanedText = itemText.replace(/🎉\s*ถูกหวย!!\s*[23]\s*ตัว\s*🎉/g, "").trim();
                 let extraClass = itemText.includes("ถูกหวย!!") ? "won-strike" : "";
-                let itemBlock = `<div class="slip-item-row-super-nano ${extraClass}">${itemText}</div>`;
+                let itemBlock = `<div class="slip-item-row-super-nano ${extraClass}">${cleanedText}</div>`;
                 
                 if (index < LIMIT_PER_COLUMN) {
                     col1Html += itemBlock;
@@ -516,17 +522,16 @@
                 const copyBtn = document.getElementById('copyImgBtn');
                 copyBtn.className = "btn btn-primary"; copyBtn.innerText = "📋 คลิกเดียว คัดลอกรูปภาพบิล";
                 document.getElementById('copyBillModal').style.display = 'block';
-                
-                // รีเซ็ตตำแหน่งสกรอลล์ให้วิ่งกลับไปด้านบนสุดของบิลทุกครั้งที่เปิดดูบิลใหม่
                 document.querySelector('.slip-scroll-wrapper').scrollTop = 0;
             }
         }
 
+        // 🔒 [ระบบคัดลอกรูปภาพเสถียรสูงสุด] แก้บั๊กกดวางแล้วกลายเป็นข้อความตัวหนังสือในแอป Messenger หน้าจอมือถือ
         function copySlipToClipboardAsImage() {
             const captureArea = document.getElementById('digitalSlipCaptureArea');
             const copyBtn = document.getElementById('copyImgBtn');
             
-            copyBtn.disabled = true; copyBtn.innerText = "⏳ กำลังสร้างรูปภาพเข้าบอร์ด...";
+            copyBtn.disabled = true; copyBtn.innerText = "⏳ กำลังคัดลอกรูปภาพเข้าบอร์ด...";
 
             html2canvas(captureArea, {
                 backgroundColor: "#ffffff",
@@ -541,12 +546,12 @@
                         const item = new ClipboardItem({ "image/png": blob });
                         navigator.clipboard.write([item]).then(function() {
                             copyBtn.style.background = "linear-gradient(180deg, #34c759 0%, #28a745 100%)";
-                            copyBtn.innerText = "✅ คัดลอกรูปภาพเสร็จแล้ว! วางได้เลย";
+                            copyBtn.innerText = "✅ คัดลอกรูปภาพแล้ว! ไปกดวางในแแชทได้เลย";
                             setTimeout(() => {
                                 copyBtn.disabled = false;
                                 copyBtn.style.background = "linear-gradient(180deg, #007aff 0%, #0056b3 100%)";
                                 copyBtn.innerText = "📋 คลิกเดียว คัดลอกรูปภาพบิล";
-                            }, 2000);
+                            }, 2500);
                         }).catch(function() {
                             triggerFallbackShare(blob);
                         });
@@ -563,14 +568,17 @@
         function triggerFallbackShare(blob) {
             const copyBtn = document.getElementById('copyImgBtn');
             const file = new File([blob], "HuayReceipt.png", { type: "image/png" });
+            
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                navigator.share({ files: [file], title: 'บิลสลิปหวย' }).then(() => {
+                navigator.share({
+                    files: [file],
+                    title: 'บิลสลิปหวยขาวมินิมอล'
+                }).then(() => {
                     copyBtn.disabled = false; copyBtn.innerText = "📋 คลิกเดียว คัดลอกรูปภาพบิล";
                 }).catch(() => {
                     copyBtn.disabled = false; copyBtn.innerText = "📋 คลิกเดียว คัดลอกรูปภาพบิล";
                 });
             } else {
-                alert("อุปกรณ์ไม่รองรับการคัดลอกรูปภาพลงบอร์ดโดยตรง ระบบจะทำการดาวน์โหลดรูปแทนค่ะ");
                 const link = document.createElement('a');
                 link.download = `HuaySlip_${Date.now()}.png`; link.href = URL.createObjectURL(blob); link.click();
                 copyBtn.disabled = false; copyBtn.innerText = "📋 คลิกเดียว คัดลอกรูปภาพบิล";
@@ -580,7 +588,7 @@
         function generateAndShareSlipPhoto() {
             const captureArea = document.getElementById('digitalSlipCaptureArea');
             const shareBtn = document.getElementById('shareImgBtn');
-            shareBtn.disabled = true; shareBtn.innerText = "⏳ กำลังแชร์...";
+            shareBtn.disabled = true; shareBtn.innerText = "⏳ กำลังดึงรูปเข้า Messenger/Line...";
 
             html2canvas(captureArea, {
                 backgroundColor: "#ffffff",
@@ -593,21 +601,24 @@
                     const file = new File([blob], "SmartHuay_Receipt.png", { type: "image/png" });
                     
                     if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        navigator.share({ files: [file], title: 'บิลสลิปหวยนำโชค', text: 'ใบเสร็จการสั่งซื้อหวยออนไลน์' }).then(() => {
-                            shareBtn.disabled = false; shareBtn.innerText = "📸 แชร์ / บันทึกรูปภาพ";
+                        navigator.share({
+                            files: [file],
+                            title: 'บิลสลิปหวยนำโชค'
+                        }).then(() => {
+                            shareBtn.disabled = false; shareBtn.innerText = "📸 แชร์เข้า Messenger / Line โดยตรง";
                         }).catch(() => {
-                            shareBtn.disabled = false; shareBtn.innerText = "📸 แชร์ / บันทึกรูปภาพ";
+                            shareBtn.disabled = false; shareBtn.innerText = "📸 แชร์เข้า Messenger / Line โดยตรง";
                         });
                     } else {
                         const link = document.createElement('a');
                         link.download = `HuaySlip_${Date.now()}.png`; link.href = canvas.toDataURL("image/png"); link.click();
-                        shareBtn.innerText = "✅ ดาวน์โหลดสำเร็จ!";
-                        setTimeout(() => { shareBtn.disabled = false; shareBtn.innerText = "📸 แชร์ / บันทึกรูปภาพ"; }, 2000);
+                        shareBtn.innerText = "✅ บันทึกลงเครื่องแล้ว!";
+                        setTimeout(() => { shareBtn.disabled = false; shareBtn.innerText = "📸 แชร์เข้า Messenger / Line โดยตรง"; }, 2000);
                     }
                 }, "image/png");
             }).catch(err => {
                 alert("เกิดข้อผิดพลาด: " + err);
-                shareBtn.disabled = false; shareBtn.innerText = "📸 แชร์ / บันทึกรูปภาพ";
+                shareBtn.disabled = false; shareBtn.innerText = "📸 แชร์เข้า Messenger / Line โดยตรง";
             });
         }
 
