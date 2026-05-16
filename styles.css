@@ -1,79 +1,5 @@
 /* ========================================== */
-/* 🆕 LIQUID GLASS MODAL STYLES               */
-/* ========================================== */
-.glass-modal-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(5, 12, 24, 0.7);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    z-index: 9999;
-    display: block; /* ควบคุมเปิด-ปิดด้วย JS */
-    animation: fadeIn 0.3s ease-out;
-}
-
-.glass-modal-card {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%; max-width: 400px;
-    background: rgba(15, 32, 67, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-top: 2px solid rgba(255, 255, 255, 0.4);
-    border-radius: 30px;
-    padding: 30px 24px;
-    text-align: center;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    color: #fff;
-}
-
-.status-modal-icon {
-    font-size: 54px;
-    margin-bottom: 16px;
-    animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.glass-modal-card h3 {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    letter-spacing: 0.5px;
-}
-
-.glass-modal-card p {
-    font-size: 14px;
-    color: #cbd5e1;
-    line-height: 1.5;
-    margin-bottom: 24px;
-}
-
-.glass-modal-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #fff;
-    padding: 12px 24px;
-    border-radius: 16px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.glass-modal-btn:active {
-    transform: scale(0.96);
-    background: rgba(255,255,255,0.15);
-}
-
-.glass-modal-btn.success {
-    background: linear-gradient(180deg, #00df89 0%, #00a061 100%);
-    border: none;
-    box-shadow: 0 8px 20px rgba(0,223,137,0.3);
-}
-
-/* ========================================== */
-/* 📱 CORE APP & LAYOUT SETTINGS               */
+/* 📱 CORE DESIGN & LIQUID GLASS SYSTEM       */
 /* ========================================== */
 :root {
     --bg-dark: #070c1e;
@@ -92,214 +18,117 @@
 }
 
 body {
-    background-color: var(--bg-dark);
-    color: var(--text-main);
-    overflow-x: hidden;
+    background-color: var(--bg-dark); color: var(--text-main); overflow-x: hidden;
     background-image: 
         radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.12) 0%, transparent 40%),
         radial-gradient(circle at 90% 80%, rgba(255, 45, 85, 0.08) 0%, transparent 45%);
     background-attachment: fixed;
 }
 
-.page-wrapper {
-    width: 100%; max-width: 480px; margin: 0 auto;
-    min-height: 100vh; display: flex; flex-direction: column;
-}
-
-.app-container {
-    padding: 16px;
-    /* 🆕 ปรับรองรับพื้นที่เว้าล่างจอ iPhone เต็มหน้าจอให้เนียนกริบ */
-    padding-bottom: calc(24px + env(safe-area-inset-bottom)); 
-    flex: 1;
-}
-
+.page-wrapper { width: 100%; max-width: 480px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+.app-container { padding: calc(20px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom)); flex: 1; }
 .hidden { display: none !important; }
 
-/* ========================================== */
-/* ✨ GLASS CARD UX/UI DESIGN                  */
-/* ========================================== */
 .card {
-    background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 28px;
-    padding: 22px 18px;
-    margin-bottom: 16px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.02);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.07); border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 28px; padding: 22px 18px; margin-bottom: 16px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.02); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
 }
 
-.card h2 {
-    font-size: 16px; font-weight: 600; margin-bottom: 18px;
-    color: #fff; display: flex; align-items: center; gap: 6px;
-}
+.card h2 { font-size: 18px; font-weight: 600; margin-bottom: 18px; color: #fff; display: flex; align-items: center; gap: 6px; }
+.top-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 6px; margin-bottom: 10px; }
+.user-badge { background: rgba(255, 255, 255, 0.07); padding: 8px 16px; border-radius: 20px; font-size: 16px; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1); }
 
-/* ========================================== */
-/* 👤 USER BAR & NAVIGATION                    */
-/* ========================================== */
-.top-bar {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 12px 6px; margin-bottom: 10px;
-}
+.input-group { margin-bottom: 18px; width: 100%; }
+.input-group label { display: block; font-size: 15px; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; padding-left: 2px; }
 
-.user-badge {
-    background: rgba(255, 255, 255, 0.07);
-    padding: 6px 14px; border-radius: 20px;
-    font-size: 14px; font-weight: 500;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+input[type="text"], input[type="number"], select, input[type="password"], input[type="date"] {
+    width: 100%; max-width: 100%; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px; padding: 14px 16px; color: #fff; font-size: 16px; outline: none; transition: all 0.25s ease;
+    box-sizing: border-box; display: block;
 }
+input:focus, select:focus { border-color: var(--ios-blue); background: rgba(0, 0, 0, 0.35); box-shadow: 0 0 12px rgba(0, 122, 255, 0.25); }
 
-/* ========================================== */
-/* 🎛️ INPUTS & CONTROLS                        */
-/* ========================================== */
-.input-group { margin-bottom: 18px; }
-.input-group label {
-    display: block; font-size: 13px; color: var(--text-muted);
-    margin-bottom: 8px; font-weight: 500; padding-left: 2px;
-}
+input[type="date"] { -webkit-appearance: none; appearance: none; min-height: 50px; }
+input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); font-size: 18px; cursor: pointer; }
 
-input[type="text"], input[type="number"], select {
-    width: 100%; background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px; padding: 14px 16px;
-    color: #fff; font-size: 15px; outline: none;
-    transition: all 0.25s ease;
-}
-
-input:focus, select:focus {
-    border-color: var(--ios-blue);
-    background: rgba(0, 0, 0, 0.35);
-    box-shadow: 0 0 12px rgba(0, 122, 255, 0.25);
-}
-
-/* ========================================== */
-/* ⚡ BUTTON DESIGN SYSTEM                     */
-/* ========================================== */
 .btn {
-    width: 100%; padding: 15px; border-radius: 18px;
-    font-size: 15px; font-weight: 600; border: 1px solid transparent;
-    cursor: pointer; transition: all 0.2s ease;
-    display: flex; justify-content: center; align-items: center; gap: 8px;
+    width: 100%; padding: 14px; border-radius: 18px; font-size: 16px; font-weight: 600; border: 1px solid transparent;
+    cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: center; align-items: center; gap: 8px;
+    box-sizing: border-box;
 }
-
 .btn:active { transform: scale(0.97); }
-
-.btn-primary {
-    background: linear-gradient(180deg, #007aff 0%, #0056b3 100%);
-    color: #fff; border-top: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 0 10px 20px rgba(0,122,255,0.25);
-}
+.btn-primary { background: linear-gradient(180deg, #007aff 0%, #0056b3 100%); color: #fff; border-top: 1px solid rgba(255,255,255,0.2); box-shadow: 0 10px 20px rgba(0,122,255,0.25); }
 
 .btn-toggle, .btn-position, .btn-payment {
-    flex: 1; padding: 12px 8px; border-radius: 14px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: var(--text-muted); font-size: 13px; font-weight: 600;
-    cursor: pointer; transition: all 0.2s ease;
-    text-align: center;
+    flex: 1; padding: 14px 10px; border-radius: 14px; background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-muted); font-size: 15px; font-weight: 600; cursor: pointer; text-align: center;
 }
+.btn-toggle.active, .btn-position.active, .btn-payment.active { background: rgba(255, 255, 255, 0.15); border-color: var(--ios-blue); color: #fff; box-shadow: 0 4px 12px rgba(0,122,255,0.15); }
 
-.btn-toggle.active, .btn-position.active, .btn-payment.active {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: var(--ios-blue); color: #fff;
-    box-shadow: 0 4px 12px rgba(0,122,255,0.15);
-}
-
-.quick-btn {
-    flex: 1; min-width: 60px; padding: 10px; border-radius: 12px;
-    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.06);
-    color: #fff; font-size: 13px; font-weight: 600; cursor: pointer;
-}
+.quick-btn { flex: 1; min-width: 65px; padding: 12px 8px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.06); color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; }
 .quick-btn:active { background: rgba(255,255,255,0.15); }
 
-/* ========================================== */
-/* 📊 TABLES & BADGES                         */
-/* ========================================== */
 .table-area { width: 100%; border-collapse: collapse; margin-top: 4px; }
-.table-area th {
-    text-align: left; font-size: 12px; color: var(--text-muted);
-    padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.08);
-    font-weight: 500;
-}
+.table-area th { text-align: left; font-size: 14px; color: var(--text-muted); padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.table-area td { padding: 14px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 16px; }
 
-.table-area td { padding: 12px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
-
-.badge {
-    padding: 4px 8px; border-radius: 8px; font-size: 11px; font-weight: 600;
-}
+.badge { padding: 5px 10px; border-radius: 8px; font-size: 12px; font-weight: 700; }
 .badge-lao { background: rgba(0, 190, 255, 0.15); color: #00beff; }
 .badge-th { background: rgba(255, 45, 85, 0.15); color: #ff2d55; }
+.btn-remove { background: transparent; border: none; cursor: pointer; font-size: 16px; }
 
-.btn-remove {
-    background: transparent; border: none; cursor: pointer; font-size: 14px; padding: 4px;
-}
-
-/* ========================================== */
-/* 🏢 MENU GRID BOX SYSTEM                     */
-/* ========================================== */
 .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
-.menu-box {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 24px; padding: 22px 14px; text-align: center; cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
+.menu-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; padding: 22px 14px; text-align: center; cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
 .menu-box:active { transform: scale(0.95); background: rgba(255,255,255,0.08); }
-.menu-box-icon { font-size: 32px; margin-bottom: 12px; }
-.menu-box-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #fff; }
-.menu-box-desc { font-size: 11px; color: var(--text-muted); }
+.menu-box-icon { font-size: 36px; margin-bottom: 12px; }
+.menu-box-title { font-size: 17px; font-weight: 600; margin-bottom: 4px; color: #fff; }
+.menu-box-desc { font-size: 12px; color: var(--text-muted); }
 
-/* ========================================== */
-/* ⏳ NEW 5-BILLS DASHBOARD SUMMARY LIST       */
-/* ========================================== */
 .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-.stat-box { 
-    background: rgba(255,255,255,0.04); border-radius: 20px; padding: 16px 8px; text-align: center; 
-    border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 1px 2px rgba(255,255,255,0.05);
-}
-.stat-box p { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
-.stat-box h3 { font-size: 15px; font-weight: 700; }
+.stat-box { background: rgba(255,255,255,0.04); border-radius: 20px; padding: 16px 8px; text-align: center; border: 1px solid rgba(255,255,255,0.08); }
+.stat-box p { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+.stat-box h3 { font-size: 16px; font-weight: 700; }
 
-.history-list { max-height: 420px; overflow-y: auto; padding-right: 4px; }
+.history-list { max-height: 440px; overflow-y: auto; padding-right: 4px; }
+.history-item { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-radius: 20px; background: rgba(255,255,255,0.04); margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
 
-/* 🆕 3. ปรับสไตล์กล่องสรุปบิลล่าสุด 5 รายการ (ไอเดียใหม่) ให้คมชัด สวยงาม มีมิติแยกแต่ละคิวบิล */
-.history-item { 
-    display: flex; justify-content: space-between; align-items: center; 
-    padding: 16px; border-radius: 20px; background: rgba(255,255,255,0.04); 
-    margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    transition: transform 0.2s ease;
-}
-.history-item:active {
-    transform: scale(0.98);
-    background: rgba(255,255,255,0.07);
-}
+.nam-sat-display { display: block; font-size: 16px; color: #ffb703; text-align: center; margin-top: 10px; font-weight: 600; min-height: 18px; }
 
-/* ========================================== */
-/* 📜 COPY BILL PREVIEW AREA                  */
-/* ========================================== */
-.bill-preview-box {
-    background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 20px; padding: 16px; text-align: left; max-height: 240px;
-    overflow-y: auto; margin-bottom: 20px;
-}
-.bill-preview-box pre {
-    color: #00df89; font-family: 'Courier New', Courier, monospace;
-    font-size: 14px; white-space: pre-wrap; line-height: 1.4;
-}
+.glass-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 12, 24, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 9999; display: none; animation: fadeIn 0.3s ease-out; }
 
-.nam-sat-display {
-    display: block; font-size: 13px; color: #ffb703; text-align: center;
-    margin-top: 8px; font-weight: 500; min-height: 18px;
+.glass-modal-card { 
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+    width: 94%; max-width: 440px; max-height: 90vh; 
+    background: rgba(18, 35, 71, 0.95); border: 1px solid rgba(255, 255, 255, 0.2); 
+    border-top: 2px solid rgba(255, 255, 255, 0.4); border-radius: 26px; 
+    padding: 16px 14px; color: #fff; display: flex; flex-direction: column; overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
 }
+.status-modal-icon { font-size: 54px; margin-bottom: 16px; text-align: center; }
+.glass-modal-btn { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; padding: 12px 24px; border-radius: 16px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; box-sizing: border-box; }
+.glass-modal-btn.success { background: linear-gradient(180deg, #007aff 0%, #0056b3 100%); border: none; box-shadow: 0 8px 20px rgba(0,122,255,0.3); }
 
-/* ========================================== */
-/* 🎬 ANIMATIONS SYSTEM                        */
-/* ========================================== */
+.winner-row-box { display: flex; justify-content: space-between; align-items: center; padding: 14px 12px; background: rgba(0, 223, 137, 0.05); border: 1px solid rgba(0, 223, 137, 0.2); border-radius: 16px; margin-top: 10px; }
+
+.slip-scroll-wrapper { width: 100%; overflow-y: auto; overflow-x: hidden; flex: 1; margin-bottom: 12px; border-radius: 16px; padding-right: 2px; -webkit-overflow-scrolling: touch; }
+
+/* 📸 DIGITAL SLIP DESIGN (พื้นขาว) */
+.digital-slip-canvas { width: 100%; max-width: 100%; background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; padding: 14px 12px; text-align: left; color: #1a202c; box-sizing: border-box; display: block; }
+.slip-header-shine { text-align: center; border-bottom: 1px dashed #cbd5e1; padding-bottom: 8px; margin-bottom: 8px; }
+.slip-title-text { font-size: 17px; font-weight: 700; color: #007aff; letter-spacing: 0.5px; margin-top: 2px; }
+.slip-row-item { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 3px; color: #4a5568; font-weight: 500; }
+.slip-divider-line { border-top: 1px dashed #cbd5e1; margin: 8px 0; }
+.slip-total-banner { display: flex; justify-content: space-between; align-items: center; background: #f0fdf4; border-radius: 10px; padding: 8px 10px; margin-top: 6px; border: 1px solid #bbf7d0; }
+
+.slip-grid-container-triple { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; align-items: start; }
+.slip-column-block-nano { display: flex; flex-direction: column; gap: 3px; }
+
+.slip-item-row-super-nano { font-size: 11.5px; font-weight: 700; color: #1a202c; background: #f8fafc; padding: 4px 3px; border-radius: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-left: 2px solid #007aff; border-bottom: 1px solid #edf2f7; }
+
+/* 🔴 ไฮไลท์ตัวเลขที่ถูกหวยด้วยสีแดงสดตามที่คุยกันล่าสุด */
+.slip-item-row-super-nano.won-strike { border-left-color: #ff3b30; background: #fef2f2; color: #ff3b30; }
+
+.modal-action-footer { width: 100%; display: flex; flex-direction: column; gap: 8px; padding-top: 4px; }
+
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes bounceIn {
-    0% { opacity: 0; transform: scale(0.3); }
-    50% { opacity: 1; transform: scale(1.05); }
-    70% { transform: scale(0.9); }
-    100% { transform: scale(1); }
-}

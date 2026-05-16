@@ -101,7 +101,7 @@ function getAllUsernames() {
 }
 
 /**
- * 🆕 [ปรับปรุงเสร็จสมบูรณ์] ฟังก์ชันดึงสถิติและมัดรวมเวลาจากคอลัมน์ A ส่งไปให้หน้าบ้านแสดงผลนิ่ง ๆ
+ * ฟังก์ชันดึงสถิติและล็อกข้อความเวลาจากคอลัมน์ A ส่งไปให้หน้าบ้านแสดงผลนิ่ง ๆ
  */
 function getSalesStats() {
   try {
@@ -150,7 +150,7 @@ function getSalesStats() {
         totalMonth += rowAmt;
       }
 
-      // 🆕 ล็อกเวลาคอลัมน์ A ให้แปลงเป็นตัวหนังสือสากลนิ่งๆ จากเซิร์ฟเวอร์โดยตรง (แก้บั๊กเวลาเพี้ยนของแต่ละบิล)
+      // ล็อกเวลาคอลัมน์ A ให้แปลงเป็นตัวหนังสือสากลนิ่งๆ จากเซิร์ฟเวอร์โดยตรง
       let formattedTimeStr = "";
       try {
         if (row[0] instanceof Date) {
@@ -168,12 +168,12 @@ function getSalesStats() {
       }
 
       history.push({
-        time: formattedTimeStr, // ส่งข้อความดิบ เช่น "Fri May 15 2026 เวลา: 21:55" ไปที่หน้าบ้านเลย
+        time: formattedTimeStr, 
         customer: row[1] || "ทั่วไป",
         num: row[3] || "-",
         type: row[2] || "-",
         amt: rowAmt,
-        seller: row[8] || "แอดมิน" // ดึงชื่อจากคอลัมน์ผู้บันทึกโดยตรง
+        seller: row[8] || "แอดมิน" 
       });
     }
 
@@ -192,7 +192,7 @@ function getSalesStats() {
 }
 
 /**
- * [ปรับปรุงแก้ไข] ฟังก์ชันรับข้อมูลบิลจากหน้าเว็บและบันทึกลงชีต
+ * ฟังก์ชันรับข้อมูลบิลจากหน้าเว็บและบันทึกลงชีต
  */
 function saveOrderFromWeb(data) {
   const lock = LockService.getScriptLock();
@@ -219,7 +219,6 @@ function saveOrderFromWeb(data) {
     let orderTable = "";
     let totalAll = 0;
     
-    // 🆕 แก้ไขระบบดึงชื่อผู้บันทึก โดยค้นหาแบบเรียลไทม์จากชีต USER โดยตรงเพื่อความถูกต้อง
     let sellerName = "แอดมินระบบ";
     if (data.user) {
       try {
@@ -245,7 +244,7 @@ function saveOrderFromWeb(data) {
       orderTable += `${String(item.num).padEnd(4, " ")} | ${typeIcon} | ${String(item.qty || "1").padEnd(3, " ")} | ${item.amt.toLocaleString()} ₭\n`;
       
       rows.push([
-        now, // บันทึกเป็น Object เวลาลงไปเพื่อให้ชีตจัดรูปแบบได้สมบูรณ์
+        now, 
         data.customer || "ทั่วไป",
         item.type,
         "'" + item.num,  
@@ -306,12 +305,38 @@ function escapeHtml(text) {
   return text.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-function doGet() {
-  return HtmlService.createTemplateFromFile('index')
-      .evaluate()
-      .setTitle('Smart Huay Pro')
-      .addMetaTag('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover')
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+// 🆕 แก้ไขฟังก์ชัน doGet(e) ให้เป็นระบบ API คลีนๆ ไม่เรนเดอร์หน้าจอเก่าซ้ำซ้อน
+function doGet(e) {
+  return ContentService.createTextOutput("Smart Huay Pro API Connected Successfully! 🚀")
+                       .setMimeType(ContentService.MimeType.TEXT);
+}
+
+// ฟังก์ชันสำหรับรับส่งข้อมูลในรูปแบบ POST API ข้ามค่ายจาก GitHub Pages
+function doPost(e) {
+  const JSON_OUTPUT = (res) => ContentService.createTextOutput(JSON.stringify(res)).setMimeType(ContentService.MimeType.JSON);
+  try {
+    const postData = JSON.parse(e.postData.contents);
+    
+    if (postData.action === "login") {
+      const loginRes = checkLogin(postData.username, postData.pin);
+      return JSON_OUTPUT(loginRes);
+    }
+    if (postData.action === "getUsernames") {
+      const users = getAllUsernames();
+      return JSON_OUTPUT({ success: true, users: users });
+    }
+    if (postData.action === "getStats") {
+      const stats = getSalesStats();
+      return JSON_OUTPUT(stats);
+    }
+    if (postData.action === "saveOrder") {
+      const saveResStr = saveOrderFromWeb(postData.payload);
+      return JSON_OUTPUT(JSON.parse(saveResStr));
+    }
+    return JSON_OUTPUT({ success: false, message: "ไม่พบคำสั่งที่ระบุ" });
+  } catch (err) {
+    return JSON_OUTPUT({ success: false, message: err.toString() });
+  }
 }
 
 function include(filename) {
