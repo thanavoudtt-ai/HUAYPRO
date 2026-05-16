@@ -11,7 +11,7 @@ let winnersGlobalDataCache = [];
 const tamraHuay = {
     "01": "ປານ້ອຍ", "41": "ປານ້ອຍ", "81": "ປານ້ອຍ", "02": "ຫອย", "42": "ຫອย", "82": "ຫອย",
     "03": "ຫ່ານ", "43": "ຫ່ານ", "83": "ຫ່ານ", "04": "ນົກຍຸງ", "44": "ນົກຍຸງ", "84": "ນົກຍຸງ",
-    "05": "ສິງ", "45": "ສิง", "85": "ສິງ", "06": "ເສືອ", "46": "ເສືອ", "86": "ເສືອ",
+    "05": "ສິງ", "45": "ສິງ", "85": "ສິງ", "06": "ເສືอ", "46": "ເສືອ", "86": "ເສືອ",
     "07": "ໝູ", "47": "ໝູ", "87": "ໝູ", "08": "ກະຕ່າຍ", "48": "ກະຕ່າຍ", "88": "ກະຕ່າຍ",
     "09": "ควาย", "49": "ควาย", "89": "ควาย", "10": "ນາກນ້ຳ", "50": "ນາກນ້ຳ", "90": "ນາກນ້ຳ",
     "11": "ໝາ", "51": "ໝາ", "91": "ໝາ", "12": "ມ້າ", "52": "ມ້າ", "92": "ມ້າ",
@@ -20,12 +20,12 @@ const tamraHuay = {
     "17": "ນົກຍາງ", "57": "ນົກຍາງ", "98": "ນົກຍາງ", "18": "ແມວປ່າ", "58": "ແມວປ່າ", "98": "ແມວປ່າ",
     "19": "ແມງກະເບື້ອ", "59": "ແມງກະເບື້ອ", "99": "ແມງກະເບື້ອ", "00": "ขี้เข็บ", "20": "ขี้เข็บ", "60": "ขี้เข็บ",
     "21": "ນົກແອ່ນ", "61": "ນົກແອ່ນ", "22": "ນົກກາງແກ", "62": "ນົກກາງແກ", "23": "ລິງ", "63": "ລິງ",
-    "24": "ກົບ", "64": "ກົບ", "25": "ແຫຼວ", "65": "ແຫຼว", "26": "ນາກບິນ", "66": "ນາກບິນ",
-    "27": "ເຕົ່າ", "67": "ເຕົ່າ", "28": "ໄກ่", "68": "ໄກ່", "29": "ອ່ຽນ", "69": "ອ່ຽນ",
-    "30": "ປ່າໃຫຍ່", "70": "ປ່າໃຫຍ່", "31": "ກຸ້ງ", "71": "ກຸ້ງ", "32": "ງູ", "72": "ງູ",
+    "24": "ກົບ", "64": "ກົບ", "25": "ແຫຼວ", "65": "ແຫຼວ", "26": "ນາກບິນ", "66": "ນາກບິນ",
+    "27": "ເຕົ່າ", "67": "ເຕົ່າ", "28": "ໄກ່", "68": "ໄກ່", "29": "ອ່ຽນ", "69": "ອ່ຽນ",
+    "30": "ປ່າໃຫຍ່", "70": "ປ່າໃຫຍ่", "31": "ກຸ້ງ", "71": "ກຸ້ງ", "32": "ງູ", "72": "ງູ",
     "33": "ແມງມຸມ", "73": "ແມງມຸມ", "34": "ກວາງ", "74": "ກວາງ", "35": "ແບ້", "75": "ແບ້",
     "36": "ເຫງັນ", "76": "ເຫງັນ", "37": "ຫຼິ່ນ", "77": "ຫຼິ່ນ", "38": "ເໝັ່ນ", "78": "ເໝັ່ນ",
-    "39": "ກະປູ", "79": "ກະປູ", "40": "ນົກອินຊີ", "80": "ນົກອິນຊີ"
+    "39": "ກະປູ", "79": "ກະປູ", "40": "ນົກອິນຊີ", "80": "ນົກອິນຊີ"
 };
 
 window.addEventListener('DOMContentLoaded', function() {
@@ -148,7 +148,7 @@ function triggerWinnerSlipModal(index) {
         const dlBtn = document.getElementById('downloadImgBtn');
         if (dlBtn) {
             dlBtn.className = "btn btn-primary"; 
-            dlBtn.innerText = "บันทึกรูปภาพ";
+            dlBtn.innerText = "👉 จิ้มค้างที่สลิปเพื่อบันทึกรูปภาพ";
         }
         document.getElementById('copyBillModal').style.display = 'block';
         document.querySelector('.slip-scroll-wrapper').scrollTop = 0;
@@ -156,23 +156,13 @@ function triggerWinnerSlipModal(index) {
 }
 
 function downloadSlipToGallery() {
-    const captureArea = document.getElementById('digitalSlipCaptureArea');
     const dlBtn = document.getElementById('downloadImgBtn');
-    dlBtn.disabled = true; dlBtn.innerText = "⏳ กำลังสร้างรูปภาพลงคลัง...";
-
-    html2canvas(captureArea, { backgroundColor: "#ffffff", scale: 2, logging: false, useCORS: true }).then(canvas => {
-        const dataUrl = canvas.toDataURL("image/png");
-        const link = document.createElement('a');
-        link.download = `HuayReceipt_${Date.now()}.png`; link.href = dataUrl; link.click();
-        dlBtn.style.background = "linear-gradient(180deg, #34c759 0%, #28a745 100%)";
-        dlBtn.innerText = "✅ บันทึกลงเครื่องแล้ว! กดส่งรูปในแชทได้เลย";
-        setTimeout(() => {
-            dlBtn.disabled = false; dlBtn.style.background = "linear-gradient(180deg, #007aff 0%, #0056b3 100%)";
-            dlBtn.innerText = "บันทึกรูปภาพ";
-        }, 3000);
-    }).catch(err => {
-        alert("บันทึกรูปพลาด: " + err); dlBtn.disabled = false;
-    });
+    dlBtn.style.background = "linear-gradient(180deg, #ff9500 0%, #ff8000 100%)";
+    dlBtn.innerText = "💡 แตะค้างที่ภาพบิลสีขาวด้านบน แล้วเลือกเซฟรูปได้เลยครับ";
+    setTimeout(() => {
+        dlBtn.style.background = "linear-gradient(180deg, #007aff 0%, #0056b3 100%)";
+        dlBtn.innerText = "👉 จิ้มค้างที่สลิปเพื่อบันทึกรูปภาพ";
+    }, 5000);
 }
 
 function generateAndShareSlipPhoto() {
@@ -275,6 +265,7 @@ function setQuickAmount(amount) {
     } else { const el = document.getElementById('huayAmt'); el.value = (parseFloat(el.value) || 0) + amount; el.focus(); }
 }
 
+// ระบบบันทึกแล้วดันตัวล่าสุดเข้าสู่ข้างบนสุดด้วย unshift ()
 function addItem() {
     const num = document.getElementById('huayNum').value; if (!num) { alert('กรุณาระบุเลขหวยก่อน'); return; }
     let now = new Date(); let timeStr = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
@@ -354,7 +345,7 @@ function submitBill() {
                 document.getElementById('slipItemsContainer').innerHTML = buildTripleColumnsLayout(itemsList);
                 
                 document.getElementById('downloadImgBtn').className = "btn btn-primary";
-                document.getElementById('downloadImgBtn').innerText = "บันทึกรูปภาพ";
+                document.getElementById('downloadImgBtn').innerText = "👉 จิ้มค้างที่สลิปเพื่อบันทึกรูปภาพ";
                 
                 document.getElementById('copyBillModal').style.display = 'block';
                 document.querySelector('.slip-scroll-wrapper').scrollTop = 0;

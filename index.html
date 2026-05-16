@@ -65,11 +65,11 @@
                 <div class="card" style="border: 1px solid rgba(0, 223, 137, 0.25); overflow: hidden;">
                     <h2 style="color: #00df89;">🎯 ตรวจเช็คยอดคนถูกหวยประจำวัน</h2>
                     <div class="input-group" style="margin-bottom: 14px;">
-                        <label style="color:#00df89; font-weight:bold;">📅 ขั้นตอนที่ 1: เลือกวันที่ต้องการตรวจสอบ</label>
+                        <label style="color:#00df89; font-weight:bold;">📅 วันที่ต้องการตรวจสอบ</label>
                         <input type="date" id="winnerTargetDateInput" style="border-color: rgba(0, 223, 137, 0.3); font-weight:600;">
                     </div>
                     <div class="input-group" style="margin-bottom: 14px;">
-                        <label style="color:#00df89; font-weight:bold;">🔢 ขั้นตอนที่ 2: ระบุเลขผลรางวัลหวย</label>
+                        <label style="color:#00df89; font-weight:bold;">🔢 ระบุเลขผลรางวัลหวย</label>
                         <div style="display: flex; gap: 10px; width: 100%; box-sizing: border-box;">
                             <input type="number" id="winNumberInput" placeholder="กรอกเลขรางวัล (เช่น 970)" inputmode="numeric" style="font-size: 16px; font-weight: bold; text-align: center; border-color: rgba(0, 223, 137, 0.4); flex: 1; width: 100%;">
                             <button class="btn btn-primary" id="btnCheckWin" onclick="checkDailyWinners()" style="width: auto; padding: 0 16px; background: linear-gradient(180deg, #00df89 0%, #00a061 100%); border:none; box-shadow: 0 4px 12px rgba(0,223,137,0.25); white-space: nowrap;">🔍 ค้นหา</button>
@@ -210,7 +210,7 @@
                 </div>
             </div>
             <div class="modal-action-footer">
-                <button id="downloadImgBtn" class="btn btn-primary" onclick="downloadSlipToGallery()" style="width: 100%; margin: 0; font-weight:bold;">บันทึกรูปภาพ</button>
+                <button id="downloadImgBtn" class="btn btn-primary" onclick="downloadSlipToGallery()" style="width: 100%; margin: 0; font-weight:bold;">👉 จิ้มค้างที่สลิปเพื่อบันทึกรูปภาพ</button>
                 <button id="shareImgBtn" class="btn" onclick="generateAndShareSlipPhoto()" style="width: 100%; margin: 0; background: rgba(52, 199, 89, 0.15); border: 1px solid rgba(52, 199, 89, 0.3); color: #34c759; font-weight:bold;">แชร์รูปภาพ</button>
                 <button class="glass-modal-btn" onclick="closeCopyModal()" style="width: 100%; margin: 0; background: rgba(255,255,255,0.08); font-size: 14px; padding: 10px;">ปิดหน้าต่างใบเสร็จ</button>
             </div>
