@@ -114,7 +114,11 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); font-
 .slip-scroll-wrapper { width: 100%; overflow-y: auto; overflow-x: hidden; flex: 1; margin-bottom: 12px; border-radius: 16px; padding-right: 2px; -webkit-overflow-scrolling: touch; }
 
 /* 📸 DIGITAL SLIP DESIGN (พื้นขาว) */
-.digital-slip-canvas { width: 100%; max-width: 100%; background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; padding: 14px 12px; text-align: left; color: #1a202c; box-sizing: border-box; display: block; }
+.digital-slip-canvas { 
+    width: 432px !important; 
+    height: auto !important; /* เปลี่ยนจาก 540px เป็น auto เพื่อเปิดส่วนขยาย */
+    min-height: 540px;
+}
 .slip-header-shine { text-align: center; border-bottom: 1px dashed #cbd5e1; padding-bottom: 8px; margin-bottom: 8px; }
 .slip-title-text { font-size: 17px; font-weight: 700; color: #007aff; letter-spacing: 0.5px; margin-top: 2px; }
 .slip-row-item { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 3px; color: #4a5568; font-weight: 500; }

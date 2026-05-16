@@ -63,13 +63,13 @@
                 </div>
 
                 <div class="card" style="border: 1px solid rgba(0, 223, 137, 0.25); overflow: hidden;">
-                    <h2 style="color: #00df89;">🎯 ตรวจเช็คยอดคนถูกหวยประจำวัน</h2>
+                    <h2 style="color: #00df89; font-size: 22px; justify-content: center;">ตรวจเช็คยอดคนถูกหวยประจำวัน</h2>
                     <div class="input-group" style="margin-bottom: 14px;">
-                        <label style="color:#00df89; font-weight:bold;">📅 วันที่ต้องการตรวจสอบ</label>
+                        <label style="color:#00df89; font-weight:bold;">วันที่ต้องการตรวจสอบ</label>
                         <input type="date" id="winnerTargetDateInput" style="border-color: rgba(0, 223, 137, 0.3); font-weight:600;">
                     </div>
                     <div class="input-group" style="margin-bottom: 14px;">
-                        <label style="color:#00df89; font-weight:bold;">🔢 ระบุเลขผลรางวัลหวย</label>
+                        <label style="color:#00df89; font-weight:bold;">ระบุเลขผลรางวัลหวย</label>
                         <div style="display: flex; gap: 10px; width: 100%; box-sizing: border-box;">
                             <input type="number" id="winNumberInput" placeholder="กรอกเลขรางวัล (เช่น 970)" inputmode="numeric" style="font-size: 16px; font-weight: bold; text-align: center; border-color: rgba(0, 223, 137, 0.4); flex: 1; width: 100%;">
                             <button class="btn btn-primary" id="btnCheckWin" onclick="checkDailyWinners()" style="width: auto; padding: 0 16px; background: linear-gradient(180deg, #00df89 0%, #00a061 100%); border:none; box-shadow: 0 4px 12px rgba(0,223,137,0.25); white-space: nowrap;">🔍 ค้นหา</button>
@@ -88,7 +88,6 @@
                     <button onclick="logout()" style="background: transparent; border: none; color: var(--ios-pink); cursor: pointer; font-size: 16px; font-weight: bold;">❌ ออก</button>
                 </div>
                 <div class="card">
-                    <h2>📝 กรอกข้อมูลรายการ</h2>
                     <div class="input-group"><label>ชื่อลูกค้า</label><input type="text" id="custName" placeholder="พิมพ์ระบุชื่อลูกค้า..."></div>
                     <div class="input-group">
                         <label>ประเภทหวย</label>
@@ -132,11 +131,10 @@
                             <button class="quick-btn" onclick="setQuickAmount(50000)">50K</button>
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="addItem()" style="font-size: 18px; font-weight: bold;">➕ บันทึกเพิ่มรายการนี้</button>
+                    <button class="btn btn-primary" onclick="addItem()" style="font-size: 18px; font-weight: bold;">➕ เพิ่มในรายการ</button>
                 </div>
                 
                 <div class="card">
-                    <h2>🧾 ตารางบิลปัจจุบัน</h2>
                     <table class="table-area">
                         <thead><tr><th>เลข</th><th>ประเภท</th><th>เงินเดิมพัน</th><th style="width: 45px;"></th></tr></thead>
                         <tbody id="billTableBody"><tr><td colspan="4" style="text-align:center; color: var(--text-muted); font-size: 15px;">ยังไม่มีรายการถูกเพิ่มเข้าบิล</td></tr></tbody>
@@ -151,7 +149,7 @@
                             <button class="btn-payment" data-method="เงินโอน" onclick="setPaymentMethod('เงินโอน', this)">📱 สแกนโอนเงิน</button>
                         </div>
                     </div>
-                    <button class="btn btn-primary" id="btnSubmit" onclick="submitBill()" style="font-size: 19px; font-weight: bold; background: linear-gradient(180deg, #00df89 0%, #00a061 100%);">✅ ยืนยันปิดบิลและส่งเข้า Telegram</button>
+                    <button class="btn btn-primary" id="btnSubmit" onclick="submitBill()" style="font-size: 19px; font-weight: bold; background: linear-gradient(180deg, #00df89 0%, #00a061 100%);">✅ ขาย และ บันทึก</button>
                 </div>
             </div>
 
@@ -162,7 +160,6 @@
                     <button onclick="logout()" style="background: transparent; border: none; color: var(--ios-pink); cursor: pointer; font-size: 16px; font-weight: bold;">❌ ออก</button>
                 </div>
                 <div class="card">
-                    <h2>📈 ยอดสรุปการขายรวม</h2>
                     <div class="stats-grid">
                         <div class="stat-box"><p>วันนี้</p><h3 style="color: #00beff; font-size: 16px;" id="statToday">0 ₭</h3></div>
                         <div class="stat-box"><p>สัปดาห์นี้</p><h3 style="color: #ff9500; font-size: 16px;" id="statWeek">0 ₭</h3></div>
@@ -170,7 +167,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <h2>⏳ สรุปบิลล่าสุด 5 รายการ</h2>
+                    <h2>⏳ 5 รายการล่าสุด</h2>
                     <div class="history-list" id="historyContainer"></div>
                 </div>
             </div>
@@ -183,36 +180,65 @@
         <div class="glass-modal-card">
             <h3 id="modalBillTitle" style="font-size: 18px; margin-bottom: 12px; text-align: center; font-weight: 700;">🧾 ใบเสร็จรับเงินอิเล็กทรอนิกส์</h3>
             <div class="slip-scroll-wrapper">
-                <div id="digitalSlipCaptureArea" class="digital-slip-canvas">
-                    <div class="slip-header-shine">
-                        <div style="font-size: 24px; text-align: center;">💎</div>
-                        <div class="slip-title-text" style="text-align: center;">SMART HUAY PRO</div>
-                        <div style="font-size: 10.5px; color: #718096; margin-top: 1px; text-align: center; font-weight:600;">ใบเสร็จรับเงินสั่งซื้อหวยออนไลน์</div>
-                    </div>
-                    
-                    <div style="font-size: 11px; color: #718096; margin-bottom: 5px; font-weight: 700;">📋 รายการตัวเลขที่เดิมพัน:</div>
-                    <div id="slipItemsContainer" class="slip-grid-container-triple"></div>
-                    
-                    <div class="slip-divider-line"></div>
-                    <div class="slip-total-banner">
-                        <span style="font-size: 14px; font-weight: 700; color:#2d3748;">💰 ยอดเงินรวมทั้งสิ้น:</span>
-                        <strong id="slipTotalAmt" style="font-size: 18px; color: #16a34a; font-weight: 800;">0 ₭</strong>
-                    </div>
+                <div id="singleImageContainerView">
+                    <div id="digitalSlipCaptureArea" class="digital-slip-canvas" style="width: 432px !important; height: auto !important; min-height: 540px; background: #ffffff; position: fixed; left: -9999px; top: 0; padding: 20px; box-sizing: border-box; font-family: 'Noto Sans Thai', sans-serif;">
+    <div style="border: 2px solid #0056b3; height: auto; border-radius: 14px; padding: 14px; box-sizing: border-box; position: relative; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+        
+        <div>
+            <div id="slipHeaderColor" style="background: linear-gradient(135deg, #0056b3 0%, #007aff 100%); border-radius: 10px; padding: 12px; text-align: center; color: #ffffff; position: relative; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0,90,179,0.2);">
+                <div id="slipHeaderIcon" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 26px;">🧾</div>
+                <h2 id="modalBillTitle" style="margin: 0; font-size: 19px; font-weight: 800; letter-spacing: 0.5px;">ใบเสร็จรับเงินอิเล็กทรอนิกส์</h2>
+                <p id="modalBillSubtitle" style="margin: 3px 0 0 0; font-size: 11px; opacity: 0.85; font-weight: 500; letter-spacing: 0.3px;">ระบบจัดการข้อมูลสลากกินแบ่งดิจิทัลอัจฉริยะ</p>
+            </div>
 
-                    <div class="slip-divider-line"></div>
-                    
-                    <div class="slip-row-item"><span>👤 ชื่อลูกค้า:</span><strong id="slipCustName" style="color:#1a202c;">-</strong></div>
-                    <div class="slip-row-item"><span>⏰ วันเวลาซื้อ:</span><span id="slipTimeBuy" style="color:#4a5568; font-size: 12px;">-</span></div>
-                    <div class="slip-row-item"><span>💳 ชำระเงินผ่าน:</span><span id="slipPayment" style="color:#4a5568;">-</span></div>
-                    <div class="slip-row-item"><span>👤 พนักงานขาย:</span><span id="slipSeller" style="color:#4a5568;">-</span></div>
-                    
-                    <div style="text-align: center; font-size: 9.5px; color: #a0aec0; margin-top: 12px; letter-spacing: 0.5px; font-weight:600; border-top: 1px solid #edf2f7; padding-top: 8px;">*** ขอบคุณที่ใช้บริการ ขอให้ท่านโชคดีรวยๆ ***</div>
+            <div style="background: #f8fafc; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #e2e8f0; font-size: 14px; color: #1e293b; font-weight: 700;">
+                👤 ลูกค้า: <span id="slipCustName" style="color: #0056b3;">-</span>
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; justify-content: space-between; font-size: 12px; color: #475569; font-weight: 600;">
+                    <div>⏰ เวลาซื้อ: <span id="slipTimeBuy" style="color: #0f172a; font-weight: 700;">-</span></div>
+                    <div>💳 ชำระโดย: <span id="slipPayment" style="color: #0f172a; font-weight: 700;">-</span></div>
                 </div>
+                <div style="background: #f1f5f9; padding: 6px 10px; border-radius: 6px; font-size: 12px; color: #475569; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                    🧑‍💼 ผู้ขายดิจิทัล: <span id="slipSeller" style="color: #0056b3; font-weight: 700;">-</span>
+                </div>
+            </div>
+
+            <div id="slipListTitle" style="border-bottom: 2px dashed #cbd5e1; padding-bottom: 6px; margin-bottom: 10px; font-size: 12px; font-weight: 700; color: #475569; letter-spacing: 0.5px;">
+                📝 รายการตัวเลขสลากที่เลือกซื้อ
+            </div>
+
+            <div id="slipItemsContainer" style="display: flex; justify-content: space-between; gap: 6px; width: 100%; box-sizing: border-box;">
+                </div>
+        </div>
+
+        <div>
+            <div style="border-top: 2px dashed #cbd5e1; padding-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+                
+                <div id="slipDrawDateRow" style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px 14px; border-radius: 8px; font-size: 13px; color: #475569; font-weight: 600;">
+                    <span>📅 งวดประจำวันที่:</span>
+                    <strong id="slipDrawDate" style="color: #1e293b; font-size: 14px; font-weight: 700;">-</strong>
+                </div>
+
+                <div id="slipTotalBanner" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); padding: 12px 14px; border: 1.5px solid #7dd3fc; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(3,105,161,0.08);">
+                    <span id="slipTotalLabel" style="font-size: 14.5px; font-weight: 800; color: #0369a1; display: flex; align-items: center; gap: 4px;">💰 ยอดรวมเงินที่ซื้อทั้งสิ้น:</span>
+                    <strong id="slipTotalAmt" style="font-size: 23px; color: #0369a1; font-weight: 900; letter-spacing: 0.5px;">0 ₭</strong>
+                </div>
+            </div>
+
+            <div id="slipFooterThankText" style="text-align: center; font-size: 10px; color: #94a3b8; margin-top: 14px; letter-spacing: 0.5px; font-weight: 700;">
+                *** ขอขอบพระคุณและขอให้ท่านโชคดีรวยๆ ***
+            </div>
+        </div>
+
+    </div>
+</div>
             </div>
             <div class="modal-action-footer">
                 <button id="downloadImgBtn" class="btn btn-primary" onclick="downloadSlipToGallery()" style="width: 100%; margin: 0; font-weight:bold;">👉 จิ้มค้างที่สลิปเพื่อบันทึกรูปภาพ</button>
                 <button id="shareImgBtn" class="btn" onclick="generateAndShareSlipPhoto()" style="width: 100%; margin: 0; background: rgba(52, 199, 89, 0.15); border: 1px solid rgba(52, 199, 89, 0.3); color: #34c759; font-weight:bold;">แชร์รูปภาพ</button>
-                <button class="glass-modal-btn" onclick="closeCopyModal()" style="width: 100%; margin: 0; background: rgba(255,255,255,0.08); font-size: 14px; padding: 10px;">ปิดหน้าต่างใบเสร็จ</button>
+                <button class="glass-modal-btn" onclick="closeCopyModal()" style="width: 100%; margin: 0; background: rgba(255,255,255,0.08); font-size: 14px; padding: 10px;">ปิดใบเสร็จ</button>
             </div>
         </div>
     </div>

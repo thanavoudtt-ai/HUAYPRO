@@ -305,6 +305,97 @@ function escapeHtml(text) {
   return text.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+/**
+ * ฟังก์ชันตรวจเช็คผู้ชนะหวยในวันที่กำหนด
+ */
+function checkWinners(winningNum, targetDate) {
+  try {
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    const sheet = ss.getSheetByName(SHEET_DATA);
+    if (!sheet || sheet.getLastRow() <= 1) {
+      return { success: true, winners: [] };
+    }
+    
+    const data = sheet.getDataRange().getValues();
+    const winners = [];
+    const customerBills = {};
+
+    for (let i = 1; i < data.length; i++) {
+      const row = data[i];
+      if (!row[0] || row[0] === "") continue;
+
+      // ตรวจเช็คว่าวันที่ตรงกับวันที่ค้นหาหรือไม่
+      let rowDate;
+      const dateParts = String(row[0]).split(" ")[0].split("/");
+      if (dateParts.length === 3) {
+        rowDate = `${dateParts[0]}/${dateParts[1]}/${dateParts[2]}`;
+      } else {
+        const date = new Date(row[0]);
+        rowDate = Utilities.formatDate(date, "GMT+7", "dd/MM/yyyy");
+      }
+      
+      if (rowDate !== targetDate) continue;
+
+      // ตรวจเช็คเลขหวย
+      const billNum = String(row[3] || "").replace(/[^0-9]/g, "");
+      if (billNum.slice(-3) === winningNum) {
+        const customer = row[1] || "ทั่วไป";
+        const billKey = customer + "_" + rowDate;
+        
+        if (!customerBills[billKey]) {
+          customerBills[billKey] = {
+            customer: customer,
+            items: [],
+            payment: row[6] || "เงินสด",
+            seller: row[8] || "แอดมิน"
+          };
+        }
+        
+        const qty = row[4] || "1";
+        const amt = row[5] || 0;
+        const type = row[2] || "-";
+        const position = row[3] || "-";
+        
+        customerBills[billKey].items.push({
+          num: billNum,
+          type: type,
+          position: position,
+          qty: qty,
+          amt: amt
+        });
+      }
+    }
+
+    // สร้างบิลข้อความสำหรับแสดงผล
+    for (let billKey in customerBills) {
+      const bill = customerBills[billKey];
+      let billText = "";
+      
+      bill.items.forEach((item, idx) => {
+        billText += `${idx + 1}.🎉 ${item.num} [${item.position}] x${item.qty} - ${item.amt} ₭ถูกหวย!!\n`;
+      });
+      
+      billText += `เวลาซื้อ: ${Utilities.formatDate(new Date(), "GMT+7", "dd/MM/yyyy HH:mm:ss")}\n`;
+      billText += `ชำระโดย: ${bill.payment}\n`;
+      billText += `ผู้ขาย: ${bill.seller}\n`;
+      
+      const totalAmt = bill.items.reduce((sum, item) => sum + item.amt, 0);
+      billText += `ยอดรวม: ${totalAmt} ₭`;
+      
+      winners.push({
+        customer: bill.customer,
+        billText: billText,
+        items: bill.items
+      });
+    }
+
+    return { success: true, winners: winners };
+  } catch (error) {
+    Logger.log("Check Winners Error: " + error.toString());
+    return { success: false, message: error.toString() };
+  }
+}
+
 // 🆕 แก้ไขฟังก์ชัน doGet(e) ให้เป็นระบบ API คลีนๆ ไม่เรนเดอร์หน้าจอเก่าซ้ำซ้อน
 function doGet(e) {
   return ContentService.createTextOutput("Smart Huay Pro API Connected Successfully! 🚀")
@@ -332,6 +423,10 @@ function doPost(e) {
     if (postData.action === "saveOrder") {
       const saveResStr = saveOrderFromWeb(postData.payload);
       return JSON_OUTPUT(JSON.parse(saveResStr));
+    }
+    if (postData.action === "checkWinners") {
+      const winners = checkWinners(postData.winningNum, postData.targetDate);
+      return JSON_OUTPUT(winners);
     }
     return JSON_OUTPUT({ success: false, message: "ไม่พบคำสั่งที่ระบุ" });
   } catch (err) {

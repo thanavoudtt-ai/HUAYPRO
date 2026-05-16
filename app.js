@@ -9,22 +9,22 @@ let lastFocusedInput = null;
 let winnersGlobalDataCache = [];
 
 const tamraHuay = {
-    "01": "ປານ້ອຍ", "41": "ປານ້ອຍ", "81": "ປານ້ອຍ", "02": "ຫອย", "42": "ຫອย", "82": "ຫອย",
-    "03": "ຫ່ານ", "43": "ຫ່ານ", "83": "ຫ່ານ", "04": "ນົກຍຸງ", "44": "ນົກຍຸງ", "84": "ນົກຍຸງ",
-    "05": "ສິງ", "45": "ສິງ", "85": "ສິງ", "06": "ເສືອ", "46": "ເສືອ", "86": "ເສືອ",
+    "01": "ປານ້ອຍ", "41": "ປານ້ອຍ", "81": "ປານ້ອຍ", "02": "ຫອย", "42": "ຫອຍ", "82": "ຫອย",
+    "03": "ຫ່ານ", "43": "ຫ່ານ", "83": "ຫ່ານ", "04": "ນົກຍຸງ", "44": "ນົກຍຸງ", "84": "ນົກຍຸง",
+    "05": "ສິງ", "45": "ສິງ", "85": "ສิง", "06": "ເສືອ", "46": "ເສືອ", "86": "ເສືອ",
     "07": "ໝູ", "47": "ໝູ", "87": "ໝູ", "08": "ກະຕ່າຍ", "48": "ກະຕ່າຍ", "88": "ກະຕ່າຍ",
     "09": "ควาย", "49": "ควาย", "89": "ควาย", "10": "ນາກນ້ຳ", "50": "ນາກນ້ຳ", "90": "ນາກນ້ຳ",
     "11": "ໝາ", "51": "ໝາ", "91": "ໝາ", "12": "ມ້າ", "52": "ມ້າ", "92": "ມ້າ",
     "13": "ຊ້າງ", "53": "ຊ້າງ", "93": "ຊ້າງ", "14": "ແມວບ້ານ", "54": "ແມວບ້ານ", "94": "ແມວບ້ານ",
     "15": "ໜູ", "55": "ໜູ", "95": "ໜູ", "16": "ເຜິງ", "56": "ເຜິງ", "96": "ເຜິງ",
-    "17": "ນົກຍາງ", "57": "ນົກຍາງ", "98": "ນົກຍາງ", "18": "ແມວປ่า", "58": "ແມວປ່າ", "98": "ແມວປ່າ",
+    "17": "ນົກຍາງ", "57": "ນົກຍາງ", "98": "ນົກຍາງ", "18": "ແມວປ່າ", "58": "ແມວປ່າ", "98": "ແມวປ່າ",
     "19": "ແມງກະເບື້ອ", "59": "ແມງກະເບື້ອ", "99": "ແມງກະເບື້ອ", "00": "ขี้เข็บ", "20": "ขี้เข็บ", "60": "ขี้เข็บ",
     "21": "ນົກແອ່ນ", "61": "ນົກແອ່ນ", "22": "ນົກກາງແກ", "62": "ນົກກາງແກ", "23": "ລິງ", "63": "ລິງ",
     "24": "ກົບ", "64": "ກົບ", "25": "ແຫຼວ", "65": "ແຫຼວ", "26": "ນາກບິນ", "66": "ນາກບິນ",
     "27": "ເຕົ່າ", "67": "ເຕົ່າ", "28": "ໄກ່", "68": "ໄກ່", "29": "ອ່ຽນ", "69": "ອ່ຽນ",
     "30": "ປ່າໃຫຍ່", "70": "ປ່າໃຫຍ່", "31": "ກຸ້ງ", "71": "ກຸ້ງ", "32": "ງູ", "72": "ງູ",
-    "33": "ແມງມຸມ", "73": "ແມງມຸມ", "34": "ກວາງ", "74": "ກວาง", "35": "ແບ້", "75": "ແບ້",
-    "36": "ເຫງັນ", "76": "ເຫงັນ", "37": "ຫຼິ່ນ", "77": "ຫຼິ່ນ", "38": "ເໝັ່ນ", "78": "ເໝັ່ນ",
+    "33": "ແມງມຸມ", "73": "ແມງມຸມ", "34": "ກວາງ", "74": "ກວາງ", "35": "ແບ້", "75": "ແບ້",
+    "36": "ເຫງັນ", "76": "ເຫງັນ", "37": "ຫຼິ່ນ", "77": "ຫຼິ່ນ", "38": "ເໝັ່ນ", "78": "ເໝັ່ນ",
     "39": "ກະປູ", "79": "ກະປູ", "40": "ນົກອິນຊີ", "80": "ນົກອິນຊີ"
 };
 
@@ -84,9 +84,9 @@ function checkDailyWinners() {
                 winnersGlobalDataCache = data.winners;
                 let html = '';
                 winnersGlobalDataCache.forEach((winner, idx) => {
-                    html += `<div class="winner-row-box">
-                        <span style="font-size:16px; font-weight:700; color:#00df89;">🎉 ยอดถูกหวย: ${winner.customer}</span>
-                        <button class="glass-modal-btn success" onclick="triggerWinnerSlipModal(${idx})" style="padding: 6px 14px; font-size: 13px; border-radius: 10px;">📋 ดูบิลภาพสลิป</button>
+                    html += `<div class="winner-row-box" style="display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid rgba(255,255,255,0.05); background:rgba(255,255,255,0.02); margin-bottom:6px; border-radius:8px;">
+                        <span style="font-size:15px; font-weight:700; color:#00df89;">🎉 ถูกหวย: ${winner.customer}</span>
+                        <button class="btn btn-primary" onclick="triggerWinnerSlipModal(${idx})" style="padding: 6px 14px; font-size: 13px; border-radius: 10px; margin:0; width:auto; background:#007aff; font-weight:bold; border:none; color:#fff; cursor:pointer;">📋 ดูบิลภาพสลิป</button>
                     </div>`;
                 });
                 resultsArea.innerHTML = html;
@@ -99,89 +99,152 @@ function checkDailyWinners() {
 }
 
 function buildTripleColumnsLayout(itemsArray) {
-    const LIMIT_PER_COLUMN = 15; 
-    let col1Html = ""; let col2Html = ""; let col3Html = "";
-
+    const ROW_LIMIT = 13; 
+    let columns = [[], [], []];
+    
     itemsArray.forEach((itemText, index) => {
         let isWon = itemText.includes("ถูกหวย!!");
         let cleanedText = itemText.replace(/🎉.*/g, "").trim();
-        let extraClass = isWon ? "won-strike" : "";
-        let itemBlock = `<div class="slip-item-row-super-nano ${extraClass}">${cleanedText}</div>`;
         
-        if (index < LIMIT_PER_COLUMN) { col1Html += itemBlock; } 
-        else if (index < (LIMIT_PER_COLUMN * 2)) { col2Html += itemBlock; } 
-        else { col3Html += itemBlock; }
+        if (cleanedText.includes("-")) {
+            let parts = cleanedText.split("-");
+            let textPart = parts[0]; 
+            let moneyPart = parts[1]; 
+            
+            if (moneyPart) {
+                let numOnly = parseInt(moneyPart.replace(/[^0-9]/g, ""), 10);
+                if (!isNaN(numOnly) && numOnly >= 1000) {
+                    let kValue = (numOnly / 1000) + "k";
+                    cleanedText = `${textPart}-${kValue}`;
+                }
+            }
+        }
+
+        let customStyle = isWon 
+            ? "background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; font-weight: 800; box-shadow: 0 1px 3px rgba(46,125,50,0.15);" 
+            : "background: #f8fafc; color: #334155; border: 1px solid #e2e8f0; font-weight: 600;";
+            
+        let itemHtml = `<div style="padding: 3px 4px; border-radius: 4px; text-align: center; font-size: 10.5px; ${customStyle} white-space: nowrap; overflow: hidden; text-overflow: ellipsis; box-sizing: border-box; width: 100%; height: 21px; line-height: 14px;">${cleanedText}</div>`;
+        
+        if (index < ROW_LIMIT) {
+            columns[0].push(itemHtml);
+        } else if (index < ROW_LIMIT * 2) {
+            columns[1].push(itemHtml);
+        } else {
+            columns[2].push(itemHtml);
+        }
     });
 
-    return `
-        <div class="slip-column-block-nano">${col1Html}</div>
-        <div class="slip-column-block-nano">${col2Html}</div>
-        <div class="slip-column-block-nano">${col3Html}</div>
-    `;
+    let html = "";
+    for (let i = 0; i < 3; i++) {
+        html += `<div style="display: flex; flex-direction: column; gap: 4px; width: 32.5%; flex-grow: 0; flex-shrink: 0; flex-basis: 32.5%; box-sizing: border-box;">
+            ${columns[i].join('')}
+        </div>`;
+    }
+    return html;
 }
 
-// ฟังก์ชันแปลง HTML สลิปขาวให้กลายเป็นภาพจริง เพื่อให้ iPhone กดเซฟค้างลงคลังรูปภาพได้ชัวร์ 100%
 function convertSlipToRealImageElement() {
     const captureArea = document.getElementById('digitalSlipCaptureArea');
+    const container = document.getElementById('singleImageContainerView');
     
-    // รีเซ็ตการซ่อนรูปภาพเก่าออกก่อน (ถ้ามี)
-    const oldImg = document.getElementById('realSlipImgView');
-    if (oldImg) oldImg.remove();
+    if (!container || !captureArea) return;
+    
+    const oldImages = container.querySelectorAll('img#realSlipImgView');
+    oldImages.forEach(img => img.remove());
+    
     captureArea.style.display = 'block';
 
     setTimeout(() => {
-        html2canvas(captureArea, { backgroundColor: "#ffffff", scale: 2, logging: false, useCORS: true }).then(canvas => {
+        html2canvas(captureArea, { 
+            backgroundColor: "#ffffff", 
+            scale: 2.5, 
+            logging: false, 
+            useCORS: true 
+        }).then(canvas => {
             const dataUrl = canvas.toDataURL("image/png");
             
-            // สร้างแท็กภาพ <img> จริงๆ มาวางซ้อนทับพื้นที่บิลเพื่อเปิดช่องทางกดค้างเซฟบน iPhone
             const img = document.createElement('img');
             img.id = 'realSlipImgView';
             img.src = dataUrl;
             img.style.width = '100%';
+            img.style.maxWidth = '432px';
+            img.style.margin = '0 auto';
             img.style.display = 'block';
             img.style.borderRadius = '16px';
             img.style.webkitUserSelect = 'auto'; 
             img.style.userSelect = 'auto';
 
-            // ซ่อนตัวโครง HTML ดั้งเดิม แล้วแสดงผลรูปภาพจริงนี้แทน
             captureArea.style.display = 'none';
-            captureArea.parentElement.appendChild(img);
+            container.appendChild(img);
         });
     }, 400);
 }
 
 function triggerWinnerSlipModal(index) {
     if (winnersGlobalDataCache[index]) {
+        const container = document.getElementById('singleImageContainerView');
+        if (container) {
+            const oldImages = container.querySelectorAll('img#realSlipImgView');
+            oldImages.forEach(img => img.remove());
+        }
+
+        if (document.getElementById('modalBillTitle')) document.getElementById('modalBillTitle').innerText = "ใบเสร็จผู้โชคดีถูกรางวัล";
+        if (document.getElementById('modalBillSubtitle')) document.getElementById('modalBillSubtitle').innerText = "ระบบตรวจสอบและสรุปผลรางวัลสลากกินแบ่ง";
+        if (document.getElementById('slipHeaderIcon')) document.getElementById('slipHeaderIcon').innerText = "🏆";
+        if (document.getElementById('slipHeaderColor')) document.getElementById('slipHeaderColor').style.background = "linear-gradient(135deg, #2e7d32 0%, #4caf50 100%)";
+        if (document.getElementById('slipListTitle')) document.getElementById('slipListTitle').innerText = "🎉 รายการตัวเลขสลากที่โชคดีถูกรางวัล";
+        if (document.getElementById('slipFooterThankText')) document.getElementById('slipFooterThankText').innerText = "*** ใบเสร็จนี้ออกโดยระบบอัตโนมัติ ขอขอบพระคุณและขอให้ท่านโชคดีในงวดถัดไป ***";
+
+        if (document.getElementById('slipDrawDateRow')) document.getElementById('slipDrawDateRow').style.display = 'flex';
+
+        if (document.getElementById('slipTotalLabel')) {
+            document.getElementById('slipTotalLabel').innerText = "💰 ยอดรวมเงินรางวัลที่ได้รับ:";
+            document.getElementById('slipTotalLabel').style.color = "#1b5e20";
+        }
+        if (document.getElementById('slipTotalAmt')) document.getElementById('slipTotalAmt').style.color = "#2e7d32";
+        if (document.getElementById('slipTotalBanner')) {
+            document.getElementById('slipTotalBanner').style.background = "linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%)";
+            document.getElementById('slipTotalBanner').style.border = "1.5px solid #81c784";
+        }
+
         const rawBillStr = winnersGlobalDataCache[index].billText;
         const lines = rawBillStr.split('\n');
         let customer = winnersGlobalDataCache[index].customer;
         let timeBuy = "ไม่ระบุ"; let payment = "เงินสด"; let seller = "แอดมิน"; let totalAmt = "0";
-        let itemsList = [];
+        let itemsList = []; 
 
         lines.forEach(line => {
             if(line.includes("เวลาซื้อ:")) timeBuy = line.replace("เวลาซื้อ:", "").trim();
             if(line.includes("ชำระโดย:")) payment = line.replace("ชำระโดย:", "").trim();
             if(line.includes("ผู้ขาย:")) seller = line.replace("ผู้ขาย:", "").trim();
             if(line.includes("ยอดรวม:")) totalAmt = line.replace("ยอดรวม:", "").trim();
-            if(/^\d+\./.test(line.trim())) { itemsList.push(line.trim()); }
+            if(/^\d+\./.test(line.trim())) { 
+                itemsList.push(line.trim()); 
+            }
         });
 
-        document.getElementById('modalBillTitle').innerText = "🎉 ใบเสร็จผู้โชคดีถูกหวย!!";
-        document.getElementById('slipCustName').innerText = customer;
-        document.getElementById('slipTimeBuy').innerText = timeBuy;
-        document.getElementById('slipPayment').innerText = payment;
-        document.getElementById('slipSeller').innerText = seller;
-        document.getElementById('slipTotalAmt').innerText = totalAmt;
-        
-        document.getElementById('slipItemsContainer').innerHTML = buildTripleColumnsLayout(itemsList);
+        const rawDateValue = document.getElementById('winnerTargetDateInput').value;
+        let formattedDrawDate = "-";
+        if (rawDateValue) {
+            const dateParts = rawDateValue.split('-');
+            formattedDrawDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+        }
 
-        document.getElementById('downloadImgBtn').className = "btn btn-primary"; 
-        document.getElementById('downloadImgBtn').innerText = "📥 บันทึกรูปภาพ";
+        if (document.getElementById('slipCustName')) document.getElementById('slipCustName').innerText = customer;
+        if (document.getElementById('slipDrawDate')) document.getElementById('slipDrawDate').innerText = formattedDrawDate;
+        if (document.getElementById('slipTimeBuy')) document.getElementById('slipTimeBuy').innerText = timeBuy;
+        if (document.getElementById('slipPayment')) document.getElementById('slipPayment').innerText = payment;
+        if (document.getElementById('slipSeller')) document.getElementById('slipSeller').innerText = seller;
+        if (document.getElementById('slipTotalAmt')) document.getElementById('slipTotalAmt').innerText = totalAmt;
         
+        if (document.getElementById('slipItemsContainer')) document.getElementById('slipItemsContainer').innerHTML = buildTripleColumnsLayout(itemsList);
+        
+        document.getElementById('downloadImgBtn').className = "btn btn-success"; 
+        document.getElementById('downloadImgBtn').innerText = "📥 บันทึกรูปภาพรางวัล";
         document.getElementById('copyBillModal').style.display = 'block';
         document.querySelector('.slip-scroll-wrapper').scrollTop = 0;
         
-        // เรียกตัวแปลงไฟล์ภาพทันทีที่เปิดโมดอลคนถูกรางวัล
         convertSlipToRealImageElement();
     }
 }
@@ -284,11 +347,44 @@ function checkLengthAndToggleFields(value) {
 
 function setHuayType(type, btn) { currentHuayType = type; document.querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active')); btn.classList.add('active'); checkLengthAndToggleFields(document.getElementById('huayNum').value); }
 
+function addItem() {
+    const num = document.getElementById('huayNum').value; if (!num) { alert('กรุณาระบุเลขหวยก่อน'); return; }
+    let now = new Date(); let timeStr = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+    if (currentHuayType === 'ไทย' && num.length === 2) {
+        if (currentHuayPosition === 'บน') {
+            const amt = parseFloat(document.getElementById('huayAmtTop').value) || 0; if (amt <= 0) { alert('กรุณาระบุจำนวนเงิน'); return; }
+            currentBillItems.unshift({ num, type: currentHuayType, position: 'บน', amt, timeAdded: timeStr }); document.getElementById('huayAmtTop').value = '';
+        } else if (currentHuayPosition === 'ล่าง') {
+            const amt = parseFloat(document.getElementById('huayAmtBot').value) || 0; if (amt <= 0) { alert('กรุณาระบุจำนวนเงิน'); return; }
+            currentBillItems.unshift({ num, type: currentHuayType, position: 'ล่าง', amt, timeAdded: timeStr }); document.getElementById('huayAmtBot').value = '';
+        } else if (currentHuayPosition === 'บน/ล่าง') {
+            const amtTop = parseFloat(document.getElementById('huayAmtTop2').value) || 0, amtBot = parseFloat(document.getElementById('huayAmtBot2').value) || 0;
+            if (amtTop <= 0 && amtBot <= 0) { alert('กรุณาใส่จำนวนเงินบนหรือล่างอย่างน้อย 1ช่อง'); return; }
+            if (amtBot > 0) currentBillItems.unshift({ num, type: currentHuayType, position: 'ล่าง', amt: amtBot, timeAdded: timeStr });
+            if (amtTop > 0) currentBillItems.unshift({ num, type: currentHuayType, position: 'บน', amt: amtTop, timeAdded: timeStr });
+            document.getElementById('huayAmtTop2').value = ''; document.getElementById('huayAmtBot2').value = '';
+        }
+    } else {
+        const amt = parseFloat(document.getElementById('huayAmt').value) || 0; if (amt <= 0) { alert('กรุณาระบุจำนวนเงิน'); return; }
+        currentBillItems.unshift({ num, type: currentHuayType, amt, timeAdded: timeStr }); document.getElementById('huayAmt').value = '';
+    }
+    renderBillTable(); document.getElementById('huayNum').value = ''; checkLengthAndToggleFields(''); document.getElementById('huayNum').focus();
+}
+
 function setHuayPosition(position, btn) {
     currentHuayPosition = position; document.querySelectorAll('.btn-position').forEach(b => b.classList.remove('active')); if(btn) btn.classList.add('active');
     const amtTopOnly = document.getElementById('amtTopOnly'), amtBotOnly = document.getElementById('amtBotOnly'), amtBothSection = document.getElementById('amtBothSection');
     amtTopOnly.style.display = 'none'; amtBotOnly.style.display = 'none'; amtBothSection.style.display = 'grid';
     if (position === 'บน') amtTopOnly.style.display = 'block'; else if (position === 'ล่าง') amtBotOnly.style.display = 'block'; else if (position === 'บน/ล่าง') amtBothSection.style.display = 'grid';
+}
+
+function closeCopyModal() {
+    document.getElementById('copyBillModal').style.display = 'none';
+    const container = document.getElementById('singleImageContainerView');
+    if (container) {
+        const imgs = container.querySelectorAll('img#realSlipImgView');
+        imgs.forEach(img => img.remove());
+    }
 }
 
 function setPaymentMethod(method, btn) { currentPaymentMethod = method; document.querySelectorAll('.btn-payment').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
@@ -305,30 +401,6 @@ function setQuickAmount(amount) {
     } else { const el = document.getElementById('huayAmt'); el.value = (parseFloat(el.value) || 0) + amount; el.focus(); }
 }
 
-function addItem() {
-    const num = document.getElementById('huayNum').value; if (!num) { alert('กรุณาระบุเลขหวยก่อน'); return; }
-    let now = new Date(); let timeStr = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
-    if (currentHuayType === 'ไทย' && num.length === 2) {
-        if (currentHuayPosition === 'บน') {
-            const amt = parseFloat(document.getElementById('huayAmtTop').value) || 0; if (amt <= 0) { alert('กรุณาระบุจำนวนเงิน'); return; }
-            currentBillItems.unshift({ num, type: currentHuayType, position: 'บน', amt, timeAdded: timeStr }); document.getElementById('huayAmtTop').value = '';
-        } else if (currentHuayPosition === 'ล่าง') {
-            const amt = parseFloat(document.getElementById('huayAmtBot').value) || 0; if (amt <= 0) { alert('กรุณาระบุจำนวนเงิน'); return; }
-            currentBillItems.unshift({ num, type: currentHuayType, position: 'ล่าง', amt, timeAdded: timeStr }); document.getElementById('huayAmtBot').value = '';
-        } else if (currentHuayPosition === 'บน/ล่าง') {
-            const amtTop = parseFloat(document.getElementById('huayAmtTop2').value) || 0, amtBot = parseFloat(document.getElementById('huayAmtBot2').value) || 0;
-            if (amtTop <= 0 && amtBot <= 0) { alert('กรุณาใส่จำนวนเงินบนหรือล่างอย่างน้อย 1 ช่อง'); return; }
-            if (amtBot > 0) currentBillItems.unshift({ num, type: currentHuayType, position: 'ล่าง', amt: amtBot, timeAdded: timeStr });
-            if (amtTop > 0) currentBillItems.unshift({ num, type: currentHuayType, position: 'บน', amt: amtTop, timeAdded: timeStr });
-            document.getElementById('huayAmtTop2').value = ''; document.getElementById('huayAmtBot2').value = '';
-        }
-    } else {
-        const amt = parseFloat(document.getElementById('huayAmt').value) || 0; if (amt <= 0) { alert('กรุณาระบุจำนวนเงิน'); return; }
-        currentBillItems.unshift({ num, type: currentHuayType, amt, timeAdded: timeStr }); document.getElementById('huayAmt').value = '';
-    }
-    renderBillTable(); document.getElementById('huayNum').value = ''; checkLengthAndToggleFields(''); document.getElementById('huayNum').focus();
-}
-
 function renderBillTable() {
     const tbody = document.getElementById('billTableBody'); let total = 0;
     if(currentBillItems.length === 0) { tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-muted); font-size: 15px;">ยังไม่มีรายการถูกเพิ่มเข้าบิล</td></tr>`; document.getElementById('billTotalText').innerText = "0 ₭"; return; }
@@ -336,11 +408,10 @@ function renderBillTable() {
     currentBillItems.forEach((item, idx) => {
         total += item.amt; let numDisplay = item.num;
         let animalLabel = (item.num.length === 2 && tamraHuay[item.num]) ? ` <span style="color:#ffb703; font-size:14px; font-weight:600;">(${tamraHuay[item.num]})</span>` : '';
-        if (item.position) numDisplay = `${item.num}${animalLabel} <small style="font-size: 13px; color: #ff9500; font-weight:bold;">[${item.position}]</small>`; else numDisplay = `${item.num}${animalLabel}`;
-        let staffName = (currentUser && currentUser.name) ? currentUser.name : "แอดมิน";
-        let now = new Date(); let options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }; let dateStr = now.toLocaleDateString('en-US', options).replace(/,/g, '');
-        let showDetails = item.timeAdded ? `<br><small style="color: #cbd5e1; font-size: 13px; font-weight: normal; display:inline-block; margin-top:4px;">เมื่อ: ${dateStr} เวลา ${item.timeAdded} | โดย: ${staffName}</small>` : '';
-        html += `<tr><td><strong style="font-size:18px; color:#fff;">${numDisplay}</strong> <span style="font-size: 13px; color: #cbd5e1; margin-left: 6px;">${item.type}</span>${showDetails}</td><td><span class="badge ${item.type === 'ไทย' ? 'badge-th' : 'badge-lao'}\">${item.type}</span></td><td style="font-weight: 700; color:#00df89; font-size:16px;">${item.amt.toLocaleString()} ₭</td><td><button class="btn-remove" onclick="removeItem(${idx})">❌</button></td></tr>`;
+        let posLabel = item.position ? ` <small style="font-size: 13px; color: #ff9500; font-weight:bold;">[${item.position}]</small>` : '';
+        numDisplay = `${item.num}${animalLabel}${posLabel}`;
+        
+        html += `<tr><td><strong style="font-size:18px; color:#fff;">${numDisplay}</strong> <span style="font-size: 13px; color: #cbd5e1; margin-left: 6px;">${item.type}</span></td><td><span class="badge ${item.type === 'ไทย' ? 'badge-th' : 'badge-lao'}">${item.type}</span></td><td style="font-weight: 700; color:#00df89; font-size:16px;">${item.amt.toLocaleString()} ₭</td><td><button class="btn-remove" onclick="removeItem(${idx})">❌</button></td></tr>`;
     });
     tbody.innerHTML = html; document.getElementById('billTotalText').innerText = total.toLocaleString() + " ₭";
 }
@@ -362,15 +433,31 @@ function submitBill() {
         if (response.status === "success") {
             showStatusPopup("🚀 บันทึกบิลสำเร็จ!", "ระบบส่งข้อมูลเข้า Telegram เรียบร้อยแล้วค่ะ", true, function() {
                 
-                document.getElementById('modalBillTitle').innerText = "🧾 ใบเสร็จรับเงินอิเล็กทรอนิกส์";
+                if (document.getElementById('modalBillTitle')) document.getElementById('modalBillTitle').innerText = "ใบเสร็จรับเงินอิเล็กทรอนิกส์";
+                if (document.getElementById('modalBillSubtitle')) document.getElementById('modalBillSubtitle').innerText = "ระบบชำเน็จเงินและบันทึกสลากดิจิทัลสำเร็จ";
+                if (document.getElementById('slipHeaderIcon')) document.getElementById('slipHeaderIcon').innerText = "🧾";
+                if (document.getElementById('slipHeaderColor')) document.getElementById('slipHeaderColor').style.background = "linear-gradient(135deg, #0056b3 0%, #007aff 100%)";
+                if (document.getElementById('slipListTitle')) document.getElementById('slipListTitle').innerText = "📝 รายการตัวเลขสลากที่เลือกซื้อ";
+                if (document.getElementById('slipFooterThankText')) document.getElementById('slipFooterThankText').innerText = "*** ใบเสร็จนี้ออกโดยระบบอัตโนมัติ ขอขอบพระคุณและขอให้ท่านโชคดีรวยๆ ***";
+
+                if (document.getElementById('slipDrawDateRow')) document.getElementById('slipDrawDateRow').style.display = 'none';
+
+                if (document.getElementById('slipTotalLabel')) document.getElementById('slipTotalLabel').innerText = "💰 ยอดรวมเงินที่ซื้อทั้งสิ้น:";
+                if (document.getElementById('slipTotalLabel')) document.getElementById('slipTotalLabel').style.color = "#0369a1";
+                if (document.getElementById('slipTotalAmt')) document.getElementById('slipTotalAmt').style.color = "#0369a1";
+                if (document.getElementById('slipTotalBanner')) {
+                    document.getElementById('slipTotalBanner').style.background = "linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%)";
+                    document.getElementById('slipTotalBanner').style.border = "1.5px solid #7dd3fc";
+                }
+
                 let now = new Date();
-                let dateStr = now.toLocaleDateString('th-TH') + ' ' + now.toLocaleTimeString('th-TH');
+                let dateStr = now.toLocaleDateString('th-TH') + ' ' + now.toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'});
                 let staffName = (currentUser && currentUser.name) ? currentUser.name : "แอดมิน";
                 
-                document.getElementById('slipCustName').innerText = custName;
-                document.getElementById('slipTimeBuy').innerText = dateStr;
-                document.getElementById('slipPayment').innerText = currentPaymentMethod;
-                document.getElementById('slipSeller').innerText = staffName;
+                if (document.getElementById('slipCustName')) document.getElementById('slipCustName').innerText = custName;
+                if (document.getElementById('slipTimeBuy')) document.getElementById('slipTimeBuy').innerText = dateStr;
+                if (document.getElementById('slipPayment')) document.getElementById('slipPayment').innerText = currentPaymentMethod;
+                if (document.getElementById('slipSeller')) document.getElementById('slipSeller').innerText = staffName;
                 
                 let itemsList = []; let total = 0;
                 currentBillItems.forEach((item, idx) => {
@@ -379,36 +466,22 @@ function submitBill() {
                     let pos = item.position ? `[${item.position}]` : '[--]';
                     itemsList.push(`${idx+1}.${flag}${item.num}${pos}-${item.amt.toLocaleString()}`);
                 });
-                document.getElementById('slipTotalAmt').innerText = total.toLocaleString() + " ₭";
                 
-                document.getElementById('slipItemsContainer').innerHTML = buildTripleColumnsLayout(itemsList);
+                if (document.getElementById('slipTotalAmt')) document.getElementById('slipTotalAmt').innerText = total.toLocaleString() + " ₭";
+                if (document.getElementById('slipItemsContainer')) document.getElementById('slipItemsContainer').innerHTML = buildTripleColumnsLayout(itemsList);
                 
                 document.getElementById('downloadImgBtn').className = "btn btn-primary";
-                document.getElementById('downloadImgBtn').innerText = "📥 บันทึกรูปภาพ";
+                document.getElementById('downloadImgBtn').innerText = "📥 บันทึกรูปภาพใบเสร็จ";
                 
                 document.getElementById('copyBillModal').style.display = 'block';
                 document.querySelector('.slip-scroll-wrapper').scrollTop = 0;
                 
-                // เรียกตัวแปลงไฟล์ภาพอัตโนมัติเมื่อแอดมินกดปิดบิลสำเร็จคีย์สด
                 convertSlipToRealImageElement();
                 
                 currentBillItems = []; renderBillTable(); document.getElementById('custName').value = '';
             });
         } else { showStatusPopup("❌ เกิดข้อผิดพลาด", response.message, false); }
     }).catch(err => { btn.disabled = false; btn.innerText = `✅ ยืนยันปิดบิลและส่งเข้า Telegram`; showStatusPopup("❌ ล้มเหลว", "เกิดข้อผิดพลาดจากเครือข่ายหลังบ้าน", false); });
-}
-
-let statusModalCallback = null, statusModalTimer = null;
-function showStatusPopup(title, message, isSuccess, callback = null) { if (statusModalTimer) clearTimeout(statusModalTimer); document.getElementById('statusTitle').innerText = title; document.getElementById('statusMessage').innerText = message; document.getElementById('statusIcon').innerText = isSuccess ? "💎" : "💥"; statusModalCallback = callback; document.getElementById('statusModal').style.display = 'block'; statusModalTimer = setTimeout(function() { closeStatusModal(); }, 1500); }
-function closeStatusModal() { if (statusModalTimer) clearTimeout(statusModalTimer); document.getElementById('statusModal').style.display = 'none'; if(statusModalCallback && typeof statusModalCallback === 'function') { statusModalCallback(); statusModalCallback = null; } }
-
-function closeCopyModal() { document.getElementById('copyBillModal').style.display = 'none'; }
-
-function closeCopyModal() {
-    document.getElementById('copyBillModal').style.display = 'none';
-    // ล้างตัววิวภาพออกเมื่อปิดหน้าต่าง เพื่อให้บิลใบถัดไปคำนวณใหม่ได้ถูกต้อง
-    const img = document.getElementById('realSlipImgView');
-    if (img) img.remove();
 }
 
 function loadDashboardData() {
@@ -435,6 +508,10 @@ function loadDashboardData() {
         }
     }).catch(err => console.error('Dashboard error:', err));
 }
+
+let statusModalCallback = null, statusModalTimer = null;
+function showStatusPopup(title, message, isSuccess, callback = null) { if (statusModalTimer) clearTimeout(statusModalTimer); document.getElementById('statusTitle').innerText = title; document.getElementById('statusMessage').innerText = message; document.getElementById('statusIcon').innerText = isSuccess ? "💎" : "💥"; statusModalCallback = callback; document.getElementById('statusModal').style.display = 'block'; statusModalTimer = setTimeout(function() { closeStatusModal(); }, 1500); }
+function closeStatusModal() { if (statusModalTimer) clearTimeout(statusModalTimer); document.getElementById('statusModal').style.display = 'none'; if(statusModalCallback && typeof statusModalCallback === 'function') { statusModalCallback(); statusModalCallback = null; } }
 
 function logout() { localStorage.removeItem('smartHuayUser'); currentUser = {}; document.getElementById('mainApp').style.display = 'none'; document.getElementById('loginContainer').style.display = 'block'; hideAllPages(); }
 function hideAllPages() { document.getElementById('menuPage').classList.add('hidden'); document.getElementById('recorderPage').classList.add('hidden'); document.getElementById('dashboardPage').classList.add('hidden'); }
