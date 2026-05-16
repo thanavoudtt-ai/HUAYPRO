@@ -18,7 +18,23 @@
 <body>
     <div class="page-wrapper">
         <div id="loginContainer" class="app-container">
-            <div id="loginFormPlaceholder"></div>
+            <div class="card" style="margin-top: 12%; padding: 35px 24px;">
+                <div style="font-size: 55px; text-align: center; margin-bottom: 15px; filter: drop-shadow(0 4px 10px rgba(0,122,255,0.3));">💎</div>
+                <h1 style="text-align: center; font-size: 26px; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.5px;">Smart Huay Pro</h1>
+                <p style="text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 28px;">กรุณาเลือกชื่อผู้ใช้และระบุรหัส PIN เพื่อลงชื่อเข้างาน</p>
+                
+                <div class="input-group">
+                    <label>บัญชีผู้ใช้พนักงาน</label>
+                    <select id="loginUser" style="font-size: 17px;"><option value="">⏳ กำลังเชื่อมต่อรายชื่อ...</option></select>
+                </div>
+                
+                <div class="input-group" style="margin-bottom: 30px;">
+                    <label>รหัส PIN เข้าสู่ระบบ</label>
+                    <input type="password" id="loginPin" placeholder="••••" maxlength="4" inputmode="numeric" style="text-align: center; font-size: 26px; letter-spacing: 12px; font-weight: bold;">
+                </div>
+                
+                <button class="btn btn-primary" onclick="handleLogin()" style="font-size: 17px; padding: 16px;">🔑 ยืนยันล็อกอินเข้าสู่ระบบ</button>
+            </div>
         </div>
 
         <div id="mainApp" class="app-container" style="display: none;">
@@ -55,7 +71,7 @@
                     <div class="input-group" style="margin-bottom: 14px;">
                         <label style="color:#00df89; font-weight:bold;">🔢 ขั้นตอนที่ 2: ระบุเลขผลรางวัลหวย</label>
                         <div style="display: flex; gap: 10px; width: 100%; box-sizing: border-box;">
-                            <input type="number" id="winNumberInput" placeholder="กรอกเลขรางวัล (เช่น 999)" inputmode="numeric" style="font-size: 16px; font-weight: bold; text-align: center; border-color: rgba(0, 223, 137, 0.4); flex: 1; width: 100%;">
+                            <input type="number" id="winNumberInput" placeholder="กรอกเลขรางวัล (เช่น 970)" inputmode="numeric" style="font-size: 16px; font-weight: bold; text-align: center; border-color: rgba(0, 223, 137, 0.4); flex: 1; width: 100%;">
                             <button class="btn btn-primary" id="btnCheckWin" onclick="checkDailyWinners()" style="width: auto; padding: 0 16px; background: linear-gradient(180deg, #00df89 0%, #00a061 100%); border:none; box-shadow: 0 4px 12px rgba(0,223,137,0.25); white-space: nowrap;">🔍 ค้นหา</button>
                         </div>
                     </div>
@@ -116,13 +132,14 @@
                             <button class="quick-btn" onclick="setQuickAmount(50000)">50K</button>
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="addItem()" style="font-size: 18px; font-weight: bold;">➕ เพิ่มรายการนี้</button>
+                    <button class="btn btn-primary" onclick="addItem()" style="font-size: 18px; font-weight: bold;">➕ บันทึกเพิ่มรายการนี้</button>
                 </div>
+                
                 <div class="card">
                     <h2>🧾 ตารางบิลปัจจุบัน</h2>
                     <table class="table-area">
                         <thead><tr><th>เลข</th><th>ประเภท</th><th>เงินเดิมพัน</th><th style="width: 45px;"></th></tr></thead>
-                        <tbody id="billTableBody"><tr><td colspan="4" style="text-align:center; color: var(--text-muted); font-size: 15px;">ยังไม่มีรายการชื้อเพิ่มในบิล</td></tr></tbody>
+                        <tbody id="billTableBody"><tr><td colspan="4" style="text-align:center; color: var(--text-muted); font-size: 15px;">ยังไม่มีรายการถูกเพิ่มเข้าบิล</td></tr></tbody>
                     </table>
                     <div style="margin: 20px 0 4px; text-align: right; font-size: 18px;">ยอดรวมทั้งหมด: <span id="billTotalText" style="color: #ff3b30; font-size: 26px; font-weight: 700;">0 ₭</span></div>
                 </div>
@@ -131,10 +148,10 @@
                         <label>เลือกการรับชำระเงิน</label>
                         <div style="display: flex; gap: 10px;">
                             <button class="btn-payment active" data-method="เงินสด" onclick="setPaymentMethod('เงินสด', this)">💵 รับเงินสด</button>
-                            <button class="btn-payment" data-method="เงินโอน" onclick="setPaymentMethod('เงินโอน', this)">📱 แบบโอนเงิน</button>
+                            <button class="btn-payment" data-method="เงินโอน" onclick="setPaymentMethod('เงินโอน', this)">📱 สแกนโอนเงิน</button>
                         </div>
                     </div>
-                    <button class="btn btn-primary" id="btnSubmit" onclick="submitBill()" style="font-size: 19px; font-weight: bold; background: linear-gradient(180deg, #00df89 0%, #00a061 100%);">✅ ขายหวย และ บันทึก</button>
+                    <button class="btn btn-primary" id="btnSubmit" onclick="submitBill()" style="font-size: 19px; font-weight: bold; background: linear-gradient(180deg, #00df89 0%, #00a061 100%);">✅ ยืนยันปิดบิลและส่งเข้า Telegram</button>
                 </div>
             </div>
 
@@ -164,19 +181,21 @@
 
     <div id="copyBillModal" class="glass-modal-overlay">
         <div class="glass-modal-card">
+            <h3 id="modalBillTitle" style="font-size: 18px; margin-bottom: 12px; text-align: center; font-weight: 700;">🧾 ใบเสร็จรับเงินอิเล็กทรอนิกส์</h3>
             <div class="slip-scroll-wrapper">
                 <div id="digitalSlipCaptureArea" class="digital-slip-canvas">
                     <div class="slip-header-shine">
-                        <div class="slip-title-text" style="text-align: center; font-size: 30px; ">HUAY PRO</div>
-                        <div style="font-size: 13px; color: #718096; margin-top: 1px; text-align: center; font-weight:600;">ใบเสร็จรับเงินหวย</div>
+                        <div style="font-size: 24px; text-align: center;">💎</div>
+                        <div class="slip-title-text" style="text-align: center;">SMART HUAY PRO</div>
+                        <div style="font-size: 10.5px; color: #718096; margin-top: 1px; text-align: center; font-weight:600;">ใบเสร็จรับเงินสั่งซื้อหวยออนไลน์</div>
                     </div>
                     
-                    <div style="font-size: 11px; color: #718096; margin-bottom: 5px; font-weight: 700; text-align: center;">รายการหวย:</div>
+                    <div style="font-size: 11px; color: #718096; margin-bottom: 5px; font-weight: 700;">📋 รายการตัวเลขที่เดิมพัน:</div>
                     <div id="slipItemsContainer" class="slip-grid-container-triple"></div>
                     
                     <div class="slip-divider-line"></div>
                     <div class="slip-total-banner">
-                        <span style="font-size: 14px; font-weight: 700; color:#2d3748;">💰 ยอดเงินรวมทั้งหมด:</span>
+                        <span style="font-size: 14px; font-weight: 700; color:#2d3748;">💰 ยอดเงินรวมทั้งสิ้น:</span>
                         <strong id="slipTotalAmt" style="font-size: 18px; color: #16a34a; font-weight: 800;">0 ₭</strong>
                     </div>
 
@@ -193,17 +212,11 @@
             <div class="modal-action-footer">
                 <button id="downloadImgBtn" class="btn btn-primary" onclick="downloadSlipToGallery()" style="width: 100%; margin: 0; font-weight:bold;">บันทึกรูปภาพ</button>
                 <button id="shareImgBtn" class="btn" onclick="generateAndShareSlipPhoto()" style="width: 100%; margin: 0; background: rgba(52, 199, 89, 0.15); border: 1px solid rgba(52, 199, 89, 0.3); color: #34c759; font-weight:bold;">แชร์รูปภาพ</button>
-                <button class="glass-modal-btn" onclick="closeCopyModal()" style="width: 100%; margin: 0; background: rgba(255,255,255,0.08); font-size: 14px; padding: 10px;">ปิดหน้าต่าง</button>
+                <button class="glass-modal-btn" onclick="closeCopyModal()" style="width: 100%; margin: 0; background: rgba(255,255,255,0.08); font-size: 14px; padding: 10px;">ปิดหน้าต่างใบเสร็จ</button>
             </div>
         </div>
     </div>
 
     <script src="app.js"></script>
-    <script>
-        fetch('login.html')
-            .then(response => response.text())
-            .then(data => { document.getElementById('loginFormPlaceholder').innerHTML = data; })
-            .catch(err => console.error('Error loading login section:', err));
-    </script>
 </body>
 </html>

@@ -11,24 +11,23 @@ let winnersGlobalDataCache = [];
 const tamraHuay = {
     "01": "ປານ້ອຍ", "41": "ປານ້ອຍ", "81": "ປານ້ອຍ", "02": "ຫອย", "42": "ຫອย", "82": "ຫອย",
     "03": "ຫ່ານ", "43": "ຫ່ານ", "83": "ຫ່ານ", "04": "ນົກຍຸງ", "44": "ນົກຍຸງ", "84": "ນົກຍຸງ",
-    "05": "ສิง", "45": "ສິງ", "85": "ສິງ", "06": "ເສືອ", "46": "ເສືອ", "86": "ເສືອ",
+    "05": "ສິງ", "45": "ສิง", "85": "ສິງ", "06": "ເສືອ", "46": "ເສືອ", "86": "ເສືອ",
     "07": "ໝູ", "47": "ໝູ", "87": "ໝູ", "08": "ກະຕ່າຍ", "48": "ກະຕ່າຍ", "88": "ກະຕ່າຍ",
     "09": "ควาย", "49": "ควาย", "89": "ควาย", "10": "ນາກນ້ຳ", "50": "ນາກນ້ຳ", "90": "ນາກນ້ຳ",
-    "11": "ໝາ", "51": "ໝา", "91": "ໝາ", "12": "ມ້າ", "52": "ມ້າ", "92": "ມ້າ",
+    "11": "ໝາ", "51": "ໝາ", "91": "ໝາ", "12": "ມ້າ", "52": "ມ້າ", "92": "ມ້າ",
     "13": "ຊ້າງ", "53": "ຊ້າງ", "93": "ຊ້າງ", "14": "ແມວບ້ານ", "54": "ແມວບ້ານ", "94": "ແມວບ້ານ",
     "15": "ໜູ", "55": "ໜູ", "95": "ໜູ", "16": "ເຜິງ", "56": "ເຜິງ", "96": "ເຜິງ",
     "17": "ນົກຍາງ", "57": "ນົກຍາງ", "98": "ນົກຍາງ", "18": "ແມວປ່າ", "58": "ແມວປ່າ", "98": "ແມວປ່າ",
-    "19": "ແມງກະเບື້ອ", "59": "ແມງກະເບື້ອ", "99": "ແມงກະເບື້ອ", "00": "ขี้เข็บ", "20": "ขี้เข็บ", "60": "ขี้เข็บ",
+    "19": "ແມງກະເບື້ອ", "59": "ແມງກະເບື້ອ", "99": "ແມງກະເບື້ອ", "00": "ขี้เข็บ", "20": "ขี้เข็บ", "60": "ขี้เข็บ",
     "21": "ນົກແອ່ນ", "61": "ນົກແອ່ນ", "22": "ນົກກາງແກ", "62": "ນົກກາງແກ", "23": "ລິງ", "63": "ລິງ",
-    "24": "ກົບ", "64": "ກົບ", "25": "ແຫຼວ", "65": "ແຫຼວ", "26": "ນາກບິນ", "66": "ນາກບິນ",
-    "27": "ເຕົ່າ", "67": "ເຕົ່າ", "28": "ໄກ່", "68": "ໄກ່", "29": "ອ່ຽນ", "69": "ອ່ຽນ",
+    "24": "ກົບ", "64": "ກົບ", "25": "ແຫຼວ", "65": "ແຫຼว", "26": "ນາກບິນ", "66": "ນາກບິນ",
+    "27": "ເຕົ່າ", "67": "ເຕົ່າ", "28": "ໄກ่", "68": "ໄກ່", "29": "ອ່ຽນ", "69": "ອ່ຽນ",
     "30": "ປ່າໃຫຍ່", "70": "ປ່າໃຫຍ່", "31": "ກຸ້ງ", "71": "ກຸ້ງ", "32": "ງູ", "72": "ງູ",
     "33": "ແມງມຸມ", "73": "ແມງມຸມ", "34": "ກວາງ", "74": "ກວາງ", "35": "ແບ້", "75": "ແບ້",
-    "36": "ເຫງັນ", "76": "ເຫງັນ", "37": "ຫຼິ່ນ", "77": "ຫຼິ່ນ", "38": "ເໝັ່ນ", "78": "เໝັ່ນ",
-    "39": "ກະປູ", "79": "ກະປູ", "40": "ນົກອິນຊີ", "80": "ນົกອິນຊີ"
+    "36": "ເຫງັນ", "76": "ເຫງັນ", "37": "ຫຼິ່ນ", "77": "ຫຼິ່ນ", "38": "ເໝັ່ນ", "78": "ເໝັ່ນ",
+    "39": "ກະປູ", "79": "ກະປູ", "40": "ນົກອินຊີ", "80": "ນົກອິນຊີ"
 };
 
-// โหลดครั้งแรกเมื่อเปิดหน้าเว็บ
 window.addEventListener('DOMContentLoaded', function() {
     const numInput = document.getElementById('huayNum');
     if (numInput) {
@@ -55,7 +54,6 @@ window.addEventListener('DOMContentLoaded', function() {
     checkSavedLoginSession();
 });
 
-// ตรวจสอบคนถูกรางวัลประจำวัน
 function checkDailyWinners() {
     const winNum = document.getElementById('winNumberInput').value.trim();
     const rawDateValue = document.getElementById('winnerTargetDateInput').value; 
@@ -87,8 +85,8 @@ function checkDailyWinners() {
                 let html = '';
                 winnersGlobalDataCache.forEach((winner, idx) => {
                     html += `<div class="winner-row-box">
-                        <span style="font-size:16px; font-weight:700; color:#00df89;">ลูกค้าถูกหวยชื่อ: ${winner.customer}</span>
-                        <button class="glass-modal-btn success" onclick="triggerWinnerSlipModal(${idx})" style="padding: 6px 14px; font-size: 15px; border-radius: 10px;">ดูบิลหวย</button>
+                        <span style="font-size:16px; font-weight:700; color:#00df89;">🎉 ยอดถูกหวย: ${winner.customer}</span>
+                        <button class="glass-modal-btn success" onclick="triggerWinnerSlipModal(${idx})" style="padding: 6px 14px; font-size: 13px; border-radius: 10px;">📋 ดูบิลภาพสลิป</button>
                     </div>`;
                 });
                 resultsArea.innerHTML = html;
@@ -100,7 +98,6 @@ function checkDailyWinners() {
     });
 }
 
-// จัดการโครงสร้างบิล 3 คอลัมน์
 function buildTripleColumnsLayout(itemsArray) {
     const LIMIT_PER_COLUMN = 15; 
     let col1Html = ""; let col2Html = ""; let col3Html = "";
@@ -123,7 +120,6 @@ function buildTripleColumnsLayout(itemsArray) {
     `;
 }
 
-// เปิดโมดอลแสดงบิลสลิปขาวคนถูกรางวัล
 function triggerWinnerSlipModal(index) {
     if (winnersGlobalDataCache[index]) {
         const rawBillStr = winnersGlobalDataCache[index].billText;
@@ -140,7 +136,7 @@ function triggerWinnerSlipModal(index) {
             if(/^\d+\./.test(line.trim())) { itemsList.push(line.trim()); }
         });
 
-        document.getElementById('modalBillTitle').innerText = "ใบเสร็จผู้โชคดีถูกหวย!!";
+        document.getElementById('modalBillTitle').innerText = "🎉 ใบเสร็จผู้โชคดีถูกหวย!!";
         document.getElementById('slipCustName').innerText = customer;
         document.getElementById('slipTimeBuy').innerText = timeBuy;
         document.getElementById('slipPayment').innerText = payment;
@@ -152,14 +148,13 @@ function triggerWinnerSlipModal(index) {
         const dlBtn = document.getElementById('downloadImgBtn');
         if (dlBtn) {
             dlBtn.className = "btn btn-primary"; 
-            dlBtn.innerText = "บันทึกรูปภาพบิล";
+            dlBtn.innerText = "บันทึกรูปภาพ";
         }
         document.getElementById('copyBillModal').style.display = 'block';
         document.querySelector('.slip-scroll-wrapper').scrollTop = 0;
     }
 }
 
-// เซฟรูปลงมือถือโดยตรงแก้ปัญหา Messenger วางภาพไม่ได้
 function downloadSlipToGallery() {
     const captureArea = document.getElementById('digitalSlipCaptureArea');
     const dlBtn = document.getElementById('downloadImgBtn');
@@ -173,14 +168,13 @@ function downloadSlipToGallery() {
         dlBtn.innerText = "✅ บันทึกลงเครื่องแล้ว! กดส่งรูปในแชทได้เลย";
         setTimeout(() => {
             dlBtn.disabled = false; dlBtn.style.background = "linear-gradient(180deg, #007aff 0%, #0056b3 100%)";
-            dlBtn.innerText = "บันทึกรูปภาพบิล";
+            dlBtn.innerText = "บันทึกรูปภาพ";
         }, 3000);
     }).catch(err => {
         alert("บันทึกรูปพลาด: " + err); dlBtn.disabled = false;
     });
 }
 
-// ระบบแชร์ภาพสดเข้าแอปภายนอกแบบแชร์ของมือถือ
 function generateAndShareSlipPhoto() {
     const captureArea = document.getElementById('digitalSlipCaptureArea');
     const shareBtn = document.getElementById('shareImgBtn');
@@ -192,19 +186,18 @@ function generateAndShareSlipPhoto() {
             const file = new File([blob], "SmartHuay_Receipt.png", { type: "image/png" });
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 navigator.share({ files: [file], title: 'บิลสลิปหวยนำโชค' }).then(() => {
-                    shareBtn.disabled = false; shareBtn.innerText = "📸 แชร์เข้า Messenger / Line โดยตรง";
+                    shareBtn.disabled = false; shareBtn.innerText = "แชร์รูปภาพ";
                 }).catch(() => { shareBtn.disabled = false; });
             } else {
                 const link = document.createElement('a');
                 link.download = `HuaySlip_${Date.now()}.png`; link.href = canvas.toDataURL("image/png"); link.click();
                 shareBtn.innerText = "✅ เซฟรูปสำเร็จ!";
-                setTimeout(() => { shareBtn.disabled = false; shareBtn.innerText = "📸 แชร์เข้า Messenger / Line โดยตรง"; }, 2000);
+                setTimeout(() => { shareBtn.disabled = false; shareBtn.innerText = "แชร์รูปภาพ"; }, 2000);
             }
         }, "image/png");
     }).catch(err => { shareBtn.disabled = false; });
 }
 
-// ตรวจสอบประวัติเซสชันล็อกอินเก่า
 function checkSavedLoginSession() {
     const savedUser = localStorage.getItem('smartHuayUser');
     if (savedUser) {
@@ -218,7 +211,6 @@ function checkSavedLoginSession() {
     }
 }
 
-// ดึงรายชื่อบัญชีพนักงานจาก Google Sheets
 function loadUserDropdown() {
     fetch(BACKEND_API_URL, { method: "POST", body: JSON.stringify({ action: "getUsernames" }) })
     .then(res => res.json())
@@ -232,7 +224,6 @@ function loadUserDropdown() {
     }).catch(err => console.error("โหลดพนักงานพลาด:", err));
 }
 
-// ฟังก์ชันเข้าสู่ระบบด้วยรหัส PIN
 function handleLogin() {
     const selectedUser = document.getElementById('loginUser').value;
     const pin = document.getElementById('loginPin').value;
@@ -249,7 +240,6 @@ function handleLogin() {
     }).catch(err => alert('เชื่อมต่อระบบหลังบ้านล้มเหลว'));
 }
 
-// ตรวจเช็คความยาวตัวเลขและเปิดช่องกรอกเงินเดิมพันหวยไทย/ลาว
 function checkLengthAndToggleFields(value) {
     const positionSection = document.getElementById('huayPositionSection');
     const laoAmtSection = document.getElementById('laoAmtSection');
@@ -273,7 +263,6 @@ function setHuayPosition(position, btn) {
 
 function setPaymentMethod(method, btn) { currentPaymentMethod = method; document.querySelectorAll('.btn-payment').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
 
-// ฟังก์ชันปุ่มกดเงินด่วนทบยอด
 function setQuickAmount(amount) {
     if (lastFocusedInput && document.body.contains(lastFocusedInput) && lastFocusedInput.offsetParent !== null) {
         const currentAmt = parseFloat(lastFocusedInput.value) || 0; lastFocusedInput.value = currentAmt + amount; lastFocusedInput.focus(); return;
@@ -286,32 +275,30 @@ function setQuickAmount(amount) {
     } else { const el = document.getElementById('huayAmt'); el.value = (parseFloat(el.value) || 0) + amount; el.focus(); }
 }
 
-// บันทึกรายการลงตารางบิลปัจจุบันก่อนปิดยอด
 function addItem() {
     const num = document.getElementById('huayNum').value; if (!num) { alert('กรุณาระบุเลขหวยก่อน'); return; }
     let now = new Date(); let timeStr = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
     if (currentHuayType === 'ไทย' && num.length === 2) {
         if (currentHuayPosition === 'บน') {
             const amt = parseFloat(document.getElementById('huayAmtTop').value) || 0; if (amt <= 0) { alert('กรุณาระบุจำนวนเงิน'); return; }
-            currentBillItems.push({ num, type: currentHuayType, position: 'บน', amt, timeAdded: timeStr }); document.getElementById('huayAmtTop').value = '';
+            currentBillItems.unshift({ num, type: currentHuayType, position: 'บน', amt, timeAdded: timeStr }); document.getElementById('huayAmtTop').value = '';
         } else if (currentHuayPosition === 'ล่าง') {
             const amt = parseFloat(document.getElementById('huayAmtBot').value) || 0; if (amt <= 0) { alert('กรุณาระบุจำนวนเงิน'); return; }
-            currentBillItems.push({ num, type: currentHuayType, position: 'ล่าง', amt, timeAdded: timeStr }); document.getElementById('huayAmtBot').value = '';
+            currentBillItems.unshift({ num, type: currentHuayType, position: 'ล่าง', amt, timeAdded: timeStr }); document.getElementById('huayAmtBot').value = '';
         } else if (currentHuayPosition === 'บน/ล่าง') {
             const amtTop = parseFloat(document.getElementById('huayAmtTop2').value) || 0, amtBot = parseFloat(document.getElementById('huayAmtBot2').value) || 0;
             if (amtTop <= 0 && amtBot <= 0) { alert('กรุณาใส่จำนวนเงินบนหรือล่างอย่างน้อย 1 ช่อง'); return; }
-            if (amtTop > 0) currentBillItems.push({ num, type: currentHuayType, position: 'บน', amt: amtTop, timeAdded: timeStr });
-            if (amtBot > 0) currentBillItems.push({ num, type: currentHuayType, position: 'ล่าง', amt: amtBot, timeAdded: timeStr });
+            if (amtBot > 0) currentBillItems.unshift({ num, type: currentHuayType, position: 'ล่าง', amt: amtBot, timeAdded: timeStr });
+            if (amtTop > 0) currentBillItems.unshift({ num, type: currentHuayType, position: 'บน', amt: amtTop, timeAdded: timeStr });
             document.getElementById('huayAmtTop2').value = ''; document.getElementById('huayAmtBot2').value = '';
         }
     } else {
         const amt = parseFloat(document.getElementById('huayAmt').value) || 0; if (amt <= 0) { alert('กรุณาระบุจำนวนเงิน'); return; }
-        currentBillItems.push({ num, type: currentHuayType, amt, timeAdded: timeStr }); document.getElementById('huayAmt').value = '';
+        currentBillItems.unshift({ num, type: currentHuayType, amt, timeAdded: timeStr }); document.getElementById('huayAmt').value = '';
     }
     renderBillTable(); document.getElementById('huayNum').value = ''; checkLengthAndToggleFields(''); document.getElementById('huayNum').focus();
 }
 
-// เรนเดอร์อัปเดตตารางคีย์หวย
 function renderBillTable() {
     const tbody = document.getElementById('billTableBody'); let total = 0;
     if(currentBillItems.length === 0) { tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-muted); font-size: 15px;">ยังไม่มีรายการถูกเพิ่มเข้าบิล</td></tr>`; document.getElementById('billTotalText').innerText = "0 ₭"; return; }
@@ -331,7 +318,6 @@ function renderBillTable() {
 function removeAllItems() { currentBillItems = []; renderBillTable(); }
 function removeItem(idx) { currentBillItems.splice(idx, 1); renderBillTable(); }
 
-// ยืนยันบันทึกข้อมูลเข้า Google Sheets และ Telegram
 function submitBill() {
     if (currentBillItems.length === 0) { alert("กรุณาเพิ่มรายการหวยก่อน"); return; }
     const custName = document.getElementById('custName').value.trim() || "ลูกค้าทั่วไป";
@@ -342,10 +328,11 @@ function submitBill() {
     fetch(BACKEND_API_URL, { method: "POST", body: JSON.stringify({ action: "saveOrder", payload: payload }) })
     .then(res => res.json())
     .then(response => {
-        btn.disabled = false; btn.innerText = `✅ ขายหวย และ บันทึก`;
+        btn.disabled = false; btn.innerText = `✅ ยืนยันปิดบิลและส่งเข้า Telegram`;
         if (response.status === "success") {
             showStatusPopup("🚀 บันทึกบิลสำเร็จ!", "ระบบส่งข้อมูลเข้า Telegram เรียบร้อยแล้วค่ะ", true, function() {
                 
+                document.getElementById('modalBillTitle').innerText = "🧾 ใบเสร็จรับเงินอิเล็กทรอนิกส์";
                 let now = new Date();
                 let dateStr = now.toLocaleDateString('th-TH') + ' ' + now.toLocaleTimeString('th-TH');
                 let staffName = (currentUser && currentUser.name) ? currentUser.name : "แอดมิน";
@@ -367,7 +354,7 @@ function submitBill() {
                 document.getElementById('slipItemsContainer').innerHTML = buildTripleColumnsLayout(itemsList);
                 
                 document.getElementById('downloadImgBtn').className = "btn btn-primary";
-                document.getElementById('downloadImgBtn').innerText = "บันทึกรูปภาพบิล";
+                document.getElementById('downloadImgBtn').innerText = "บันทึกรูปภาพ";
                 
                 document.getElementById('copyBillModal').style.display = 'block';
                 document.querySelector('.slip-scroll-wrapper').scrollTop = 0;
@@ -375,17 +362,15 @@ function submitBill() {
                 currentBillItems = []; renderBillTable(); document.getElementById('custName').value = '';
             });
         } else { showStatusPopup("❌ เกิดข้อผิดพลาด", response.message, false); }
-    }).catch(err => { btn.disabled = false; btn.innerText = `✅ ขายหวย และ บันทึก`; showStatusPopup("❌ ล้มเหลว", "เกิดข้อผิดพลาดจากเครือข่ายหลังบ้าน", false); });
+    }).catch(err => { btn.disabled = false; btn.innerText = `✅ ยืนยันปิดบิลและส่งเข้า Telegram`; showStatusPopup("❌ ล้มเหลว", "เกิดข้อผิดพลาดจากเครือข่ายหลังบ้าน", false); });
 }
 
-// แสดงและปิดหน้าต่างป๊อปอัพแจ้งสถานะ
 let statusModalCallback = null, statusModalTimer = null;
 function showStatusPopup(title, message, isSuccess, callback = null) { if (statusModalTimer) clearTimeout(statusModalTimer); document.getElementById('statusTitle').innerText = title; document.getElementById('statusMessage').innerText = message; document.getElementById('statusIcon').innerText = isSuccess ? "💎" : "💥"; statusModalCallback = callback; document.getElementById('statusModal').style.display = 'block'; statusModalTimer = setTimeout(function() { closeStatusModal(); }, 1500); }
 function closeStatusModal() { if (statusModalTimer) clearTimeout(statusModalTimer); document.getElementById('statusModal').style.display = 'none'; if(statusModalCallback && typeof statusModalCallback === 'function') { statusModalCallback(); statusModalCallback = null; } }
 
 function closeCopyModal() { document.getElementById('copyBillModal').style.display = 'none'; }
 
-// ดึงรายงานสถิติหน้าแดชบอร์ด
 function loadDashboardData() {
     fetch(BACKEND_API_URL, { method: "POST", body: JSON.stringify({ action: "getStats" }) })
     .then(res => res.json())
@@ -411,7 +396,6 @@ function loadDashboardData() {
     }).catch(err => console.error('Dashboard error:', err));
 }
 
-// ควบคุมการเปลี่ยนหน้าจอแอปพลิเคชัน
 function logout() { localStorage.removeItem('smartHuayUser'); currentUser = {}; document.getElementById('mainApp').style.display = 'none'; document.getElementById('loginContainer').style.display = 'block'; hideAllPages(); }
 function hideAllPages() { document.getElementById('menuPage').classList.add('hidden'); document.getElementById('recorderPage').classList.add('hidden'); document.getElementById('dashboardPage').classList.add('hidden'); }
 function showMenu() { hideAllPages(); document.getElementById('menuPage').classList.remove('hidden'); }
