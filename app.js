@@ -11,20 +11,20 @@ let winnersGlobalDataCache = [];
 const tamraHuay = {
     "01": "ປານ້ອຍ", "41": "ປານ້ອຍ", "81": "ປານ້ອຍ", "02": "ຫອย", "42": "ຫອย", "82": "ຫອย",
     "03": "ຫ່ານ", "43": "ຫ່ານ", "83": "ຫ່ານ", "04": "ນົກຍຸງ", "44": "ນົກຍຸງ", "84": "ນົກຍຸງ",
-    "05": "ສິງ", "45": "ສິງ", "85": "ສິງ", "06": "ເສືอ", "46": "ເສືອ", "86": "ເສືອ",
+    "05": "ສິງ", "45": "ສິງ", "85": "ສິງ", "06": "ເສືອ", "46": "ເສືອ", "86": "ເສືອ",
     "07": "ໝູ", "47": "ໝູ", "87": "ໝູ", "08": "ກະຕ່າຍ", "48": "ກະຕ່າຍ", "88": "ກະຕ່າຍ",
     "09": "ควาย", "49": "ควาย", "89": "ควาย", "10": "ນາກນ້ຳ", "50": "ນາກນ້ຳ", "90": "ນາກນ້ຳ",
     "11": "ໝາ", "51": "ໝາ", "91": "ໝາ", "12": "ມ້າ", "52": "ມ້າ", "92": "ມ້າ",
     "13": "ຊ້າງ", "53": "ຊ້າງ", "93": "ຊ້າງ", "14": "ແມວບ້ານ", "54": "ແມວບ້ານ", "94": "ແມວບ້ານ",
     "15": "ໜູ", "55": "ໜູ", "95": "ໜູ", "16": "ເຜິງ", "56": "ເຜິງ", "96": "ເຜິງ",
-    "17": "ນົກຍາງ", "57": "ນົກຍາງ", "98": "ນົກຍາງ", "18": "ແມວປ່າ", "58": "ແມວປ່າ", "98": "ແມວປ່າ",
+    "17": "ນົກຍາງ", "57": "ນົກຍາງ", "98": "ນົກຍາງ", "18": "ແມວປ่า", "58": "ແມວປ່າ", "98": "ແມວປ່າ",
     "19": "ແມງກະເບື້ອ", "59": "ແມງກະເບື້ອ", "99": "ແມງກະເບື້ອ", "00": "ขี้เข็บ", "20": "ขี้เข็บ", "60": "ขี้เข็บ",
     "21": "ນົກແອ່ນ", "61": "ນົກແອ່ນ", "22": "ນົກກາງແກ", "62": "ນົກກາງແກ", "23": "ລິງ", "63": "ລິງ",
     "24": "ກົບ", "64": "ກົບ", "25": "ແຫຼວ", "65": "ແຫຼວ", "26": "ນາກບິນ", "66": "ນາກບິນ",
     "27": "ເຕົ່າ", "67": "ເຕົ່າ", "28": "ໄກ່", "68": "ໄກ່", "29": "ອ່ຽນ", "69": "ອ່ຽນ",
-    "30": "ປ່າໃຫຍ່", "70": "ປ່າໃຫຍ่", "31": "ກຸ້ງ", "71": "ກຸ້ງ", "32": "ງູ", "72": "ງູ",
-    "33": "ແມງມຸມ", "73": "ແມງມຸມ", "34": "ກວາງ", "74": "ກວາງ", "35": "ແບ້", "75": "ແບ້",
-    "36": "ເຫງັນ", "76": "ເຫງັນ", "37": "ຫຼິ່ນ", "77": "ຫຼິ່ນ", "38": "ເໝັ່ນ", "78": "ເໝັ່ນ",
+    "30": "ປ່າໃຫຍ່", "70": "ປ່າໃຫຍ່", "31": "ກຸ້ງ", "71": "ກຸ້ງ", "32": "ງູ", "72": "ງູ",
+    "33": "ແມງມຸມ", "73": "ແມງມຸມ", "34": "ກວາງ", "74": "ກວาง", "35": "ແບ້", "75": "ແບ້",
+    "36": "ເຫງັນ", "76": "ເຫงັນ", "37": "ຫຼິ່ນ", "77": "ຫຼິ່ນ", "38": "ເໝັ່ນ", "78": "ເໝັ່ນ",
     "39": "ກະປູ", "79": "ກະປູ", "40": "ນົກອິນຊີ", "80": "ນົກອິນຊີ"
 };
 
@@ -120,6 +120,36 @@ function buildTripleColumnsLayout(itemsArray) {
     `;
 }
 
+// ฟังก์ชันแปลง HTML สลิปขาวให้กลายเป็นภาพจริง เพื่อให้ iPhone กดเซฟค้างลงคลังรูปภาพได้ชัวร์ 100%
+function convertSlipToRealImageElement() {
+    const captureArea = document.getElementById('digitalSlipCaptureArea');
+    
+    // รีเซ็ตการซ่อนรูปภาพเก่าออกก่อน (ถ้ามี)
+    const oldImg = document.getElementById('realSlipImgView');
+    if (oldImg) oldImg.remove();
+    captureArea.style.display = 'block';
+
+    setTimeout(() => {
+        html2canvas(captureArea, { backgroundColor: "#ffffff", scale: 2, logging: false, useCORS: true }).then(canvas => {
+            const dataUrl = canvas.toDataURL("image/png");
+            
+            // สร้างแท็กภาพ <img> จริงๆ มาวางซ้อนทับพื้นที่บิลเพื่อเปิดช่องทางกดค้างเซฟบน iPhone
+            const img = document.createElement('img');
+            img.id = 'realSlipImgView';
+            img.src = dataUrl;
+            img.style.width = '100%';
+            img.style.display = 'block';
+            img.style.borderRadius = '16px';
+            img.style.webkitUserSelect = 'auto'; 
+            img.style.userSelect = 'auto';
+
+            // ซ่อนตัวโครง HTML ดั้งเดิม แล้วแสดงผลรูปภาพจริงนี้แทน
+            captureArea.style.display = 'none';
+            captureArea.parentElement.appendChild(img);
+        });
+    }, 400);
+}
+
 function triggerWinnerSlipModal(index) {
     if (winnersGlobalDataCache[index]) {
         const rawBillStr = winnersGlobalDataCache[index].billText;
@@ -145,47 +175,57 @@ function triggerWinnerSlipModal(index) {
         
         document.getElementById('slipItemsContainer').innerHTML = buildTripleColumnsLayout(itemsList);
 
-        const dlBtn = document.getElementById('downloadImgBtn');
-        if (dlBtn) {
-            dlBtn.className = "btn btn-primary"; 
-            dlBtn.innerText = "👉 จิ้มค้างที่สลิปเพื่อบันทึกรูปภาพ";
-        }
+        document.getElementById('downloadImgBtn').className = "btn btn-primary"; 
+        document.getElementById('downloadImgBtn').innerText = "📥 บันทึกรูปภาพ";
+        
         document.getElementById('copyBillModal').style.display = 'block';
         document.querySelector('.slip-scroll-wrapper').scrollTop = 0;
+        
+        // เรียกตัวแปลงไฟล์ภาพทันทีที่เปิดโมดอลคนถูกรางวัล
+        convertSlipToRealImageElement();
     }
 }
 
 function downloadSlipToGallery() {
-    const dlBtn = document.getElementById('downloadImgBtn');
-    dlBtn.style.background = "linear-gradient(180deg, #ff9500 0%, #ff8000 100%)";
-    dlBtn.innerText = "💡 แตะค้างที่ภาพบิลสีขาวด้านบน แล้วเลือกเซฟรูปได้เลยครับ";
-    setTimeout(() => {
-        dlBtn.style.background = "linear-gradient(180deg, #007aff 0%, #0056b3 100%)";
-        dlBtn.innerText = "👉 จิ้มค้างที่สลิปเพื่อบันทึกรูปภาพ";
-    }, 5000);
+    const imgView = document.getElementById('realSlipImgView');
+    if (imgView) {
+        const link = document.createElement('a');
+        link.download = `HuayReceipt_${Date.now()}.png`;
+        link.href = imgView.src;
+        link.click();
+        
+        const dlBtn = document.getElementById('downloadImgBtn');
+        dlBtn.style.background = "linear-gradient(180deg, #34c759 0%, #28a745 100%)";
+        dlBtn.innerText = "✅ บันทึกแล้ว! หรือแตะค้างที่รูปภาพเพื่อเซฟลงคลัง";
+        setTimeout(() => {
+            dlBtn.style.background = "linear-gradient(180deg, #007aff 0%, #0056b3 100%)";
+            dlBtn.innerText = "📥 บันทึกรูปภาพ";
+        }, 3000);
+    } else {
+        alert("กรุณารอรูปภาพประมวลผลสักครู่ค่ะ");
+    }
 }
 
 function generateAndShareSlipPhoto() {
-    const captureArea = document.getElementById('digitalSlipCaptureArea');
+    const imgView = document.getElementById('realSlipImgView');
+    if (!imgView) { alert("รูปภาพยังประมวลผลไม่เสร็จค่ะ"); return; }
+    
     const shareBtn = document.getElementById('shareImgBtn');
-    shareBtn.disabled = true; shareBtn.innerText = "⏳ กำลังเตรียมส่งรูปเข้าแชท...";
+    shareBtn.disabled = true; shareBtn.innerText = "⏳ กำลังเตรียมส่งรูป...";
 
-    html2canvas(captureArea, { backgroundColor: "#ffffff", scale: 2, logging: false, useCORS: true }).then(canvas => {
-        canvas.toBlob(function(blob) {
-            if (!blob) { alert("สร้างภาพล้มเหลว"); shareBtn.disabled = false; return; }
-            const file = new File([blob], "SmartHuay_Receipt.png", { type: "image/png" });
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                navigator.share({ files: [file], title: 'บิลสลิปหวยนำโชค' }).then(() => {
-                    shareBtn.disabled = false; shareBtn.innerText = "แชร์รูปภาพ";
-                }).catch(() => { shareBtn.disabled = false; });
-            } else {
-                const link = document.createElement('a');
-                link.download = `HuaySlip_${Date.now()}.png`; link.href = canvas.toDataURL("image/png"); link.click();
-                shareBtn.innerText = "✅ เซฟรูปสำเร็จ!";
-                setTimeout(() => { shareBtn.disabled = false; shareBtn.innerText = "แชร์รูปภาพ"; }, 2000);
-            }
-        }, "image/png");
-    }).catch(err => { shareBtn.disabled = false; });
+    fetch(imgView.src).then(res => res.blob()).then(blob => {
+        const file = new File([blob], "SmartHuay_Receipt.png", { type: "image/png" });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({ files: [file], title: 'บิลสลิปหวยนำโชค' }).then(() => {
+                shareBtn.disabled = false; shareBtn.innerText = "แชร์รูปภาพ";
+            }).catch(() => { shareBtn.disabled = false; shareBtn.innerText = "แชร์รูปภาพ"; });
+        } else {
+            const link = document.createElement('a');
+            link.download = `HuaySlip_${Date.now()}.png`; link.href = imgView.src; link.click();
+            shareBtn.disabled = false; shareBtn.innerText = "✅ ดาวน์โหลดสำเร็จ!";
+            setTimeout(() => { shareBtn.innerText = "แชร์รูปภาพ"; }, 2000);
+        }
+    }).catch(() => { shareBtn.disabled = false; shareBtn.innerText = "แชร์รูปภาพ"; });
 }
 
 function checkSavedLoginSession() {
@@ -265,7 +305,6 @@ function setQuickAmount(amount) {
     } else { const el = document.getElementById('huayAmt'); el.value = (parseFloat(el.value) || 0) + amount; el.focus(); }
 }
 
-// ระบบบันทึกแล้วดันตัวล่าสุดเข้าสู่ข้างบนสุดด้วย unshift ()
 function addItem() {
     const num = document.getElementById('huayNum').value; if (!num) { alert('กรุณาระบุเลขหวยก่อน'); return; }
     let now = new Date(); let timeStr = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
@@ -301,7 +340,7 @@ function renderBillTable() {
         let staffName = (currentUser && currentUser.name) ? currentUser.name : "แอดมิน";
         let now = new Date(); let options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }; let dateStr = now.toLocaleDateString('en-US', options).replace(/,/g, '');
         let showDetails = item.timeAdded ? `<br><small style="color: #cbd5e1; font-size: 13px; font-weight: normal; display:inline-block; margin-top:4px;">เมื่อ: ${dateStr} เวลา ${item.timeAdded} | โดย: ${staffName}</small>` : '';
-        html += `<tr><td><strong style="font-size:18px; color:#fff;">${numDisplay}</strong> <span style="font-size: 13px; color: #cbd5e1; margin-left: 6px;">${item.type}</span>${showDetails}</td><td><span class="badge ${item.type === 'ไทย' ? 'badge-th' : 'badge-lao'}">${item.type}</span></td><td style="font-weight: 700; color:#00df89; font-size:16px;">${item.amt.toLocaleString()} ₭</td><td><button class="btn-remove" onclick="removeItem(${idx})">❌</button></td></tr>`;
+        html += `<tr><td><strong style="font-size:18px; color:#fff;">${numDisplay}</strong> <span style="font-size: 13px; color: #cbd5e1; margin-left: 6px;">${item.type}</span>${showDetails}</td><td><span class="badge ${item.type === 'ไทย' ? 'badge-th' : 'badge-lao'}\">${item.type}</span></td><td style="font-weight: 700; color:#00df89; font-size:16px;">${item.amt.toLocaleString()} ₭</td><td><button class="btn-remove" onclick="removeItem(${idx})">❌</button></td></tr>`;
     });
     tbody.innerHTML = html; document.getElementById('billTotalText').innerText = total.toLocaleString() + " ₭";
 }
@@ -345,10 +384,13 @@ function submitBill() {
                 document.getElementById('slipItemsContainer').innerHTML = buildTripleColumnsLayout(itemsList);
                 
                 document.getElementById('downloadImgBtn').className = "btn btn-primary";
-                document.getElementById('downloadImgBtn').innerText = "👉 จิ้มค้างที่สลิปเพื่อบันทึกรูปภาพ";
+                document.getElementById('downloadImgBtn').innerText = "📥 บันทึกรูปภาพ";
                 
                 document.getElementById('copyBillModal').style.display = 'block';
                 document.querySelector('.slip-scroll-wrapper').scrollTop = 0;
+                
+                // เรียกตัวแปลงไฟล์ภาพอัตโนมัติเมื่อแอดมินกดปิดบิลสำเร็จคีย์สด
+                convertSlipToRealImageElement();
                 
                 currentBillItems = []; renderBillTable(); document.getElementById('custName').value = '';
             });
@@ -361,6 +403,13 @@ function showStatusPopup(title, message, isSuccess, callback = null) { if (statu
 function closeStatusModal() { if (statusModalTimer) clearTimeout(statusModalTimer); document.getElementById('statusModal').style.display = 'none'; if(statusModalCallback && typeof statusModalCallback === 'function') { statusModalCallback(); statusModalCallback = null; } }
 
 function closeCopyModal() { document.getElementById('copyBillModal').style.display = 'none'; }
+
+function closeCopyModal() {
+    document.getElementById('copyBillModal').style.display = 'none';
+    // ล้างตัววิวภาพออกเมื่อปิดหน้าต่าง เพื่อให้บิลใบถัดไปคำนวณใหม่ได้ถูกต้อง
+    const img = document.getElementById('realSlipImgView');
+    if (img) img.remove();
+}
 
 function loadDashboardData() {
     fetch(BACKEND_API_URL, { method: "POST", body: JSON.stringify({ action: "getStats" }) })
